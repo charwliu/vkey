@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.6)
 
 add_subdirectory(src/)
 
+
 project(vkeytest)
+
 
 set( SRC_LIST test/main.c)
 

@@ -60,7 +60,7 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
 
 
     //todo: write to sqlite
-    int ret = d(strId,strTemplateId,strJson,nTimeC,nTimeC);
+    int ret = write_claim(strId,strTemplateId,strJson,nTimeC,nTimeC);
 
     if(ret==0)
     {

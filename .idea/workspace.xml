@@ -13,783 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd422a73-f682-4280-8ebf-09854eb96d1b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/10" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/100" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/11" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/12" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/13" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/14" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/15" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/16" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/17" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/18" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/19" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/20" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/21" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/22" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/23" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/24" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/25" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/26" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/27" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/28" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/29" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/30" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/31" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/32" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/33" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/34" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/35" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/36" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/37" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/38" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/39" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/40" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/41" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/42" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/43" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/44" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/45" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/46" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/47" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/48" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/49" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/50" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/51" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/52" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/53" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/54" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/55" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/56" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/57" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/58" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/59" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/6" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/60" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/61" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/62" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/63" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/64" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/65" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/66" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/67" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/68" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/69" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/7" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/70" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/71" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/72" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/73" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/74" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/75" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/76" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/77" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/78" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/79" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/8" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/80" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/81" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/82" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/83" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/84" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/85" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/86" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/87" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/88" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/89" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/9" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/90" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/91" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/92" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/93" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/94" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/95" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/96" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/97" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/98" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/DependInfo.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/build.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/cmake_clean.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/cmake_clean_target.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/depend.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/flags.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/link.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/lib.dir/progress.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/DependInfo.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/build.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/cmake_clean.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/cmake_clean_target.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/depend.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/flags.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/link.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libsodium.dir/progress.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/DependInfo.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/build.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/cmake_clean.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/cmake_clean_target.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/depend.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/flags.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/link.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libveky.dir/progress.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/C.includecache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/CMakeFiles/3.6.2/CompilerIdC/CMakeCCompilerId.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/CMakeFiles/feature_tests.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/DependInfo.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/build.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/cmake_clean.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/cmake_clean_target.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/depend.internal" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/depend.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/flags.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/link.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/progress.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/auth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/cjson/cJSON.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/claim.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/config.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/db.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/encrypt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/gcm/aes.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/gcm/gcm.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/http.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/jwt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/key.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_aead/aes256gcm/aesni/aead_aes256gcm_aesni.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/crypto_auth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha256/auth_hmacsha256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha256/cp/hmac_hmacsha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha256/cp/verify_hmacsha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha512/auth_hmacsha512_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha512/cp/hmac_hmacsha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha512/cp/verify_hmacsha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha512256/auth_hmacsha512256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha512256/cp/hmac_hmacsha512256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_auth/hmacsha512256/cp/verify_hmacsha512256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/crypto_box.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/crypto_box_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/crypto_box_seal.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/after_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/before_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/box_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/keypair_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/after_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/before_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/box_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/keypair_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/curve25519/ref10/curve25519_ref10.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/hchacha20/core_hchacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/hsalsa20/core_hsalsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/hsalsa20/ref2/core_hsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/salsa20/core_salsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/salsa20/ref/core_salsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/salsa2012/core_salsa2012_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/salsa2012/ref/core_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/salsa208/core_salsa208_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_core/salsa208/ref/core_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/generichash_blake2_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-avx2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-sse41.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ssse3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/blake2/ref/generichash_blake2b.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_generichash/crypto_generichash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_hash/crypto_hash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_hash/sha256/cp/hash_sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_hash/sha256/hash_sha256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_hash/sha512/cp/hash_sha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_hash/sha512/hash_sha512_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_onetimeauth/crypto_onetimeauth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_onetimeauth/poly1305/donna/poly1305_donna.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_onetimeauth/poly1305/onetimeauth_poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_onetimeauth/poly1305/sse2/poly1305_sse2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-core.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-encoding.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ssse3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/argon2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/blake2b-long.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/argon2/pwhash_argon2i.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/crypto_pwhash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/sse/pwhash_scryptsalsa208sha256_sse.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/crypto_scalarmult.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/curve25519/donna_c64/curve25519_donna_c64.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/curve25519/ref10/x25519_ref10.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/curve25519_sandy2x.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/fe51_invert.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/fe_frombytes_sandy2x.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_scalarmult/curve25519/scalarmult_curve25519.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/crypto_secretbox.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/crypto_secretbox_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/sodium/secretbox_xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/xsalsa20poly1305/ref/secretbox_xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_shorthash/crypto_shorthash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_shorthash/siphash24/ref/shorthash_siphash24.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_shorthash/siphash24/shorthash_siphash24_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_sign/crypto_sign.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_sign/ed25519/ref10/keypair.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_sign/ed25519/ref10/obsolete.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_sign/ed25519/ref10/open.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_sign/ed25519/ref10/sign.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_sign/ed25519/sign_ed25519_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/afternm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/beforenm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/consts_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/int128_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/stream_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/xor_afternm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/aes128ctr/stream_aes128ctr_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/chacha20/ref/stream_chacha20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/chacha20/stream_chacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/chacha20/vec/stream_chacha20_vec.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/crypto_stream.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa20/ref/stream_salsa20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa20/ref/xor_salsa20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa20/stream_salsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa2012/ref/stream_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa2012/ref/xor_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa2012/stream_salsa2012_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa208/ref/stream_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa208/ref/xor_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/salsa208/stream_salsa208_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/xchacha20/stream_xchacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/xsalsa20/ref/stream_xsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/xsalsa20/ref/xor_xsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_stream/xsalsa20/stream_xsalsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_verify/16/ref/verify_16.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_verify/16/verify_16_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_verify/32/ref/verify_32.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_verify/32/verify_32_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_verify/64/ref/verify_64.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/crypto_verify/64/verify_64_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/randombytes/nativeclient/randombytes_nativeclient.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/randombytes/randombytes.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/randombytes/salsa20/randombytes_salsa20_random.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/randombytes/sysrandom/randombytes_sysrandom.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/sodium/core.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/sodium/runtime.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/sodium/utils.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/libsodium/sodium/version.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/main.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/mongoose/mongoose.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/mqtt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/network.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/sqlite/sqlite3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/start.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/libvkey.dir/src/util.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/C.includecache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/CMakeFiles/3.6.2/CompilerIdC/CMakeCCompilerId.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/CMakeFiles/feature_tests.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/CXX.includecache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/DependInfo.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/build.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/cmake_clean.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/depend.internal" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/depend.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/flags.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/link.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/progress.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/auth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/cjson/cJSON.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/claim.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/config.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/db.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/encrypt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/gcm/aes.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/gcm/gcm.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/http.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/jwt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/key.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_aead/aes256gcm/aesni/aead_aes256gcm_aesni.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/crypto_auth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha256/auth_hmacsha256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha256/cp/hmac_hmacsha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha256/cp/verify_hmacsha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha512/auth_hmacsha512_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha512/cp/hmac_hmacsha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha512/cp/verify_hmacsha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha512256/auth_hmacsha512256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha512256/cp/hmac_hmacsha512256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_auth/hmacsha512256/cp/verify_hmacsha512256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/crypto_box.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/crypto_box_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/crypto_box_seal.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/after_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/before_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/box_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/keypair_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/after_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/before_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/box_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/keypair_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/curve25519/ref10/curve25519_ref10.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/hchacha20/core_hchacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/hsalsa20/core_hsalsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/hsalsa20/ref2/core_hsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/salsa20/core_salsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/salsa20/ref/core_salsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/salsa2012/core_salsa2012_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/salsa2012/ref/core_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/salsa208/core_salsa208_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_core/salsa208/ref/core_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/generichash_blake2_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-avx2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-sse41.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ssse3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/blake2/ref/generichash_blake2b.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_generichash/crypto_generichash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_hash/crypto_hash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_hash/sha256/cp/hash_sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_hash/sha256/hash_sha256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_hash/sha512/cp/hash_sha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_hash/sha512/hash_sha512_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_onetimeauth/crypto_onetimeauth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_onetimeauth/poly1305/donna/poly1305_donna.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_onetimeauth/poly1305/onetimeauth_poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_onetimeauth/poly1305/sse2/poly1305_sse2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/argon2-core.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/argon2-encoding.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ssse3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/argon2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/blake2b-long.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/argon2/pwhash_argon2i.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/crypto_pwhash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/sse/pwhash_scryptsalsa208sha256_sse.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/crypto_scalarmult.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/curve25519/donna_c64/curve25519_donna_c64.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/curve25519/ref10/x25519_ref10.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/curve25519_sandy2x.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/fe51_invert.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/fe_frombytes_sandy2x.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_scalarmult/curve25519/scalarmult_curve25519.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/crypto_secretbox.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/crypto_secretbox_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/sodium/secretbox_xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/xsalsa20poly1305/ref/secretbox_xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_shorthash/crypto_shorthash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_shorthash/siphash24/ref/shorthash_siphash24.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_shorthash/siphash24/shorthash_siphash24_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_sign/crypto_sign.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_sign/ed25519/ref10/keypair.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_sign/ed25519/ref10/obsolete.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_sign/ed25519/ref10/open.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_sign/ed25519/ref10/sign.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_sign/ed25519/sign_ed25519_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/portable/afternm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/portable/beforenm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/portable/consts_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/portable/int128_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/portable/stream_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/portable/xor_afternm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/aes128ctr/stream_aes128ctr_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/chacha20/ref/stream_chacha20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/chacha20/stream_chacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/chacha20/vec/stream_chacha20_vec.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/crypto_stream.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa20/ref/stream_salsa20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa20/ref/xor_salsa20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa20/stream_salsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa2012/ref/stream_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa2012/ref/xor_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa2012/stream_salsa2012_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa208/ref/stream_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa208/ref/xor_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/salsa208/stream_salsa208_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/xchacha20/stream_xchacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/xsalsa20/ref/stream_xsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/xsalsa20/ref/xor_xsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_stream/xsalsa20/stream_xsalsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_verify/16/ref/verify_16.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_verify/16/verify_16_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_verify/32/ref/verify_32.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_verify/32/verify_32_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_verify/64/ref/verify_64.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/crypto_verify/64/verify_64_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/randombytes/nativeclient/randombytes_nativeclient.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/randombytes/randombytes.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/randombytes/salsa20/randombytes_salsa20_random.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/randombytes/sysrandom/randombytes_sysrandom.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/sodium/core.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/sodium/runtime.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/sodium/utils.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/libsodium/sodium/version.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/main.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/mongoose/mongoose.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/mqtt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/network.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/sqlite/sqlite3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/start.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/sdk.dir/src/util.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/C.includecache" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/CMakeFiles/3.6.2/CompilerIdC/CMakeCCompilerId.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/CMakeFiles/feature_tests.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/DependInfo.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/build.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/cmake_clean.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/cmake_clean_target.cmake" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/depend.internal" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/depend.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/flags.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/link.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/progress.make" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/auth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/cjson/cJSON.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/claim.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/config.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/db.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/encrypt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/gcm/aes.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/gcm/gcm.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/http.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/jwt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/key.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_aead/aes256gcm/aesni/aead_aes256gcm_aesni.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/crypto_auth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha256/auth_hmacsha256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha256/cp/hmac_hmacsha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha256/cp/verify_hmacsha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha512/auth_hmacsha512_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha512/cp/hmac_hmacsha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha512/cp/verify_hmacsha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha512256/auth_hmacsha512256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha512256/cp/hmac_hmacsha512256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_auth/hmacsha512256/cp/verify_hmacsha512256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/crypto_box.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/crypto_box_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/crypto_box_seal.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/after_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/before_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/box_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/keypair_curve25519xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/after_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/before_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/box_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/keypair_curve25519xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/curve25519/ref10/curve25519_ref10.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/hchacha20/core_hchacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/hsalsa20/core_hsalsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/hsalsa20/ref2/core_hsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/salsa20/core_salsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/salsa20/ref/core_salsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/salsa2012/core_salsa2012_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/salsa2012/ref/core_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/salsa208/core_salsa208_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_core/salsa208/ref/core_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/generichash_blake2_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-avx2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-sse41.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ssse3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/ref/blake2b-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/blake2/ref/generichash_blake2b.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_generichash/crypto_generichash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_hash/crypto_hash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_hash/sha256/cp/hash_sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_hash/sha256/hash_sha256_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_hash/sha512/cp/hash_sha512.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_hash/sha512/hash_sha512_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_onetimeauth/crypto_onetimeauth.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_onetimeauth/poly1305/donna/poly1305_donna.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_onetimeauth/poly1305/onetimeauth_poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_onetimeauth/poly1305/sse2/poly1305_sse2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-core.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-encoding.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/argon2-fill-block-ssse3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/argon2.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/blake2b-long.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/argon2/pwhash_argon2i.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/crypto_pwhash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_pwhash/scryptsalsa208sha256/sse/pwhash_scryptsalsa208sha256_sse.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/crypto_scalarmult.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/curve25519/donna_c64/curve25519_donna_c64.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/curve25519/ref10/x25519_ref10.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/curve25519_sandy2x.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/fe51_invert.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/curve25519/sandy2x/fe_frombytes_sandy2x.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_scalarmult/curve25519/scalarmult_curve25519.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/crypto_secretbox.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/crypto_secretbox_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_easy.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/xchacha20poly1305/sodium/secretbox_xchacha20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/xsalsa20poly1305/ref/secretbox_xsalsa20poly1305.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_shorthash/crypto_shorthash.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_shorthash/siphash24/ref/shorthash_siphash24.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_shorthash/siphash24/shorthash_siphash24_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_sign/crypto_sign.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_sign/ed25519/ref10/keypair.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_sign/ed25519/ref10/obsolete.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_sign/ed25519/ref10/open.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_sign/ed25519/ref10/sign.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_sign/ed25519/sign_ed25519_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/afternm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/beforenm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/consts_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/int128_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/stream_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/portable/xor_afternm_aes128ctr.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/aes128ctr/stream_aes128ctr_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/chacha20/ref/stream_chacha20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/chacha20/stream_chacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/chacha20/vec/stream_chacha20_vec.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/crypto_stream.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa20/ref/stream_salsa20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa20/ref/xor_salsa20_ref.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa20/stream_salsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa2012/ref/stream_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa2012/ref/xor_salsa2012.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa2012/stream_salsa2012_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa208/ref/stream_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa208/ref/xor_salsa208.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/salsa208/stream_salsa208_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/xchacha20/stream_xchacha20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/xsalsa20/ref/stream_xsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/xsalsa20/ref/xor_xsalsa20.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_stream/xsalsa20/stream_xsalsa20_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_verify/16/ref/verify_16.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_verify/16/verify_16_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_verify/32/ref/verify_32.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_verify/32/verify_32_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_verify/64/ref/verify_64.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/crypto_verify/64/verify_64_api.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/randombytes/nativeclient/randombytes_nativeclient.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/randombytes/randombytes.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/randombytes/salsa20/randombytes_salsa20_random.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/randombytes/sysrandom/randombytes_sysrandom.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/sodium/core.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/sodium/runtime.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/sodium/utils.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/libsodium/sodium/version.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/main.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/mongoose/mongoose.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/mqtt.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/network.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/sqlite/sqlite3.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/start.c.o" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkey.dir/src/util.c.o" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/test/main.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/test/main.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/auth.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/auth.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/cjson/cJSON.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/cjson/cJSON.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/claim.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/claim.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/config.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/config.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/db.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/db.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/encrypt.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/encrypt.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/gcm/aes.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/gcm/aes.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/gcm/gcm.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/gcm/gcm.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/http.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/http.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/jwt.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/jwt.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/key.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/key.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_aead/aes256gcm/aesni/aead_aes256gcm_aesni.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_aead/aes256gcm/aesni/aead_aes256gcm_aesni.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_aead/chacha20poly1305/sodium/aead_chacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_aead/xchacha20poly1305/sodium/aead_xchacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/crypto_auth.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/crypto_auth.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha256/auth_hmacsha256_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha256/auth_hmacsha256_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha256/cp/hmac_hmacsha256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha256/cp/hmac_hmacsha256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha256/cp/verify_hmacsha256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha256/cp/verify_hmacsha256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512/auth_hmacsha512_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512/auth_hmacsha512_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512/cp/hmac_hmacsha512.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512/cp/hmac_hmacsha512.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512/cp/verify_hmacsha512.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512/cp/verify_hmacsha512.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512256/auth_hmacsha512256_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512256/auth_hmacsha512256_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512256/cp/hmac_hmacsha512256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512256/cp/hmac_hmacsha512256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512256/cp/verify_hmacsha512256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_auth/hmacsha512256/cp/verify_hmacsha512256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/crypto_box.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/crypto_box.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/crypto_box_easy.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/crypto_box_easy.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/crypto_box_seal.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/crypto_box_seal.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_easy.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305_easy.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/after_curve25519xchacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/after_curve25519xchacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/before_curve25519xchacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/before_curve25519xchacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/box_curve25519xchacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/box_curve25519xchacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/keypair_curve25519xchacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xchacha20poly1305/sodium/keypair_curve25519xchacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/after_curve25519xsalsa20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/after_curve25519xsalsa20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/before_curve25519xsalsa20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/before_curve25519xsalsa20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/box_curve25519xsalsa20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/box_curve25519xsalsa20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/keypair_curve25519xsalsa20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_box/curve25519xsalsa20poly1305/ref/keypair_curve25519xsalsa20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/curve25519/ref10/curve25519_ref10.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/curve25519/ref10/curve25519_ref10.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/hchacha20/core_hchacha20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/hchacha20/core_hchacha20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/hsalsa20/core_hsalsa20_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/hsalsa20/core_hsalsa20_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/hsalsa20/ref2/core_hsalsa20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/hsalsa20/ref2/core_hsalsa20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa20/core_salsa20_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa20/core_salsa20_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa20/ref/core_salsa20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa20/ref/core_salsa20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa2012/core_salsa2012_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa2012/core_salsa2012_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa2012/ref/core_salsa2012.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa2012/ref/core_salsa2012.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa208/core_salsa208_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa208/core_salsa208_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa208/ref/core_salsa208.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_core/salsa208/ref/core_salsa208.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/generichash_blake2_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/generichash_blake2_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-avx2.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-avx2.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ref.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ref.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-sse41.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-sse41.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ssse3.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-compress-ssse3.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-ref.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/blake2b-ref.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/generichash_blake2b.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/blake2/ref/generichash_blake2b.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/crypto_generichash.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_generichash/crypto_generichash.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/crypto_hash.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/crypto_hash.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha256/cp/hash_sha256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha256/cp/hash_sha256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha256/hash_sha256_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha256/hash_sha256_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha512/cp/hash_sha512.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha512/cp/hash_sha512.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha512/hash_sha512_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_hash/sha512/hash_sha512_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/crypto_onetimeauth.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/crypto_onetimeauth.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/poly1305/donna/poly1305_donna.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/poly1305/donna/poly1305_donna.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/poly1305/onetimeauth_poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/poly1305/onetimeauth_poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/poly1305/sse2/poly1305_sse2.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_onetimeauth/poly1305/sse2/poly1305_sse2.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-core.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-core.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-encoding.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-encoding.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-fill-block-ref.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-fill-block-ref.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-fill-block-ssse3.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2-fill-block-ssse3.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/argon2.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/blake2b-long.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/blake2b-long.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/pwhash_argon2i.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/argon2/pwhash_argon2i.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/crypto_pwhash.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/crypto_pwhash.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/crypto_scrypt-common.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/nosse/pwhash_scryptsalsa208sha256_nosse.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/pbkdf2-sha256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/pwhash_scryptsalsa208sha256.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/scrypt_platform.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/sse/pwhash_scryptsalsa208sha256_sse.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_pwhash/scryptsalsa208sha256/sse/pwhash_scryptsalsa208sha256_sse.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/crypto_scalarmult.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/crypto_scalarmult.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/donna_c64/curve25519_donna_c64.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/donna_c64/curve25519_donna_c64.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/ref10/x25519_ref10.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/ref10/x25519_ref10.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/sandy2x/curve25519_sandy2x.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/sandy2x/curve25519_sandy2x.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/sandy2x/fe51_invert.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/sandy2x/fe51_invert.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/sandy2x/fe_frombytes_sandy2x.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/sandy2x/fe_frombytes_sandy2x.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/scalarmult_curve25519.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_scalarmult/curve25519/scalarmult_curve25519.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/crypto_secretbox.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/crypto_secretbox.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/crypto_secretbox_easy.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/crypto_secretbox_easy.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_easy.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xchacha20poly1305/secretbox_xchacha20poly1305_easy.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xchacha20poly1305/sodium/secretbox_xchacha20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xchacha20poly1305/sodium/secretbox_xchacha20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xsalsa20poly1305/ref/secretbox_xsalsa20poly1305.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xsalsa20poly1305/ref/secretbox_xsalsa20poly1305.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_shorthash/crypto_shorthash.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_shorthash/crypto_shorthash.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_shorthash/siphash24/ref/shorthash_siphash24.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_shorthash/siphash24/ref/shorthash_siphash24.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_shorthash/siphash24/shorthash_siphash24_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_shorthash/siphash24/shorthash_siphash24_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/crypto_sign.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/crypto_sign.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/keypair.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/keypair.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/obsolete.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/obsolete.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/open.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/open.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/sign.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/ref10/sign.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/sign_ed25519_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_sign/ed25519/sign_ed25519_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/afternm_aes128ctr.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/afternm_aes128ctr.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/beforenm_aes128ctr.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/beforenm_aes128ctr.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/consts_aes128ctr.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/consts_aes128ctr.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/int128_aes128ctr.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/int128_aes128ctr.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/stream_aes128ctr.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/stream_aes128ctr.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/xor_afternm_aes128ctr.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/portable/xor_afternm_aes128ctr.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/stream_aes128ctr_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/aes128ctr/stream_aes128ctr_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/chacha20/ref/stream_chacha20_ref.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/chacha20/ref/stream_chacha20_ref.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/chacha20/stream_chacha20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/chacha20/stream_chacha20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/chacha20/vec/stream_chacha20_vec.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/chacha20/vec/stream_chacha20_vec.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/crypto_stream.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/crypto_stream.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa20/ref/stream_salsa20_ref.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa20/ref/stream_salsa20_ref.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa20/ref/xor_salsa20_ref.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa20/ref/xor_salsa20_ref.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa20/stream_salsa20_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa20/stream_salsa20_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa2012/ref/stream_salsa2012.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa2012/ref/stream_salsa2012.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa2012/ref/xor_salsa2012.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa2012/ref/xor_salsa2012.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa2012/stream_salsa2012_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa2012/stream_salsa2012_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa208/ref/stream_salsa208.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa208/ref/stream_salsa208.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa208/ref/xor_salsa208.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa208/ref/xor_salsa208.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa208/stream_salsa208_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/salsa208/stream_salsa208_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xchacha20/stream_xchacha20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xchacha20/stream_xchacha20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xsalsa20/ref/stream_xsalsa20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xsalsa20/ref/stream_xsalsa20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xsalsa20/ref/xor_xsalsa20.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xsalsa20/ref/xor_xsalsa20.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xsalsa20/stream_xsalsa20_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_stream/xsalsa20/stream_xsalsa20_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/16/ref/verify_16.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/16/ref/verify_16.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/16/verify_16_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/16/verify_16_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/32/ref/verify_32.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/32/ref/verify_32.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/32/verify_32_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/32/verify_32_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/64/ref/verify_64.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/64/ref/verify_64.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/64/verify_64_api.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/crypto_verify/64/verify_64_api.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/nativeclient/randombytes_nativeclient.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/nativeclient/randombytes_nativeclient.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/randombytes.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/randombytes.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/salsa20/randombytes_salsa20_random.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/salsa20/randombytes_salsa20_random.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/sysrandom/randombytes_sysrandom.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/randombytes/sysrandom/randombytes_sysrandom.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/core.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/core.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/runtime.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/runtime.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/utils.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/utils.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/version.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/libsodium/sodium/version.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/main.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/main.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/mongoose/mongoose.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/mongoose/mongoose.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/mqtt.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/mqtt.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/network.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/network.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/sqlite/sqlite3.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/sqlite/sqlite3.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/start.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/start.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/util.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/util.c.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/libvkey.a" afterPath="$PROJECT_DIR$/cmake-build-debug/src/libvkey.a" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.6.2/CMakeSystem.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.6.2/CMakeSystem.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.c" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/C.includecache" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/C.includecache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/DependInfo.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/DependInfo.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/build.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/build.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/depend.internal" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/depend.internal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/flags.make" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/vkeytest.dir/flags.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/CMakeDirectoryInformation.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/CMakeDirectoryInformation.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/C.includecache" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/C.includecache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/DependInfo.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/DependInfo.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/build.make" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/build.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/depend.internal" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/depend.internal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/flags.make" afterPath="$PROJECT_DIR$/cmake-build-debug/src/CMakeFiles/vkey.dir/flags.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/Makefile" afterPath="$PROJECT_DIR$/cmake-build-debug/src/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/cmake_install.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/src/cmake_install.cmake" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/src/sdk.cbp" afterPath="$PROJECT_DIR$/cmake-build-debug/src/sdk.cbp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/vkeytest.cbp" afterPath="$PROJECT_DIR$/cmake-build-debug/vkeytest.cbp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/claim.c" afterPath="$PROJECT_DIR$/src/claim.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -806,12 +31,42 @@
     <favorites_list name="sdk" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="claim.c" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/claim.c">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="claim.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../vkey/sdk/src/claim.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="67" column="5" lean-forward="true" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+            <state relative-caret-position="181">
+              <caret line="62" column="59" lean-forward="false" selection-start-line="62" selection-start-column="59" selection-end-line="62" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -826,6 +81,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/claim.c" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -868,43 +125,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ios" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cmake-build-debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vkey/sdk" />
   </component>
-  <component name="RunManager" selected="Application.vkeytest">
+  <component name="RunManager" selected="Application.vkey">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug">
       <envs />
       <method />
@@ -938,11 +167,15 @@
       <option name="presentableId" value="Default" />
       <updated>1482997335630</updated>
       <workItem from="1482997336953" duration="882000" />
+      <workItem from="1482999484034" duration="276000" />
+      <workItem from="1482999773265" duration="37000" />
+      <workItem from="1482999835237" duration="203000" />
+      <workItem from="1483000093848" duration="411000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="882000" />
+    <option name="totallyTimeSpent" value="1809000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="37" y="24" width="1879" height="955" extended-state="6" />
@@ -950,26 +183,29 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.gitignore" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -979,10 +215,72 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../vkey/sdk/src/claim.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1054">
+          <caret line="62" column="14" lean-forward="false" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/claim.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="67" column="5" lean-forward="true" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/claim.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="64" column="14" lean-forward="true" selection-start-line="64" selection-start-column="14" selection-end-line="64" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../vkey/sdk/src/claim.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="62" column="59" lean-forward="false" selection-start-line="62" selection-start-column="59" selection-end-line="62" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>

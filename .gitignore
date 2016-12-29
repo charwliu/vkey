@@ -2,6 +2,8 @@ cmake-build-debug
 ios
 .idea
 
+*.DS_Store
+
 # Prerequisites
 *.d
 

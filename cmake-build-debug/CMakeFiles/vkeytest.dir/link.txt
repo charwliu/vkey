@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/vkeytest.dir/test/main.c.o  -o vkeytest src/libvkey.a -lpthread -ldl -lm 

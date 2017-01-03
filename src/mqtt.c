@@ -45,6 +45,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             memset(&opts, 0, sizeof(opts));
             opts.user_name = s_user_name;
             opts.password = s_password;
+            opts.keep_alive=10000000;
 
             mg_set_protocol_mqtt(nc);
             mg_send_mqtt_handshake_opt(nc, "dummy", opts);

@@ -102,7 +102,7 @@ int mqtt_send(const char* s_address,const char* s_data, int n_size)
 {
     if(!mqtt_conn) return -1;
     char strTopic[256];
-    sprintf(strTopic,"/veky/%s",s_address);
+    sprintf(strTopic,"%s",s_address);
 
     mg_mqtt_publish(mqtt_conn, strTopic, 65, MG_MQTT_QOS(0), s_data, n_size);
 }

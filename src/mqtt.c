@@ -104,5 +104,5 @@ int mqtt_send(const char* s_address,const char* s_data, int n_size)
     char strTopic[256];
     sprintf(strTopic,"%s",s_address);
 
-    mg_mqtt_publish(mqtt_conn, strTopic, 65, MG_MQTT_QOS(0), s_data, n_size);
+    mg_mqtt_publish(mqtt_conn, strTopic, 42, MG_MQTT_QOS(0), s_data, n_size);
 }

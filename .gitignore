@@ -1,6 +1,7 @@
 cmake-build-debug
 ios
 .idea
+*.xml
 
 *.DS_Store
 

@@ -18,10 +18,14 @@ int g_notify(const char* s_msg)
     g_fn_notity(s_msg);
 }
 
-int start_vkey(FN_Notify fn_notify){
+int start_vkey(FN_Notify fn_notify,const char* s_dbPath,const char* s_port){
 
     config_load();
-    db_init("/home/gqc/vkey/db.vkey");
+    if(s_port)
+        g_config.http_port=s_port;
+
+    //db_init("/home/gqc/vkey/db.vkey");
+    db_init(s_dbPath);
     encrypt_init();
 
     key_load();

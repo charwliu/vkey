@@ -5,7 +5,6 @@
 int notify(const char* s_msg);
 
 int main() {
-    start_vkey(notify);
     return 0;
 }
 

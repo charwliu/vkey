@@ -37,5 +37,7 @@ cJSON* util_parseBody(struct mg_str* body)
  * */
 char* util_getFromQuery(struct mg_str* s_query,const char* s_key)
 {
+    c_strnstr(s_query->p,s_key,s_query->len);
+
     return "todo";
 }

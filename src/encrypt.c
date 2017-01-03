@@ -13,12 +13,12 @@ int encrypt_init()
     gcm_initialize();
 
     //{{test code
-    unsigned char seed[32]="1234567890123456789012345678901";
-    unsigned char pk[32];
-    unsigned char sk[64];
-    crypto_sign_seed_keypair(pk,sk,seed);
-    printf("public key: %s\n",pk);
-    printf("secret key: %s\n",sk);
+//    unsigned char seed[32]="1234567890123456789012345678901";
+//    unsigned char pk[32];
+//    unsigned char sk[64];
+//    crypto_sign_seed_keypair(pk,sk,seed);
+//    printf("public key: %s\n",pk);
+//    printf("secret key: %s\n",sk);
     //}}
 
 }

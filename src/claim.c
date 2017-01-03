@@ -23,13 +23,16 @@ static void get_claimInfo(struct mg_connection *nc, struct http_message *hm) {
 
 }
 
+/// /api/v1/claim?templateid=CLMT_NAME
 static int get_claim(struct mg_connection *nc, struct http_message *hm) {
 
-    char* tempateId=util_getFromQuery(&hm->query_string,"templateId");
+    char templateId[32]="";
+    mg_get_http_var(&hm->query_string, "templateId", templateId, 32);
+
 
     cJSON* res = cJSON_CreateArray();
 
-    claim_read(tempateId,res);
+    claim_read(templateId,res);
 
     http_response_json(nc,200,res);
 
@@ -127,8 +130,14 @@ int claim_read(const char* s_templateId,cJSON* result)
 
     char strSql[256];
 
-    sprintf(strSql,"SELECT ID,DATA FROM TB_CLAIM WHERE TID=?;");
-
+    if(s_templateId==NULL || strlen(s_templateId)==0)
+    {
+        sprintf(strSql,"SELECT ID,DATA FROM TB_CLAIM;");
+    }
+    else
+    {
+        sprintf(strSql,"SELECT ID,DATA FROM TB_CLAIM WHERE TID=?;");
+    }
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -139,7 +148,13 @@ int claim_read(const char* s_templateId,cJSON* result)
         return -1;
     }
 
-    sqlite3_bind_text(pStmt, 1, s_templateId, strlen(s_templateId), SQLITE_TRANSIENT);
+    if(s_templateId==NULL || strlen(s_templateId)==0)
+    {
+    }
+    else
+    {
+        sqlite3_bind_text(pStmt, 1, s_templateId, strlen(s_templateId), SQLITE_TRANSIENT);
+    }
 
     while( sqlite3_step(pStmt) == SQLITE_ROW )
     {

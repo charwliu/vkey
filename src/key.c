@@ -58,7 +58,9 @@ static int write_key(const char* s_address,const char * s_imk,const char* s_ilk,
 
 /*
  {
-    "rescure":"rescure code"
+    "rescure":"rescure code",
+
+    "password":"123"
  }
  * */
 /// request by secure code and main password hash , saved ilk,encrytped imk,create address, return encryped iuk,address
@@ -76,13 +78,13 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     cJSON *rescureCode = cJSON_GetObjectItem(json, "rescure");
     if(!rescureCode)
     {
-        http_response_error(nc,400,"Vkey Service : templateId error");
+        http_response_error(nc,400,"Vkey Service : rescure error");
         return 0;
     }
     cJSON *password = cJSON_GetObjectItem(json, "password");
     if(!password)
     {
-        http_response_error(nc,400,"Vkey Service : templateId error");
+        http_response_error(nc,400,"Vkey Service : password error");
         return 0;
     }
 

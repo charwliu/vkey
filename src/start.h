@@ -4,7 +4,7 @@
 // function pointer type for notify when sdk got some message
 typedef int (*FN_Notify)(const char*) ;
 
-int start_vkey(FN_Notify fn_notify);
+int start_vkey(FN_Notify fn_notify,const char* s_dbPath,const char* s_port);
 
 int g_notify(const char* s_msg);
 

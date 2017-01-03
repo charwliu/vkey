@@ -21,11 +21,11 @@
 #include "mongoose/mongoose.h"
 #include "config.h"
 #include "start.h"
+#include "key.h"
 
-static const char *s_address = "localhost:1883";
 static const char *s_user_name = NULL;
 static const char *s_password = NULL;
-static const char *s_topic = "1234";
+
 static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
 static struct mg_connection *mqtt_conn=NULL;
 
@@ -55,8 +55,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
                 printf("Got mqtt connection error: %d\n", msg->connack_ret_code);
                 exit(1);
             }
-            s_topic_expr.topic = s_topic;
-            printf("Subscribing to '%s'\n", s_topic);
+            s_topic_expr.topic = key_getAddress();
+            printf("Subscribing to '%s'\n", s_topic_expr.topic);
             mg_mqtt_subscribe(nc, &s_topic_expr, 1, 42);
             break;
         case MG_EV_MQTT_PUBACK:
@@ -66,14 +66,10 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             printf("Subscription acknowledged, forwarding to '/test'\n");
             break;
         case MG_EV_MQTT_PUBLISH: {
-#if 0
-            char hex[1024] = {0};
-        mg_hexdump(nc->recv_mbuf.buf, msg->payload.len, hex, sizeof(hex));
-        printf("Got incoming message %.*s:\n%s", (int)msg->topic.len, msg->topic.p, hex);
-#else
+
             printf("Got incoming message %.*s: %.*s\n", (int) msg->topic.len,
                    msg->topic.p, (int) msg->payload.len, msg->payload.p);
-#endif
+
 
             printf("Forwarding to /test\n");
             char* strMessage=malloc(msg->payload.len+1);
@@ -94,7 +90,7 @@ int mqtt_connect(struct mg_mgr *mgr)
     mqtt_conn = mg_connect(mgr, g_config.sde_url, ev_handler);
     if (mqtt_conn == NULL)
     {
-        fprintf(stderr, "MQTT Connect to (%s) failed\n", s_address);
+        fprintf(stderr, "MQTT Connect to (%s) failed\n", g_config.sde_url);
         return -1;
     }
     printf("Connected MQTT server on %s \n", g_config.sde_url);

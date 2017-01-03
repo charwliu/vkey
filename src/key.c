@@ -187,6 +187,8 @@ int key_load()
     char *strADDRESS = (char *) sqlite3_column_text(pStmt, 0);
     memcpy(key_address,strADDRESS,strlen(strADDRESS));
 
+    printf("Address:%s\n",key_address);
+
     sqlite3_finalize(pStmt);
 
     return 0;

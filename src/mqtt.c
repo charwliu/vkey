@@ -23,8 +23,8 @@
 #include "start.h"
 #include "key.h"
 
-static const char *s_user_name = NULL;
-static const char *s_password = NULL;
+static const char *s_user_name = "guoqc";
+static const char *s_password = "123";
 
 static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
 static struct mg_connection *mqtt_conn=NULL;

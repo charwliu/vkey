@@ -96,8 +96,8 @@ Return
 ##attestation
 
 Attestation data store in block chain:
-- owner vid
-- witness vid
+- from vid
+- to vid
 - claim id
 - proof signature by witness
 

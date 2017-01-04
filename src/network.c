@@ -3,6 +3,7 @@
 #include "http.h"
 #include "mqtt.h"
 #include "config.h"
+#include "eth.h"
 
 int network_start()
 {
@@ -12,6 +13,8 @@ int network_start()
     http_start(&mgr);
 
     mqtt_connect(&mgr);
+
+    eth_init(&mgr);
 
     while (1)
     {

@@ -1,8 +1,8 @@
 vkey 2.0
 
-##Interface
+# Interface
 
-###Start
+## Start
 
 ````
 int start_vkey(FN_Notify fn_notify,const char* s_dbPath,const char* s_port);
@@ -16,9 +16,9 @@ return
 - 0:start successful
 - -1:start failed
 
-##key
+## key
 
-###create key
+### create key
 Request
 ```
 POST HOST/key
@@ -38,9 +38,9 @@ Return
 ```
 - iuk   encrypted iuk, vwallet should show qrcode with iuk to user and user must backup the qrcode for recovering the identity
  
-##claim
+## claim
 
-###create claim
+### create claim
 Request
 ````
 POST HOST/claim
@@ -58,7 +58,7 @@ Return
 - 500 Claim write failed!
 ````
 
-###get claim
+### get claim
 Request
 ````
  GET HOST/claim?templateId=CLMT_NAME
@@ -78,7 +78,7 @@ Return
 }
 ````
 
-##auth
+## auth
 Request
 ```
 POST HOST/auth
@@ -95,7 +95,7 @@ Return
 - 200 data sent
 ```
 
-##attestation
+## attestation
 
 Attestation data store in block chain:
 - from vid
@@ -111,7 +111,7 @@ POST HOST/attestation
 }
 ```
 
-#Coding standard
+# Coding standard
 
 - Public function name
 
@@ -129,7 +129,7 @@ string g_name
 - Local name
 string strName
 
-#Building
+# Building
 
 ## linux
 

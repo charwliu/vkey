@@ -23,17 +23,17 @@ static int test_auth(struct mg_connection *nc, struct http_message *hm) {
 /*
 POST
 {
-  "vid":"as84s8f7a8dfagyerwrg",
+  "peer":"as84s8f7a8dfagyerwrg",
   "claims":["CLMT_IDNUMBER","CLMT_SOCIALSECURITY"]
 }
  * */
 static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 
     cJSON *json = util_parseBody(&hm->body);
-    cJSON *vid = cJSON_GetObjectItem(json, "vid");
-    if(!vid)
+    cJSON *peer = cJSON_GetObjectItem(json, "peer");
+    if(!peer)
     {
-        http_response_error(nc,400,"Vkey Service : vid error");
+        http_response_error(nc,400,"Vkey Service : peer error");
         return 0;
     }
     cJSON *claimTemplates = cJSON_GetObjectItem(json, "claims");
@@ -54,14 +54,12 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     }
 
     //2 generate jwt
-    char* jwt = jwt_create(vid->valuestring,claimsAll);
+    char* jwt = jwt_create(peer->valuestring,claimsAll);
 
     //3 publish to mq
-    mqtt_send(vid->valuestring,jwt,strlen(jwt));
+    mqtt_send(peer->valuestring,jwt,strlen(jwt));
 
-    //todo:7 return ok
-    http_response_text(nc,200,"ok");
-
+    http_response_text(nc,200,"data sent");
 
     free(jwt);
     cJSON_Delete(json);

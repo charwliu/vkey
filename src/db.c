@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <string.h>
 #include "db.h"
 #include "sqlite/sqlite3.h"
 #include "cjson/cJSON.h"
@@ -20,8 +21,42 @@ sqlite3* db_get()
     return g_db;
 }
 
+static int db_exist(const char* s_table)
+{
+    sqlite3* db = db_get();
+    char strSql[256];
+
+    sprintf(strSql,"SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+    sqlite3_bind_text(pStmt, 1, s_table, strlen(s_table), SQLITE_TRANSIENT);
+
+    ret=0;
+    if( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        ret=1;
+    }
+
+    sqlite3_finalize(pStmt);
+    return ret;
+}
+
 static int db_checkKeyTable()
 {
+    if(1==db_exist("TB_KEY"))
+    {
+        fprintf(stdout, "Table TB_KEY is ready\n");
+        return 0;
+    }
     char *sErrMsg = 0;
     /* Create SQL statement */
     const char* sql = "CREATE TABLE TB_KEY( ADDRESS TEXT PRIMARY KEY NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
@@ -42,6 +77,11 @@ static int db_checkKeyTable()
 
 static int db_checkClaimTable()
 {
+    if(1==db_exist("TB_CLAIM"))
+    {
+        fprintf(stdout, "Table TB_CLAIM is ready\n");
+        return 0;
+    }
     char *sErrMsg = 0;
     /* Create SQL statement */
     const char* sql = "CREATE TABLE TB_CLAIM( ID TEXT PRIMARY KEY NOT NULL, TID TEXT NOT NULL, DATA TEXT NOT NULL, TIMEC INT, TIMEU INT );";
@@ -63,7 +103,13 @@ int db_init(const char *s_path)
 {
     sqlite3_open_v2(s_path,&g_db,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,NULL);
 
-    db_checkKeyTable();
-    db_checkClaimTable();
+    if(0!=db_checkKeyTable())
+    {
+        return -1;
+    }
+    if(0!=db_checkClaimTable())
+    {
+        return -1;
+    }
     return 0;
 }

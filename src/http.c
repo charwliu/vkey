@@ -5,6 +5,7 @@
 #include "auth.h"
 #include "config.h"
 #include "key.h"
+#include "attest.h"
 
 static int test(struct mg_connection *nc, struct http_message *hm);
 
@@ -12,6 +13,7 @@ static http_router routers[4]={
         {key_route,"*","/api/v1/key"},
         {claim_route,"*","/api/v1/claim"},
         {auth_route,"*","/api/v1/auth"},
+        {attest_route,"*","/api/v1/attestation"},
         {test,"GET","/test"}
 };
 

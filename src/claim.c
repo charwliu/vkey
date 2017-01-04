@@ -79,11 +79,6 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
 }
 
 
-
-static void del_claim(struct mg_connection *nc, struct http_message *hm) {
-
-}
-
 static int write_claim(const char* s_id,const char * s_templateId,const char* s_data,int n_timec,int n_timeu)
 {
 
@@ -150,6 +145,7 @@ int claim_read(const char* s_templateId,cJSON* result)
 
     if(s_templateId==NULL || strlen(s_templateId)==0)
     {
+        //nothing to do
     }
     else
     {
@@ -160,6 +156,7 @@ int claim_read(const char* s_templateId,cJSON* result)
     {
         char *strID = (char *) sqlite3_column_text(pStmt, 0);
         char *strData = (char *) sqlite3_column_text(pStmt, 1);
+        //todo: descrypt data
         cJSON* jData = cJSON_Parse(strData);
         if(jData&&strID)
         {

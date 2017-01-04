@@ -9,6 +9,7 @@ int encrypt_init()
     if(0!=sodium_init())
     {
         printf("Sodium init failed.");
+        return -1;
     }
     gcm_initialize();
 

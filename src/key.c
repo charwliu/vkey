@@ -10,11 +10,9 @@
 #include "util.h"
 
 static int post_key(struct mg_connection *nc, struct http_message *hm );
-static int del_key(struct mg_connection *nc, struct http_message *hm );
 
-static http_router routers[2]={
-        {post_key,"POST","/api/v1/key"},
-        {del_key,"DEL","/api/v1/key"},
+static http_router routers[1]={
+        {post_key,"POST","/api/v1/key"}
 };
 
 #define  VKEY_KEY_SIZE  32u
@@ -59,7 +57,6 @@ static int write_key(const char* s_address,const char * s_imk,const char* s_ilk,
 /*
  {
     "rescure":"rescure code",
-
     "password":"123"
  }
  * */
@@ -74,7 +71,6 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
 
     cJSON *json = util_parseBody(&hm->body);
 
-    //todo: varify json schema
     cJSON *rescureCode = cJSON_GetObjectItem(json, "rescure");
     if(!rescureCode)
     {
@@ -114,7 +110,6 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     encrypt_hash(hashRescure,strSecure,strlen(strSecure));
     unsigned char cipherIUK[VKEY_KEY_SIZE];
     encrypt_encrypt(cipherIUK,IUK,32,hashRescure,NULL,NULL,0,NULL);
-    cJSON_Delete(json);
     memset(IUK,0,VKEY_KEY_SIZE);
 
     //IMK使用密码的HASH进行加密，并生成16位校验tag，解密时用于确认密码是否正确
@@ -125,6 +120,8 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     encrypt_encrypt(cipherIMK,IMK,32,hashPassword,NULL,NULL,0,authTag);
     sodium_bin2hex(AUTHTAG,33,authTag,16);
 
+    cJSON_Delete(json);
+
     //2:write to db
     time_t nTime = time(NULL);
     int ret = write_key(key_address,IMK,ILK,AUTHTAG,nTime);
@@ -132,7 +129,6 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     {
         http_response_text(nc,400,"Vkey Service : Write key error");
         return 0;
-
     }
 
 
@@ -150,13 +146,6 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     return 0;
 }
 
-/// post by encrtypted iuk,securecode,to remove local identity, descrypted iuk, generate ilk and imk, if match with stored ,remove identity
-static int del_key(struct mg_connection *nc, struct http_message *hm )
-{
-    return 0;
-}
-
-
 /// load address imk from table TB_KEY
 int key_load()
 {
@@ -172,6 +161,7 @@ int key_load()
     int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
     if( ret != SQLITE_OK )
     {
+        printf("No key!");
         sqlite3_finalize(pStmt);
         return -1;
     }

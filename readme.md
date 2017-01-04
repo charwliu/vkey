@@ -1,4 +1,5 @@
 #Interface
+
 ##Start
 
 ````
@@ -14,6 +15,7 @@ return
 - -1:start failed
 
 ##key
+
 ###create key
 Request
 ```
@@ -35,6 +37,7 @@ Return
 - iuk   encrypted iuk, vwallet should show qrcode with iuk to user and user must backup the qrcode for recovering the identity
  
 ##claim
+
 ###create claim
 Request
 ````
@@ -102,9 +105,7 @@ Attestation data store in block chain:
 ```
 POST HOST/attestation
 {
-    "peer":"as84s8f7a8dfagyerwrg",
-    "claimId":"1234",
-    ""
+   ...
 }
 ```
 
@@ -127,6 +128,7 @@ string g_name
 string strName
 
 #Building
+
 ## linux
 
 clion open project, select sdk forder

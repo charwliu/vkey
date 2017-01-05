@@ -1,5 +1,6 @@
 vkey 2.0
 
+[toc]
 # Interface
 
 ## Start
@@ -16,7 +17,7 @@ return
 - 0:start successful
 - -1:start failed
 
-## key
+## Key
 
 ### create key
 Request
@@ -27,8 +28,8 @@ POST HOST/key
     "password":"123"
 }
 ```
-- rescure   rescurecode,24 numbers
-- password  acturely,it should be hash of user password,32 bytes
+- rescure :  rescurecode,24 numbers
+- password : acturely,it should be hash of user password,32 bytes
 
 Return
 ```
@@ -38,7 +39,11 @@ Return
 ```
 - iuk   encrypted iuk, vwallet should show qrcode with iuk to user and user must backup the qrcode for recovering the identity
  
-## claim
+
+
+
+
+## Claim
 
 ### create claim
 Request
@@ -56,7 +61,35 @@ Return
 ````
 - 200 Claim post ok! 
 - 500 Claim write failed!
+- 406 claim would exceed the max count!
 ````
+
+### update claim
+
+All Attestations of a claim will be removed, when the claim been updated.
+
+Request
+````
+PUT HOST/claim
+{
+    "claimId":"344343",
+    "claim":
+        {
+            "value":"1234566"
+        }
+}
+````
+All attributes of the claim should be included in the body. It's not possible to update partial attributes of a claim.
+If a attribute wasnt included, the old value would be removed.
+
+Return
+````
+- 200 Claim update ok! 
+- 500 Claim write failed!
+- 406 claim not found!
+
+````
+
 
 ### get claim
 Request
@@ -78,7 +111,25 @@ Return
 }
 ````
 
-## auth
+### delete claim
+
+Request
+
+````
+DEL HOST/claim
+{
+    "claimId":"3424234"
+}
+````
+Return
+````
+- 200 Claim deleted ok! 
+- 406 claim not found!
+
+````
+
+## Auth
+
 Request
 ```
 POST HOST/auth
@@ -95,21 +146,150 @@ Return
 - 200 data sent
 ```
 
-## attestation
+
+## Share
+
+Request
+```
+POST HOST/share
+{
+  "templateId":"CLMT_IDNUMBER",
+  "claimId":"1234",
+}
+```
+- tempateId : claims of this template will be shared all.
+- claimId : just this claim will be shared.
+
+
+Return
+```
+{
+    "vlink":"https://vlink.vnet.com/share/2324242424e2"
+}
+```
+- vlink : address can be used to get shared claim data, client should generate QRCode and show it to others.
+
+## Collection
+
+FLow of collection:
+1. user sign in vkey site,  site get his vid and some claims on authorization
+2. site orgnize data to claims
+3. user select claims on site, and site can use api to create attestation of some of these claims
+4. site use collection api send this claims to user
+5. user confirm save claims on his mobile phone
+6. vwallet call create claim api to save claims selected
+
+Request
+```
+POST HOST/collection
+{
+  "to":"1231231241321",
+  "claims":[
+    {
+        "templateId":"CLMT_EDUCATION",
+        "claim":{},
+        "proof":{}
+    },
+    {
+        "templateId":"CLMT_CAREER",
+        "claim":{}
+    }
+  ]
+}
+```
+
+- to : reception of the claims
+- claims : array of claim to be sent
+- proof: site can pre attestat the claim and then send to user, once user accept the claim, it attestatted already.
+
+
+Return
+```
+- 200 data sent
+```
+
+
+
+## Attestation
 
 Attestation data store in block chain:
 - from vid
 - to vid
 - claim id
-- proof signature by witness
+- proof signature by attestator
 
+### create attestation
 
+Request
 ```
-POST HOST/attestation
+ POST HOST/attestation
 {
-   ...
+    "proof":{
+        "from":"74444211acdaf12345",
+        "to":"as84s8f7a8dfagyerwrg",
+        
+        "claimId":"2323423423",
+        "claimSignature":"sdfadfa",
+        
+        "result":1,
+    
+        "name":"佛山自然人一门式",
+        
+        "time":"125545611",
+        "expiration":"13545544",
+        "link":"https://mysite.com/12323",
+        
+        "extra":{
+            "staff":"20112313 李敏",
+            "docs":"身份证原件，本人",
+            "desc":"本人现场认证，无误"
+        }
+    }
+    "Signature":"312sdf1312",
 }
 ```
+- proof 
+    - from :              vid of attestator
+    - to :                vid of claim owner
+    - claimId :           claim id
+    - claimSignature :    claim signature signed by claim owner
+    - result :            result of attestation, signed integer number.
+    - name :              name of attestator, provided by attestator
+    - time :              time of attestation
+    - expiration :        time of expiration
+    - link :              address of some page which can be reviewed of this attestation
+    - extra :             optional infomation provided by attestator
+- Signature :    signature of proof by attestation creator
+
+
+Return
+````
+- 200 attest  ok! 
+- 406 attest not acceptable!
+````
+
+### check attestation
+Request
+```
+ GET HOST/attestation
+{
+    "claim":{
+    },
+    "proof":{
+    }
+    "Signature":"312sdf1312",
+}
+```
+
+Return
+
+````
+{
+    "attestation":"yes/no"
+}
+````
+
+- attestation: yes or no
 
 # Coding standard
 

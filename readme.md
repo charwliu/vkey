@@ -245,7 +245,7 @@ Request
             "desc":"本人现场认证，无误"
         }
     }
-    "Signature":"312sdf1312",
+    "signature":"312sdf1312",
 }
 ```
 - proof 
@@ -277,7 +277,7 @@ Request
     },
     "proof":{
     }
-    "Signature":"312sdf1312",
+    "signature":"312sdf1312",
 }
 ```
 

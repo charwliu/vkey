@@ -72,6 +72,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
                    msg->topic.p, (int) msg->payload.len, msg->payload.p);
 
 
+
             printf("Forwarding to /test\n");
             char* strMessage=malloc(msg->payload.len+1);
             memcpy(strMessage,msg->payload.p,msg->payload.len);

@@ -9,16 +9,10 @@
 static int post_auth(struct mg_connection *nc, struct http_message *hm);
 static int test_auth(struct mg_connection *nc, struct http_message *hm);
 
-static http_router routers[2]={
-        {post_auth,"POST","/api/v1/auth"},
-        {test_auth,"GET","/api/v1/auth"}
+static http_router routers[1]={
+        {post_auth,"POST","/api/v1/auth"}
 };
 
-static int test_auth(struct mg_connection *nc, struct http_message *hm) {
-
-    mqtt_send("1000001","hellobaby!",10);
-    return 0;
-}
 
 /*
 POST
@@ -77,5 +71,5 @@ int auth_got(const char* s_msg)
 
 int auth_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,2,nc,hm);
+    return http_routers_handle(routers,1,nc,hm);
 }

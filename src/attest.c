@@ -3,6 +3,7 @@
 
 #include "http.h"
 #include "eth.h"
+#include "util.h"
 
 static int get_attest(struct mg_connection *nc, struct http_message *hm);
 static int post_attest(struct mg_connection *nc, struct http_message *hm);
@@ -13,25 +14,42 @@ static http_router routers[2]={
 };
 
 
-/// /api/v1/claim?templateid=CLMT_NAME
 static int get_attest(struct mg_connection *nc, struct http_message *hm)
 {
+    cJSON *json = util_parseBody(&hm->body);
 
-}
-
-/*
-
- POST HOST/attestation
-{
-    "peer":"as84s8f7a8dfagyerwrg",
-    "claim":{},
-    "proof":{
-        "signature":"sdfadfa",
-        ""
+    cJSON *claim = cJSON_GetObjectItem(json, "claim");
+    if(!claim)
+    {
+        http_response_error(nc,400,"Vkey Service : claim error");
+        return 0;
     }
-}
+    cJSON *proof = cJSON_GetObjectItem(json, "proof");
+    if(!proof)
+    {
+        http_response_error(nc,400,"Vkey Service : proof error");
+        return 0;
+    }
 
- * */
+    cJSON *signature = cJSON_GetObjectItem(json, "signature");
+    if(!signature)
+    {
+        http_response_error(nc,400,"Vkey Service : signature error");
+        return 0;
+    }
+
+    //todo: check it
+
+    cJSON_Delete(json);
+
+    cJSON* res = cJSON_CreateObject();
+
+    cJSON_AddStringToObject(res,"attestation","yes");
+
+    http_response_json(nc,200,res);
+
+    cJSON_Delete(res);
+}
 
 static int post_attest(struct mg_connection *nc, struct http_message *hm)
 {

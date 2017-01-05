@@ -1,23 +1,25 @@
 
 #include "http.h"
-#include "mongoose/mongoose.h"
 #include "claim.h"
 #include "auth.h"
 #include "config.h"
 #include "key.h"
 #include "attest.h"
+#include "share.h"
+#include "collect.h"
 
 static int test(struct mg_connection *nc, struct http_message *hm);
 
-static http_router routers[4]={
+/// router gateway
+static http_router routers[7]={
         {key_route,"*","/api/v1/key"},
         {claim_route,"*","/api/v1/claim"},
         {auth_route,"*","/api/v1/auth"},
         {attest_route,"*","/api/v1/attestation"},
+        {share_route,"*","/api/v1/share"},
+        {collect_route,"*","/api/v1/collection"},
         {test,"GET","/test"}
 };
-
-
 
 
 static int test(struct mg_connection *nc, struct http_message *hm)
@@ -29,23 +31,6 @@ static int test(struct mg_connection *nc, struct http_message *hm)
 
 }
 
-static void handle_sum_call(struct mg_connection *nc, struct http_message *hm)
-{
-    char n1[100], n2[100];
-    double result = 1.3;
-
-    /* Get form variables */
-    // mg_get_http_var(&hm->body, "n1", n1, sizeof(n1));
-    //  mg_get_http_var(&hm->body, "n2", n2, sizeof(n2));
-
-    /* Send headers */
-    mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
-
-    /* Compute the result and send it back as a JSON object */
-    // result = strtod(n1, NULL) + strtod(n2, NULL);
-    mg_printf_http_chunk(nc, "{ \"result\": %lf,\"method\":%s }", result, hm->method);
-    mg_send_http_chunk(nc, "", 0); /* Send empty chunk, the end of response */
-}
 
 static void handle_not_found(struct mg_connection *nc, struct http_message *hm)
 {
@@ -64,7 +49,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data)
     {
         case MG_EV_HTTP_REQUEST:
         {
-            if (0 != http_routers_handle(routers, 4, nc, hm))
+            if (0 != http_routers_handle(routers, 7, nc, hm))
             {
                 handle_not_found(nc, hm);
             }

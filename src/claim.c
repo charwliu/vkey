@@ -17,7 +17,7 @@ static int insert_claim(const char* s_id,const char * s_templateId,const char* s
 static int update_claim(const char* s_id,const char* s_data,int n_timeu);
 
 
-static http_router routers[2]={
+static http_router routers[4]={
         {get_claim,"GET","/api/v1/claim"},
         {post_claim,"POST","/api/v1/claim"},
         {put_claim,"PUT","/api/v1/claim"},
@@ -62,7 +62,6 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
 
     time_t nTimeC = time(NULL);
     const char* strJson=cJSON_PrintUnformatted(json);
-
 
     //todo: write to sqlite
     int ret = insert_claim(strId,strTemplateId,strJson,nTimeC);

@@ -22,6 +22,8 @@
 #include "config.h"
 #include "start.h"
 #include "key.h"
+#include "util.h"
+#include "auth.h"
 
 static const char *s_user_name = "guoqc";
 static const char *s_password = "123";
@@ -78,17 +80,16 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
         }
         case MG_EV_MQTT_PUBLISH:
         {
-
-            printf("Got incoming message %.*s: %.*s\n", (int) msg->topic.len,
-                   msg->topic.p, (int) msg->payload.len, msg->payload.p);
-
-
-
-            printf("Forwarding to /test\n");
             char* strMessage=malloc(msg->payload.len+1);
             memcpy(strMessage,msg->payload.p,msg->payload.len);
             strMessage[msg->payload.len]=0;
-            g_notify(strMessage);
+
+            if(util_strstr(&msg->topic,"auth")>0)
+            {
+                auth_got(strMessage);
+            }
+
+            free(strMessage);
             //mg_mqtt_publish(nc, "/test", 65, MG_MQTT_QOS(0), msg->payload.p, msg->payload.len);
             break;
         }

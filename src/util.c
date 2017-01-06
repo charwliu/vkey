@@ -41,3 +41,25 @@ char* util_getFromQuery(struct mg_str* s_query,const char* s_key)
 
     return "todo";
 }
+
+int util_strstr(struct mg_str* src, const char* s2)
+{
+    int n,i=0;
+    char* s1=src->p;
+    if (*s2)
+    {
+        while (i<src->len)
+        {
+            for (n = 0; *(s1 + n) == *(s2 + n); n ++)
+            {
+                if (!*(s2 + n + 1))
+                    return i;
+            }
+            s1++;
+            i++;
+        }
+        return -1;
+    }
+    else
+        return 0;
+}

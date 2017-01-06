@@ -8,4 +8,6 @@
 const char* util_getUUID();
 cJSON* util_parseBody(struct mg_str* body);
 char* util_getFromQuery(struct mg_str* s_query,const char* s_key);
+int util_strstr(struct mg_str* src, const char* des);
+
 #endif

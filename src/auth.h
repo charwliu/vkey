@@ -4,4 +4,6 @@
 #include "mongoose/mongoose.h"
 int auth_route(struct mg_connection *nc, struct http_message *hm );
 
+int auth_got(const char* s_msg);
+
 #endif

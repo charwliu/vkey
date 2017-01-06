@@ -50,8 +50,10 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     //2 generate jwt
     char* jwt = jwt_create(peer->valuestring,claimsAll);
 
+    char topic[256];
+    sprintf(topic,"%s/auth",peer->valuestring);
     //3 publish to mq
-    mqtt_send(peer->valuestring,jwt,strlen(jwt));
+    mqtt_send(topic,jwt,strlen(jwt));
 
     http_response_text(nc,200,"data sent");
 
@@ -62,9 +64,14 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 
 int auth_got(const char* s_msg)
 {
+
+    printf("Got auth data : %s \n", s_msg);
+
     //todo:1 parse and descrypt jwt
 
     //todo:2 notify app with json
+
+    return 0;
 
 }
 

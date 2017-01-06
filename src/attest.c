@@ -59,7 +59,7 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
 
     //todo:3 send transction to Smart Contract
 
-    eth_register("cn.guoqc.2","vid123","pid123","suk123","vuk123");
+    eth_register("cn.guoqc.3","vid1233","pid1233","suk1233","vuk1233");
     http_response_text(nc,200,"Attestation post ok!");
 }
 

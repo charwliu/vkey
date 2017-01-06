@@ -29,30 +29,32 @@ static const char *s_password = "123";
 static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
 static struct mg_connection *mqtt_conn=NULL;
 
-
+/// event handler of mqtt
+/// \param nc
+/// \param ev
+/// \param p
 static void ev_handler(struct mg_connection *nc, int ev, void *p) {
     struct mg_mqtt_message *msg = (struct mg_mqtt_message *) p;
     (void) nc;
 
-#if 0
-    if (ev != MG_EV_POLL)
-    printf("USER HANDLER GOT %d\n", ev);
-#endif
-
-    switch (ev) {
-        case MG_EV_CONNECT: {
+    switch (ev)
+    {
+        case MG_EV_CONNECT:
+        {
             struct mg_send_mqtt_handshake_opts opts;
             memset(&opts, 0, sizeof(opts));
             opts.user_name = s_user_name;
             opts.password = s_password;
-            opts.keep_alive=6000;
+            opts.keep_alive=600;
 
             mg_set_protocol_mqtt(nc);
             mg_send_mqtt_handshake_opt(nc, key_getAddress(), opts);
             break;
         }
         case MG_EV_MQTT_CONNACK:
-            if (msg->connack_ret_code != MG_EV_MQTT_CONNACK_ACCEPTED) {
+        {
+            if (msg->connack_ret_code != MG_EV_MQTT_CONNACK_ACCEPTED)
+            {
                 printf("Got mqtt connection error: %d\n", msg->connack_ret_code);
                 exit(1);
             }
@@ -60,13 +62,19 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             printf("Subscribing to '%s'\n", s_topic_expr.topic);
             mg_mqtt_subscribe(nc, &s_topic_expr, 1, 42);
             break;
+        }
         case MG_EV_MQTT_PUBACK:
+        {
             printf("Message publishing acknowledged (msg_id: %d)\n", msg->message_id);
             break;
+        }
         case MG_EV_MQTT_SUBACK:
+        {
             printf("Subscription acknowledged, forwarding to '/test'\n");
             break;
-        case MG_EV_MQTT_PUBLISH: {
+        }
+        case MG_EV_MQTT_PUBLISH:
+        {
 
             printf("Got incoming message %.*s: %.*s\n", (int) msg->topic.len,
                    msg->topic.p, (int) msg->payload.len, msg->payload.p);
@@ -82,11 +90,16 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             break;
         }
         case MG_EV_CLOSE:
+        {
             printf("MQTT connection closed\n");
             //exit(1);
+        }
     }
 }
 
+/// connect to mqtt
+/// \param mgr
+/// \return
 int mqtt_connect(struct mg_mgr *mgr)
 {
     mqtt_conn = mg_connect(mgr, g_config.sde_url, ev_handler);
@@ -99,7 +112,11 @@ int mqtt_connect(struct mg_mgr *mgr)
     return 0;
 }
 
-
+/// send data to mqtt
+/// \param s_address
+/// \param s_data
+/// \param n_size
+/// \return
 int mqtt_send(const char* s_address,const char* s_data, int n_size)
 {
     if(!mqtt_conn) return -1;

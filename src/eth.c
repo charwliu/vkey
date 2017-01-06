@@ -133,59 +133,32 @@ static char* strEncodingSliceInData(char* data, char* str)
 }
 
 
-//合约函数 - register
-static char* eth_payloadRegister(char* result, char* global_name, char* vid, char* pid, char* suk, char* vuk)
+static char* eth_buildPayload(char* result, char** values, int size)
 {
-    char data[4096];
-    memset(data,'\0',4096);
-    strncpy(data,FUNCTION_CODE_REGISTER,strlen(FUNCTION_CODE_REGISTER));
 
-    int gn_len=(int)strlen(global_name);
-    int gn_segments=gn_len/32;//segments, each segment has 32 bytes
-    if(gn_len%32>0) gn_segments++;
+    int segments[size];
+    int len,segment;
+    for(int i=0;i<size;i++)
+    {
+        len=(int)strlen(values[i]);
+        segment=len/32;//segments, each segment has 32 bytes
+        if(len%32>0) segment++;
+        segments[i]=segment;
+    }
 
-    int vid_len=(int)strlen(vid);
-    int vid_segments=vid_len/32;
-    if(vid_len%32>0) vid_segments++;
 
-    int pid_len=(int)strlen(pid);
-    int pid_segments=pid_len/32;
-    if(pid_len%32>0) pid_segments++;
+    int param_data_offset=32*size;
+    for(int i=0;i<size;i++)
+    {
+        intEncodingSliceInData(result,param_data_offset);
+        param_data_offset+=(32+segments[i]*32);
+    }
 
-    int suk_len=(int)strlen(suk);
-    int suk_segments=suk_len/32;
-    if(suk_len%32>0) suk_segments++;
+    for(int i=0;i<size;i++)
+    {
+        strEncodingSliceInData(result,values[i]);
+    }
 
-    int vuk_len=(int)strlen(vuk);
-    int vuk_segments=vuk_len/32;
-    if(vuk_len%32>0) vuk_segments++;
-
-    int param_data_offset=32*5;
-    //gn
-    intEncodingSliceInData(data,param_data_offset);
-    //vid
-    param_data_offset+=(32+gn_segments*32);
-    intEncodingSliceInData(data,param_data_offset);
-
-    //pid
-    param_data_offset+=(32+vid_segments*32);
-    intEncodingSliceInData(data,param_data_offset);
-
-    //suk
-    param_data_offset+=(32+pid_segments*32);
-    intEncodingSliceInData(data,param_data_offset);
-
-    //vuk
-    param_data_offset+=(32+suk_segments*32);
-    intEncodingSliceInData(data,param_data_offset);
-
-    strEncodingSliceInData(data,global_name);
-    strEncodingSliceInData(data,vid);
-    strEncodingSliceInData(data,pid);
-    strEncodingSliceInData(data,suk);
-    strEncodingSliceInData(data,vuk);
-
-    sprintf(result,TEMPLATE_PAYLOAD_ETH_SENDTRANSACTION,PUB_ADDRESS,CONTRACT_ADDRESS,data,ETH_ACCOUNT_PASSWORD);
     return result;
 }
 
@@ -237,12 +210,25 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
 /// \return
 int eth_register(char* global_name, char* vid, char* pid, char* suk, char* vuk)
 {
+    //build params data
+    char data[1024];
+    memset(data,0,1024);
+    strncpy(data,FUNCTION_CODE_REGISTER,strlen(FUNCTION_CODE_REGISTER));
+    char* values[5];
+    values[0]=global_name;
+    values[1]=vid;
+    values[2]=pid;
+    values[3]=suk;
+    values[4]=vuk;
+    eth_buildPayload(data,values,5);
+
+    //construct json data to post to block chain
     char payload[2048];
-    eth_payloadRegister(payload,global_name,vid,pid,suk,vuk);
+    memset(payload,0,2048);
+    sprintf(payload,TEMPLATE_PAYLOAD_ETH_SENDTRANSACTION,PUB_ADDRESS,CONTRACT_ADDRESS,data,ETH_ACCOUNT_PASSWORD);
 
     struct mg_connection *nc;
 
-    //mg_mgr_init(eth_mgr, NULL);
     nc = mg_connect_http(eth_mgr, ev_handler, eth_getUrl(), eth_header, payload);
     mg_set_protocol_http_websocket(nc);
 

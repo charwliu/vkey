@@ -58,7 +58,10 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
                 printf("Got mqtt connection error: %d\n", msg->connack_ret_code);
                 exit(1);
             }
-            s_topic_expr.topic = key_getAddress();
+            char topic[256];
+            sprintf(topic, "%s.*",key_getAddress());
+            s_topic_expr.topic = topic;
+            
             printf("Subscribing to '%s'\n", s_topic_expr.topic);
             mg_mqtt_subscribe(nc, &s_topic_expr, 1, 42);
             break;

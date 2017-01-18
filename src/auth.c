@@ -17,14 +17,14 @@ static http_router routers[1]={
 /*
 POST
 {
-  "peer":"as84s8f7a8dfagyerwrg",
+  "to":"as84s8f7a8dfagyerwrg",
   "claims":["CLMT_IDNUMBER","CLMT_SOCIALSECURITY"]
 }
  * */
 static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 
     cJSON *json = util_parseBody(&hm->body);
-    cJSON *peer = cJSON_GetObjectItem(json, "peer");
+    cJSON *peer = cJSON_GetObjectItem(json, "to");
     if(!peer)
     {
         http_response_error(nc,400,"Vkey Service : peer error");
@@ -68,6 +68,7 @@ int auth_got(const char* s_msg)
     printf("Got auth data : %s \n", s_msg);
 
     //todo:1 parse and descrypt jwt
+
 
     //todo:2 notify app with json
 

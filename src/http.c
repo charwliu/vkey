@@ -7,17 +7,20 @@
 #include "attest.h"
 #include "share.h"
 #include "collect.h"
+#include "vlink.h"
+#include "util.h"
 
 static int test(struct mg_connection *nc, struct http_message *hm);
 
 /// router gateway
-static http_router routers[7]={
+static http_router routers[8]={
         {key_route,"*","/api/v1/key"},
         {claim_route,"*","/api/v1/claim"},
         {auth_route,"*","/api/v1/auth"},
         {attest_route,"*","/api/v1/attestation"},
-        {share_route,"*","/api/v1/share"},
+        {share_route,"*","/api/v1/share/"},
         {collect_route,"*","/api/v1/collection"},
+        {vlink_route,"*","/api/v1/vlink"},
         {test,"GET","/test"}
 };
 
@@ -49,7 +52,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data)
     {
         case MG_EV_HTTP_REQUEST:
         {
-            if (0 != http_routers_handle(routers, 7, nc, hm))
+            if (0 != http_routers_handle(routers, 8, nc, hm))
             {
                 handle_not_found(nc, hm);
             }
@@ -101,7 +104,8 @@ int http_routers_handle(const http_router* routers,int n_size, struct mg_connect
     for( int i=0;i<n_size;i++)
     {
         http_router router = routers[i];
-        if (mg_vcmp(&hm->uri, router.uri) == 0 &&
+        //if (mg_vcmp(&hm->uri, router.uri) == 0 &&
+        if (util_strstr(&hm->uri, router.uri) == 0 &&
                 (mg_vcmp(&hm->method, router.method) == 0 || mg_vcmp(&all, router.method) == 0) )
         {
             int rt = router.fn_handle(nc,hm);

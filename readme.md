@@ -40,7 +40,7 @@ Return
 - iuk   encrypted iuk, vwallet should show qrcode with iuk to user and user must backup the qrcode for recovering the identity
  
 
-
+## 
 
 
 ## Claim
@@ -134,12 +134,12 @@ Request
 ```
 POST HOST/auth
 {
-  "peer":"as84s8f7a8dfagyerwrg",
+  "to":"as84s8f7a8dfagyerwrg",
   "claims":["CLMT_IDNUMBER","CLMT_SOCIALSECURITY"]
 }
 ```
 
-- vid   id of identity which be authorized
+- to   random topic which be authorized
 
 Return
 ```

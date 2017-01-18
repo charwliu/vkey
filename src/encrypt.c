@@ -44,6 +44,25 @@ int encrypt_makeDHPublic(const uint8_t *secret, uint8_t *public)
     return 0;
 }
 
+int encrypt_makeDHShareKey(const uint8_t *secret,const uint8_t *public,const uint8_t *to_public,uint8_t* share)
+{
+    crypto_generichash_state	h;
+    unsigned	char	scalarmult_q[32];
+
+    /*	The	client	derives	a	shared	key	from	its	secret	key	and	the	server's	public	key	*/
+    /*	shared	key	=	h(q	||	client_publickey	||	server_publickey)	*/
+    if	(crypto_scalarmult(scalarmult_q, secret, public) !=	0 )
+    {
+        return -1;
+    }
+    crypto_generichash_init(&h,	NULL,	0U,	crypto_generichash_BYTES);
+    crypto_generichash_update(&h,	scalarmult_q,	sizeof	scalarmult_q);
+    crypto_generichash_update(&h,	public,	sizeof	public);
+    crypto_generichash_update(&h,	to_public,	sizeof	to_public);
+    crypto_generichash_final(&h,	share,	sizeof	share);
+    return 0;
+}
+
 int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public)
 {
     uint8_t sk[crypto_sign_SECRETKEYBYTES];
@@ -146,4 +165,14 @@ int encrypt_decrypt(uint8_t *plainText, const uint8_t *cipherText, int textLengt
     gcm_zero_ctx( &ctx );
     return retVal;
 
+}
+
+int encrypt_sign(const uint8_t* msg,int n_msg,const uint8_t * sk, uint8_t* sig)
+{
+    return crypto_sign_detached(sig, NULL, msg, n_msg, sk);
+}
+
+int encrypt_recover(const uint8_t *msg, int n_msg, const uint8_t *pk, uint8_t *sig)
+{
+    return crypto_sign_verify_detached(sig, msg, n_msg, pk);
 }

@@ -15,7 +15,6 @@ static http_router routers[1]={
         {post_key,"POST","/api/v1/key"}
 };
 
-#define  VKEY_KEY_SIZE  32u
 
 static char key_address[VKEY_KEY_SIZE*2+1]="";
 
@@ -190,6 +189,17 @@ int key_route(struct mg_connection *nc, struct http_message *hm )
 }
 
 const char* key_getAddress()
+{
+    return key_address;
+}
+
+
+const char* key_getAttestSK()
+{
+    return key_address;
+}
+
+const char* key_getAttestPK()
 {
     return key_address;
 }

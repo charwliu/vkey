@@ -52,42 +52,61 @@ static int db_exist(const char* s_table)
 
 static int db_checkKeyTable()
 {
-    if(1==db_exist("TB_KEY"))
-    {
-        fprintf(stdout, "Table TB_KEY is ready\n");
-        return 0;
-    }
-    char *sErrMsg = 0;
-    /* Create SQL statement */
+//    if(1==db_exist("TB_KEY"))
+//    {
+//        fprintf(stdout, "Table TB_KEY is ready\n");
+//        return 0;
+//    }
+//    char *sErrMsg = 0;
+//    /* Create SQL statement */
+//    const char* sql = "CREATE TABLE TB_KEY( ADDRESS TEXT PRIMARY KEY NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
+//
+//    /* Execute SQL statement */
+//    int rc = sqlite3_exec(g_db, sql, callback, 0, &sErrMsg);
+//    if( rc != SQLITE_OK ){
+//        fprintf(stderr, "SQL error: %s\n", sErrMsg);
+//        sqlite3_free(sErrMsg);
+//        return -1;
+//    }else{
+//        fprintf(stdout, "Table created successfully\n");
+//    }
+//    return 0;
     const char* sql = "CREATE TABLE TB_KEY( ADDRESS TEXT PRIMARY KEY NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
-
-    /* Execute SQL statement */
-    int rc = sqlite3_exec(g_db, sql, callback, 0, &sErrMsg);
-    if( rc != SQLITE_OK ){
-        fprintf(stderr, "SQL error: %s\n", sErrMsg);
-        sqlite3_free(sErrMsg);
-        return -1;
-    }else{
-        fprintf(stdout, "Table created successfully\n");
-    }
-    return 0;
-
+    return db_checkTable("TB_KEY",sql);
 }
 
 
 static int db_checkClaimTable()
 {
-    if(1==db_exist("TB_CLAIM"))
+    const char* sql = "CREATE TABLE TB_CLAIM( ID TEXT PRIMARY KEY NOT NULL, TID TEXT NOT NULL, DATA TEXT NOT NULL, TIMEC INT, TIMEU INT );";
+    return db_checkTable("TB_CLAIM",sql);
+}
+
+
+static int db_checkAttestTable()
+{
+    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, ATTEST TEXT NOT NULL, RASK TEXT NOT NULL, TIME INT );";
+    return db_checkTable("TB_ATTEST",sql);
+}
+
+
+static int db_checkShareTable()
+{
+    const char* sql = "CREATE TABLE TB_SHARE( TOPIC TEXT PRIMARY KEY NOT NULL, CLAIMS TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, CONFIRM INT );";
+    return db_checkTable("TB_SHARE",sql);
+}
+
+static int db_checkTable(const char* s_table,const char* s_createSQL)
+{
+    if(1==db_exist("s_table"))
     {
-        fprintf(stdout, "Table TB_CLAIM is ready\n");
+        fprintf(stdout, "Table %s is ready\n",s_table);
         return 0;
     }
     char *sErrMsg = 0;
-    /* Create SQL statement */
-    const char* sql = "CREATE TABLE TB_CLAIM( ID TEXT PRIMARY KEY NOT NULL, TID TEXT NOT NULL, DATA TEXT NOT NULL, TIMEC INT, TIMEU INT );";
 
     /* Execute SQL statement */
-    int rc = sqlite3_exec(g_db, sql, callback, 0, &sErrMsg);
+    int rc = sqlite3_exec(g_db, s_createSQL, callback, 0, &sErrMsg);
     if( rc != SQLITE_OK ){
         fprintf(stderr, "SQL error: %s\n", sErrMsg);
         sqlite3_free(sErrMsg);
@@ -96,8 +115,8 @@ static int db_checkClaimTable()
         fprintf(stdout, "Table created successfully\n");
     }
     return 0;
-
 }
+
 
 int db_init(const char *s_path)
 {
@@ -108,6 +127,16 @@ int db_init(const char *s_path)
         return -1;
     }
     if(0!=db_checkClaimTable())
+    {
+        return -1;
+    }
+
+    if(0!=db_checkAttestTable())
+    {
+        return -1;
+    }
+
+    if(0!=db_checkShareTable())
     {
         return -1;
     }

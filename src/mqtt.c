@@ -24,12 +24,16 @@
 #include "key.h"
 #include "util.h"
 #include "auth.h"
+#include "attest.h"
+#include "db.h"
+#include "share.h"
 
 static const char *s_user_name = "guoqc";
 static const char *s_password = "123";
 
 static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
 static struct mg_connection *mqtt_conn=NULL;
+static int mqtt_ready=0;
 
 /// event handler of mqtt
 /// \param nc
@@ -60,6 +64,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
                 printf("Got mqtt connection error: %d\n", msg->connack_ret_code);
                 exit(1);
             }
+
+            mqtt_ready = 1;
             char topic[256];
             sprintf(topic, "%s.*",key_getAddress());
             s_topic_expr.topic = topic;
@@ -84,9 +90,24 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             memcpy(strMessage,msg->payload.p,msg->payload.len);
             strMessage[msg->payload.len]=0;
 
+
+            if(util_strstr(&msg->topic,"SHARE_SRC")==0)
+            {
+                share_confirm(msg);
+            }
+
+            if(util_strstr(&msg->topic,"SHARE_DES")==0)
+            {
+                share_got(strMessage);
+            }
+
             if(util_strstr(&msg->topic,"auth")>0)
             {
                 auth_got(strMessage);
+            }
+            if(util_strstr(&msg->topic,"attest")>0)
+            {
+                attest_got(strMessage);
             }
 
             free(strMessage);
@@ -96,6 +117,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
         case MG_EV_CLOSE:
         {
             printf("MQTT connection closed\n");
+            mqtt_ready=0;
             //exit(1);
         }
     }
@@ -106,6 +128,9 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 /// \return
 int mqtt_connect(struct mg_mgr *mgr)
 {
+    if(mqtt_conn){
+        return 0;
+    }
     mqtt_conn = mg_connect(mgr, g_config.sde_url, ev_handler);
     if (mqtt_conn == NULL)
     {
@@ -117,15 +142,157 @@ int mqtt_connect(struct mg_mgr *mgr)
 }
 
 /// send data to mqtt
-/// \param s_address
-/// \param s_data
-/// \param n_size
+/// {
+///     from:topic of publish
+///     data:un encrypted data
+/// }
+///
+/// \param s_to destinate topic which consist of event/publickey
+/// \param s_from  source topic which consist of event/publickey
+/// \param s_sk source secret key
+/// \param s_data data unecrypted
 /// \return
-int mqtt_send(const char* s_address,const char* s_data, int n_size)
+int mqtt_send(const char* s_to,const char* s_from,const char* s_sk,int n_sksize,const char* s_data )
 {
-    if(!mqtt_conn) return -1;
-    char strTopic[256];
-    sprintf(strTopic,"%s",s_address);
+    if(!mqtt_ready) return -1;
 
-    mg_mqtt_publish(mqtt_conn, strTopic, 42, MG_MQTT_QOS(0), s_data, n_size);
+    //todo: encrypt data with dh key s_sk&pk in s_from
+    cJSON* jPayload = cJSON_CreateObject();
+    cJSON_AddStringToObject(jPayload,"from",s_from);
+    cJSON_AddStringToObject(jPayload,"data",s_data);
+    char* sPayload = cJSON_PrintUnformatted(jPayload);
+
+
+    mg_mqtt_publish(mqtt_conn, s_to, 42, MG_MQTT_QOS(0), sPayload, strlen(sPayload));
+
+    free(sPayload);
+    cJSON_Delete(jPayload);
+}
+
+/// subscribe and save the data
+/// \param s_topic
+/// \param s_pk
+/// \param s_sk
+/// \param t_time
+/// \param n_duration
+/// \param s_data
+/// \return
+int mqtt_subscribe(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
+{
+    if(!mqtt_ready) return -1;
+
+    sprintf(s_topic_expr.topic,"%s/%s",s_topic,s_pk);
+
+
+    printf("Subscribing to '%s'\n", s_topic_expr.topic);
+    mg_mqtt_subscribe(mqtt_conn, &s_topic_expr, 1, 42);
+
+    mqtt_log(s_topic,s_pk,s_sk,t_time,n_duration,s_data);
+    return 0;
+}
+
+/// subscribe topic to mqtt
+/// \param s_topic
+/// \return
+int mqtt_unsubscribe(const char* s_topic)
+{
+    if(!mqtt_ready) return -1;
+
+    s_topic_expr.topic = s_topic;
+
+    printf("Subscribing to '%s'\n", s_topic_expr.topic);
+    mg_mqtt_unsubscribe(mqtt_conn, &s_topic_expr, 1, 42);
+    return 0;
+}
+
+/// save the subscribe data
+/// \param s_topic ,vkey topic, mq topic consist of s_topic and s_pk like this s_topic/s_pk
+/// \param s_pk ,communication public key and the part of mq topic
+/// \param s_sk ,communication secret key
+/// \param t_time ,subscribe time, since the subscribe will be cancel when the duration is expired
+/// \param n_duration , duration of the subscribe
+/// \param s_data , additional data with the subscribe
+/// \return
+static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
+{
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"INSERT INTO TB_MQTT (TOPIC,PK,SK,TIME,DURATION,DATA) VALUES(?,?,?,?,?,?)");
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_bind_text(pStmt,1,s_topic,strlen(s_topic),SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,2,s_pk,strlen(s_pk),SQLITE_TRANSIENT);
+    //todo: encrypt sk
+    sqlite3_bind_text(pStmt,3,s_sk,strlen(s_sk),SQLITE_TRANSIENT);
+
+    sqlite3_bind_int(pStmt,4,t_time );
+    sqlite3_bind_int(pStmt,5,n_duration);
+    sqlite3_bind_text(pStmt,6,s_data,strlen(s_data),SQLITE_TRANSIENT);
+
+    ret = sqlite3_step(pStmt);
+    if( ret != SQLITE_DONE )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_finalize(pStmt);
+
+    return 0;
+}
+
+int mqtt_readTopic(const char* s_topic,cJSON* j_result)
+{
+    sqlite3* db = db_get();
+
+    char strSql[256];
+
+
+    sprintf(strSql,"SELECT SK,TIME,DURATION,DATA WHERE TOPIC=?;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+    sqlite3_bind_text(pStmt, 1, s_topic, strlen(s_topic), SQLITE_TRANSIENT);
+
+
+    if( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        char *strSK = (char *) sqlite3_column_text(pStmt, 0);
+        time_t time = (time_t)sqlite3_column_int(pStmt,1);
+        int duration = sqlite3_column_int(pStmt,2);
+        char *strData = (char *) sqlite3_column_text(pStmt, 3);
+
+        //todo: descrypt data
+        cJSON* jData = cJSON_Parse(strData);
+        if(strSK)
+        {
+            cJSON_AddStringToObject(j_result,"sk",strSK);
+        }
+
+        cJSON_AddNumberToObject(j_result,"time",time);
+        cJSON_AddNumberToObject(j_result,"duration",duration);
+
+        if(strData)
+        {
+            cJSON_AddStringToObject(j_result,"sk",strData);
+        }
+
+        sqlite3_finalize(pStmt);
+        return 0;
+    }
+    return -1;
 }

@@ -2,9 +2,13 @@
 #include "util.h"
 #include "libsodium/include/sodium.h"
 
-/// need free return value
-const char* util_getUUID()
+
+const char* util_getUUID(char* s_uuid,int n_size)
 {
+    if(n_size!=33 )
+    {
+        return NULL;
+    }
     unsigned char random[32];
     randombytes_buf(random,	32);
 
@@ -12,8 +16,8 @@ const char* util_getUUID()
     crypto_generichash(hash, sizeof	hash, random, 16, NULL,	0);
 
 
-    unsigned char *hex=(unsigned char*)malloc(33);
-    return sodium_bin2hex(hex,33,hash,16);
+    //unsigned char *hex=(unsigned char*)malloc(33);
+    return sodium_bin2hex(s_uuid,n_size,hash,16);
 }
 
 
@@ -62,4 +66,72 @@ int util_strstr(struct mg_str* src, const char* s2)
     }
     else
         return 0;
+}
+
+char* util_getStr(struct mg_str* msg)
+{
+    char *topic=malloc(msg->len + 1);
+    memcpy(topic, msg->p, msg->len);
+    topic[msg->len + 1] = 0;
+    return topic;
+}
+
+
+char* util_getPk(const char* s_topic)
+{
+    char* result = strstr(s_topic,".");
+    if( result )
+    {
+        return result+1;
+    }
+    return NULL;
+
+}
+
+char** util_split(char* a_str, const char a_delim)
+{
+    char** result    = 0;
+    size_t count     = 0;
+    char* tmp        = a_str;
+    char* last_comma = 0;
+    char delim[2];
+    delim[0] = a_delim;
+    delim[1] = 0;
+
+    /* Count how many elements will be extracted. */
+    while (*tmp)
+    {
+        if (a_delim == *tmp)
+        {
+            count++;
+            last_comma = tmp;
+        }
+        tmp++;
+    }
+
+    /* Add space for trailing token. */
+    count += last_comma < (a_str + strlen(a_str) - 1);
+
+    /* Add space for terminating null string so caller
+       knows where the list of returned strings ends. */
+    count++;
+
+    result = malloc(sizeof(char*) * count);
+
+    if (result)
+    {
+        size_t idx  = 0;
+        char* token = strtok(a_str, delim);
+
+        while (token)
+        {
+            assert(idx < count);
+            *(result + idx++) = strdup(token);
+            token = strtok(0, delim);
+        }
+        assert(idx == count - 1);
+        *(result + idx) = 0;
+    }
+
+    return result;
 }

@@ -8,4 +8,7 @@ int claim_route(struct mg_connection *nc, struct http_message *hm );
 
 int claim_read(const char* s_templateId,cJSON* result);
 
+
+cJSON* claim_read_by_claimid(const char* s_id);
+
 #endif

@@ -38,6 +38,8 @@ static int get_claim(struct mg_connection *nc, struct http_message *hm) {
 
     http_response_json(nc,200,res);
 
+    cJSON_Delete(res);
+
 }
 
 
@@ -57,7 +59,14 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
         return 0;
     }
 
-    const char* strId=util_getUUID();
+
+    char strId[33];
+    if(NULL==util_getUUID(strId,33))
+    {
+        http_response_error(nc,400,"Vkey Service : Could not generate uuid");
+        return 0;
+
+    }
     const char* strTemplateId=templateId->valuestring;
 
     time_t nTimeC = time(NULL);
@@ -190,6 +199,42 @@ static int update_claim(const char* s_id,const char* s_data,int n_timec)
     return 0;
 }
 
+
+cJSON* claim_read_by_claimid(const char* s_id)
+{
+    sqlite3* db = db_get();
+
+    char strSql[256];
+    sprintf(strSql,"SELECT ID,DATA FROM TB_CLAIM WHERE ID=?;");
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return NULL;
+    }
+    sqlite3_bind_text(pStmt, 1, s_id, strlen(s_id), SQLITE_TRANSIENT);
+
+    if( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        char *strID = (char *) sqlite3_column_text(pStmt, 0);
+        char *strData = (char *) sqlite3_column_text(pStmt, 1);
+        //todo: descrypt data
+        cJSON* jData = cJSON_Parse(strData);
+        if(jData&&strID)
+        {
+            cJSON_AddStringToObject(jData,"id",strID);
+        }
+        sqlite3_finalize(pStmt);
+        return jData;
+
+    }
+    sqlite3_finalize(pStmt);
+    return NULL;
+}
+
 /**
  * return value
  * ["data1","data2"]
@@ -240,7 +285,7 @@ int claim_read(const char* s_templateId,cJSON* result)
             cJSON_AddStringToObject(jData,"id",strID);
         }
         cJSON_AddItemToArray(result,jData);
-
+        cJSON_Delete(jData);
     }
     sqlite3_finalize(pStmt);
     return 0;

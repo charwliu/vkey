@@ -84,7 +84,6 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
         http_response_error(nc,500,"Claim write failed!");
     }
     free((void*)strJson);
-    free((void*)strId);
     cJSON_Delete(json);
 }
 
@@ -285,7 +284,7 @@ int claim_read(const char* s_templateId,cJSON* result)
             cJSON_AddStringToObject(jData,"id",strID);
         }
         cJSON_AddItemToArray(result,jData);
-        cJSON_Delete(jData);
+        //cJSON_Delete(jData);
     }
     sqlite3_finalize(pStmt);
     return 0;

@@ -8,6 +8,7 @@
 #include "encrypt.h"
 #include "libsodium/include/sodium.h"
 #include "util.h"
+#include "vkey.h"
 
 static int post_key(struct mg_connection *nc, struct http_message *hm );
 

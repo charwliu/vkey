@@ -53,7 +53,7 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     char topic[256];
     sprintf(topic,"%s/auth",peer->valuestring);
     //3 publish to mq
-    mqtt_send(topic,jwt,strlen(jwt));
+    //mqtt_send(topic,jwt,strlen(jwt));
 
     http_response_text(nc,200,"data sent");
 

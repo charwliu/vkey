@@ -7,6 +7,9 @@
 
 sqlite3* g_db;
 
+
+static int db_checkTable(const char* s_table,const char* s_createSQL);
+
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
     int i;
     for(i=0; i<argc; i++){
@@ -26,7 +29,7 @@ static int db_exist(const char* s_table)
     sqlite3* db = db_get();
     char strSql[256];
 
-    sprintf(strSql,"SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?;");
+    sprintf(strSql,"SELECT * FROM sqlite_master WHERE type='table' AND name=?;");
 
 
     sqlite3_stmt* pStmt;
@@ -90,15 +93,15 @@ static int db_checkAttestTable()
 }
 
 
-static int db_checkShareTable()
+static int db_checkMqttTable()
 {
-    const char* sql = "CREATE TABLE TB_SHARE( TOPIC TEXT PRIMARY KEY NOT NULL, CLAIMS TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, CONFIRM INT );";
-    return db_checkTable("TB_SHARE",sql);
+    const char* sql = "CREATE TABLE TB_MQTT( TOPIC TEXT NOT NULL, PK TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, DATA TEXT NOT NULL );";
+    return db_checkTable("TB_MQTT",sql);
 }
 
 static int db_checkTable(const char* s_table,const char* s_createSQL)
 {
-    if(1==db_exist("s_table"))
+    if(1==db_exist(s_table))
     {
         fprintf(stdout, "Table %s is ready\n",s_table);
         return 0;
@@ -136,7 +139,7 @@ int db_init(const char *s_path)
         return -1;
     }
 
-    if(0!=db_checkShareTable())
+    if(0!=db_checkMqttTable())
     {
         return -1;
     }

@@ -4,13 +4,13 @@
 
 int notify(const char* s_msg);
 
-int main(char** args,int arg) {
+int main(int arg,char* args[]) {
     char* db;
     char* port;
-    if(arg>0)
-        db=args[0];
     if(arg>1)
-        port=args[1];
+        db=args[1];
+    if(arg>2)
+        port=args[2];
 
     start_vkey(notify,db,port);
     return 0;

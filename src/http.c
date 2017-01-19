@@ -18,7 +18,7 @@ static http_router routers[8]={
         {claim_route,"*","/api/v1/claim"},
         {auth_route,"*","/api/v1/auth"},
         {attest_route,"*","/api/v1/attestation"},
-        {share_route,"*","/api/v1/share/"},
+        {share_route,"*","/api/v1/share"},
         {collect_route,"*","/api/v1/collection"},
         {vlink_route,"*","/api/v1/vlink"},
         {test,"GET","/test"}

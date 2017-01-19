@@ -1,6 +1,7 @@
 
 #include "util.h"
 #include "libsodium/include/sodium.h"
+#include "attest.h"
 
 
 const char* util_getUUID(char* s_uuid,int n_size)
@@ -79,7 +80,7 @@ char* util_getStr(struct mg_str* msg)
 
 char* util_getPk(const char* s_topic)
 {
-    char* result = strstr(s_topic,".");
+    char* result = strstr(s_topic,"/");
     if( result )
     {
         return result+1;
@@ -135,3 +136,4 @@ char** util_split(char* a_str, const char a_delim)
 
     return result;
 }
+

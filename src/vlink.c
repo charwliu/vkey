@@ -34,7 +34,7 @@ static int get_vlink_auth(struct mg_connection *nc, struct http_message *hm)
     sprintf(strLink,"vlink://vnet.cn/auth/%s",strTopic);
     cJSON_AddStringToObject(res,"vlink",strLink);
 
-    mqtt_subscribe(strTopic);
+    //mqtt_subscribe(strTopic);
 
     http_response_json(nc,200,res);
 

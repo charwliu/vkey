@@ -13,7 +13,6 @@ char* util_getStr(struct mg_str* msg);
 char* util_getPk(const char* s_topic);
 char** util_split(char* a_str, const char a_delim);
 
-cJSON* util_assemble(cJSON* jClaim,cJSON* jAttests,const char* strMsg);
 
 
 #endif

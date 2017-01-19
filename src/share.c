@@ -11,11 +11,12 @@
 #include "encrypt.h"
 #include "claim.h"
 #include "attest.h"
+#include "start.h"
 
 static int post_share(struct mg_connection *nc, struct http_message *hm);
 static int get_share(struct mg_connection *nc, struct http_message *hm);
 
-static http_router routers[1]={
+static http_router routers[2]={
         {post_share,"POST","/api/v1/share"},
         {get_share,"GET","/api/v1/share"}
 };
@@ -71,8 +72,8 @@ static int post_share(struct mg_connection *nc, struct http_message *hm)
 
     //todo 1: check if claims exist all
 
-    //2 save shared claim ids and topic to db
 
+    //2 subscribe topic
     unsigned char PK[VKEY_KEY_SIZE];
     unsigned char SK[VKEY_KEY_SIZE];
 
@@ -85,14 +86,18 @@ static int post_share(struct mg_connection *nc, struct http_message *hm)
 
     time_t nTime = time(NULL);
 
-    //3 subscribe topic
-    mqtt_subscribe("SHARE",strPK,strSK,nTime,duration->valueint,claimIds->valuestring);
+
+    char* pData = cJSON_PrintUnformatted(json);
+
+
+    mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,pData);
+    free(pData);
 
     //4 build vlink
     cJSON* res = cJSON_CreateObject();
 
     char strTopic[128];
-    sprintf(strTopic,"SHARE/%s",strPK);
+    sprintf(strTopic,"SHARE:%s",strPK);
     char names[128];
     //todo 2: get claim template names by claim ids
 
@@ -113,65 +118,42 @@ static int post_share(struct mg_connection *nc, struct http_message *hm)
 static int get_share(struct mg_connection *nc, struct http_message *hm)
 {
 
+    char strSource[80]="";
     char strSourceTopic[128]="";
-    mg_get_http_var(&hm->query_string, "topic", strSourceTopic, 32);
+    mg_get_http_var(&hm->query_string, "topic", strSource, 80);
+    sprintf(strSourceTopic,"SHARE_SRC/%s",strSource);
 
     unsigned char PK[VKEY_KEY_SIZE];
     unsigned char SK[VKEY_KEY_SIZE];
 
     encrypt_random(SK);
     encrypt_makeDHPublic(SK,PK);
-    char strPK[65];
-    char strSK[65];
-    sodium_bin2hex(strPK,65,PK,VKEY_KEY_SIZE);
-    sodium_bin2hex(strSK,65,SK,VKEY_KEY_SIZE);
-
 
     time_t nTime = time(NULL);
-    char strTopic[128];
-    sprintf(strTopic,"SHARE/%s",strPK);
-
     //3 subscribe topic
-    mqtt_subscribe("SHARE",strPK,strSK,nTime,0,"");
-    mqtt_send(strSourceTopic,strTopic,SK,VKEY_KEY_SIZE,"");
+    mqtt_subscribe("SHARE_DES",PK,SK,nTime,0,"");
+    mqtt_send(strSourceTopic,"SHARE_DES",PK,SK,"");
 
 
+    http_response_text(nc,200,"ok");
     return 0;
 }
 
 ///
 /// \param s_msg ,json format {}
 /// \return
-int share_confirm(struct mg_mqtt_message *msg )
+int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSON* j_subData, const char* s_data )
 {
-    //get secret key by topic
-    char* strTopic = util_getStr(&msg->topic);
-    char* strPK = util_getPk(strTopic);
 
-    cJSON* jSubscribe=cJSON_CreateObject();
-
-    if( 0!=mqtt_readTopic(strTopic,jSubscribe))
-    {
-        return -1;
-    }
-    cJSON* jSK = cJSON_GetObjectItem(jSubscribe,"sk");
-    cJSON* jData = cJSON_GetObjectItem(jSubscribe,"data");
+    cJSON* jData = cJSON_Parse(j_subData->valuestring);
     cJSON* jClaimIds = cJSON_GetObjectItem(jData,"claimIds");
 
-    //get from public key
-    char* strPayload = util_getStr(&msg->payload);
-    cJSON* jPayload = cJSON_Parse(strPayload);
-    cJSON* jFrom = cJSON_GetObjectItem(jPayload,"from");
-    char* strFromPK = util_getPk(jFrom->valuestring);
-
-
-    //generate sharekey from secret key and peer public key
-    char shareKey[32];
-    encrypt_makeDHShareKey(jSK->valuestring,strPK,strFromPK,shareKey);
 
     //build data playload from claims
-    char** claimIds;
+    char* claimIds[1];
     int nClaimCount;
+    nClaimCount=1;
+    claimIds[0]=jClaimIds->valuestring;
 
     //todo: parse multi claims
 
@@ -183,38 +165,47 @@ int share_confirm(struct mg_mqtt_message *msg )
     {
         cJSON* jClaim = claim_read_by_claimid(claimIds[i]);
         cJSON* jAttests = attest_read_by_claimid(claimIds[i]);
-        cJSON* jClaimWithAttest = util_assemble(jClaim,jAttests,strFromPK);
+        int nProofCount = cJSON_GetArraySize(jAttests);
+        for(int j=0;j<nProofCount;j++)
+        {
+            cJSON* jProof = cJSON_GetArrayItem(jAttests,j);
+            attest_replace_rask_with_verify(jProof,s_peerTopic);
+
+        }
+        cJSON* jClaimWithAttest=cJSON_CreateObject();
+        cJSON_AddItemToObject(jClaimWithAttest,"claim",jClaim);
+        cJSON_AddItemToObject(jClaimWithAttest,"proofs",jAttests);
+
+
 
         cJSON_AddItemToArray( jClaims,jClaimWithAttest);
-        cJSON_Delete(jClaim);
-        cJSON_Delete(jAttests);
-        cJSON_Delete(jClaimWithAttest);
-
+        //cJSON_Delete(jClaim);
+        //cJSON_Delete(jAttests);
+        //cJSON_Delete(jClaimWithAttest);
     }
     cJSON_AddItemToObject(jSend,"claims",jClaims);
-    cJSON_Delete(jClaims);
-    //encrypt data by sharekey
-    //todo: encrypt data
-    char* encryptData;
 
     //send data to des
+    char* pData=cJSON_PrintUnformatted(jSend);
+
+    mqtt_send(s_peerTopic,"SHARE_SRC",s_pk,s_sk,pData);
 
     //release resource
-    free(strPayload);
-    free(strTopic);
+    free(pData);
+    cJSON_Delete(jData);
     cJSON_Delete(jSend);
-    cJSON_Delete(jPayload);
-    cJSON_Delete(jSubscribe);
     return 0;
 }
 
-int share_got(struct mg_mqtt_message *msg )
+int share_got( const char* s_myTopic, const char* s_data )
 {
+    g_notify(s_data);
+    mqtt_unsubscribe(s_myTopic);
     return 0;
 }
 
 
 int share_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,1,nc,hm);
+    return http_routers_handle(routers,2,nc,hm);
 }

@@ -15,6 +15,7 @@ FN_Notify g_fn_notity;
 
 int g_notify(const char* s_msg)
 {
+    printf("Got data : %s \n", s_msg);
     g_fn_notity(s_msg);
 }
 

@@ -1,5 +1,6 @@
 
 #include <stddef.h>
+#include <sodium.h>
 #include "mqtt.h"
 /*
  * Copyright (c) 2014 Cesanta Software Limited
@@ -27,6 +28,8 @@
 #include "attest.h"
 #include "db.h"
 #include "share.h"
+#include "encrypt.h"
+#include "vkey.h"
 
 static const char *s_user_name = "guoqc";
 static const char *s_password = "123";
@@ -34,6 +37,8 @@ static const char *s_password = "123";
 static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
 static struct mg_connection *mqtt_conn=NULL;
 static int mqtt_ready=0;
+
+static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data);
 
 /// event handler of mqtt
 /// \param nc
@@ -54,7 +59,9 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             opts.keep_alive=600;
 
             mg_set_protocol_mqtt(nc);
-            mg_send_mqtt_handshake_opt(nc, key_getAddress(), opts);
+            char clientId[33];
+            util_getUUID(clientId,33);
+            mg_send_mqtt_handshake_opt(nc, clientId, opts);
             break;
         }
         case MG_EV_MQTT_CONNACK:
@@ -91,6 +98,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             strMessage[msg->payload.len]=0;
 
 
+            mqtt_got(msg);
+            /*
             if(util_strstr(&msg->topic,"SHARE_SRC")==0)
             {
                 share_confirm(msg);
@@ -110,7 +119,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
                 attest_got(strMessage);
             }
 
-            free(strMessage);
+            free(strMessage);*/
             //mg_mqtt_publish(nc, "/test", 65, MG_MQTT_QOS(0), msg->payload.p, msg->payload.len);
             break;
         }
@@ -147,18 +156,38 @@ int mqtt_connect(struct mg_mgr *mgr)
 ///     data:un encrypted data
 /// }
 ///
-/// \param s_to destinate topic which consist of event/publickey
-/// \param s_from  source topic which consist of event/publickey
-/// \param s_sk source secret key
+/// \param s_to destinate topic which consist of event/publickey hex
+/// \param s_from  source topic which consist of event/publickey hex
+/// \param s_sk source secret key hex
 /// \param s_data data unecrypted
 /// \return
-int mqtt_send(const char* s_to,const char* s_from,const char* s_sk,int n_sksize,const char* s_data )
+int mqtt_send(const char* s_to,const char* s_event,const char* s_pk,const char* s_sk,const char* s_data )
 {
     if(!mqtt_ready) return -1;
 
-    //todo: encrypt data with dh key s_sk&pk in s_from
+
+    char* strToPK = util_getPk(s_to);
+
+    char to_pk[VKEY_KEY_SIZE];
+
+    size_t len;
+    sodium_hex2bin(to_pk,VKEY_KEY_SIZE,strToPK,64,NULL,&len,NULL);
+
+
+    //generate sharekey from secret key and peer public key
+    char shareKey[32];
+    encrypt_makeDHShareKey(s_sk,s_pk,to_pk,shareKey);
+    //todo: encrypt data with shareKey
+
+
+    char strPK[65];
+    sodium_bin2hex(strPK,65,s_pk,VKEY_KEY_SIZE);
+
+    char strFromTopic[128];
+    sprintf(strFromTopic,"%s/%s",s_event,strPK);
+
     cJSON* jPayload = cJSON_CreateObject();
-    cJSON_AddStringToObject(jPayload,"from",s_from);
+    cJSON_AddStringToObject(jPayload,"from",strFromTopic);
     cJSON_AddStringToObject(jPayload,"data",s_data);
     char* sPayload = cJSON_PrintUnformatted(jPayload);
 
@@ -169,25 +198,108 @@ int mqtt_send(const char* s_to,const char* s_from,const char* s_sk,int n_sksize,
     cJSON_Delete(jPayload);
 }
 
+/// extract data from message, compute sharekey and descrypt data, then call handler of each event
+/// \param msg
+/// \return
+static int mqtt_got(struct mg_mqtt_message *msg)
+{
+    //get secret key and subscribe data by topic
+    char* strTopic = util_getStr(&msg->topic);
+    char* strPK = util_getPk(strTopic);
+
+    cJSON* jSubscribe=cJSON_CreateObject();
+
+    if( 0!=mqtt_readTopic(strPK,jSubscribe))
+    {
+        return -1;
+    }
+
+    cJSON* jSubSK = cJSON_GetObjectItem(jSubscribe,"sk");
+    cJSON* jSubData = cJSON_GetObjectItem(jSubscribe,"data");
+    //cJSON* jClaimIds = cJSON_GetObjectItem(jData,"claimIds");
+
+    //get from public key
+    char* strPayload = util_getStr(&msg->payload);
+    cJSON* jPayload = cJSON_Parse(strPayload);
+    cJSON* jFrom = cJSON_GetObjectItem(jPayload,"from");
+    cJSON* jData = cJSON_GetObjectItem(jPayload,"data");
+
+
+    //compute share key
+    char* strMyPK = util_getPk(strTopic);
+    char* strFromPK = util_getPk(jFrom->valuestring);
+
+    char my_pk[VKEY_KEY_SIZE];
+    char my_sk[VKEY_KEY_SIZE];
+    char from_pk[VKEY_KEY_SIZE];
+    size_t len;
+    sodium_hex2bin(my_pk,VKEY_KEY_SIZE,strMyPK,64,NULL,&len,NULL);
+    sodium_hex2bin(my_sk,VKEY_KEY_SIZE,jSubSK->valuestring,64,NULL,&len,NULL);
+    sodium_hex2bin(from_pk,VKEY_KEY_SIZE,strFromPK,64,NULL,&len,NULL);
+
+    //generate sharekey from secret key and peer public key
+    char shareKey[32];
+    encrypt_makeDHShareKey(my_sk,my_pk,from_pk,shareKey);
+
+    //todo:descrypt data
+    char* strData;
+
+
+
+    if(strstr(strTopic,"SHARE_SRC"))
+    {
+        share_confirm(jFrom->valuestring,my_pk,my_sk,jSubData,jData->valuestring);
+    }
+
+    if(strstr(strTopic,"SHARE_DES"))
+    {
+        share_got(strTopic,jData->valuestring);
+    }
+
+    if(strstr(strTopic,"auth")>0)
+    {
+        //auth_got(strMessage);
+    }
+    if(strstr(strTopic,"attest")>0)
+    {
+        //attest_got(strMessage);
+    }
+
+    free(strTopic);
+    free(strPayload);
+
+    cJSON_Delete(jPayload);
+    cJSON_Delete(jSubscribe);
+
+
+
+}
+
 /// subscribe and save the data
-/// \param s_topic
+/// \param s_event   SHARE/AUTH/ATTEST etc.
 /// \param s_pk
 /// \param s_sk
 /// \param t_time
 /// \param n_duration
 /// \param s_data
 /// \return
-int mqtt_subscribe(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
+int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
 {
     if(!mqtt_ready) return -1;
 
-    sprintf(s_topic_expr.topic,"%s/%s",s_topic,s_pk);
+    char strPK[65];
+    char strSK[65];
+    sodium_bin2hex(strPK,65,s_pk,VKEY_KEY_SIZE);
+    sodium_bin2hex(strSK,65,s_sk,VKEY_KEY_SIZE);
+
+
+    sprintf(s_topic_expr.topic,"%s/%s",s_event,strPK);
 
 
     printf("Subscribing to '%s'\n", s_topic_expr.topic);
     mg_mqtt_subscribe(mqtt_conn, &s_topic_expr, 1, 42);
 
-    mqtt_log(s_topic,s_pk,s_sk,t_time,n_duration,s_data);
+    mqtt_log(s_event,strPK,strSK,t_time,n_duration,s_data);
     return 0;
 }
 
@@ -202,6 +314,8 @@ int mqtt_unsubscribe(const char* s_topic)
 
     printf("Subscribing to '%s'\n", s_topic_expr.topic);
     mg_mqtt_unsubscribe(mqtt_conn, &s_topic_expr, 1, 42);
+
+    //todo:remove subscribe record from db file
     return 0;
 }
 
@@ -213,7 +327,7 @@ int mqtt_unsubscribe(const char* s_topic)
 /// \param n_duration , duration of the subscribe
 /// \param s_data , additional data with the subscribe
 /// \return
-static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
+static int mqtt_log(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
 {
     sqlite3* db = db_get();
     char strSql[1024];
@@ -227,7 +341,7 @@ static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t
         sqlite3_finalize(pStmt);
         return -1;
     }
-    sqlite3_bind_text(pStmt,1,s_topic,strlen(s_topic),SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,1,s_event,strlen(s_event),SQLITE_TRANSIENT);
     sqlite3_bind_text(pStmt,2,s_pk,strlen(s_pk),SQLITE_TRANSIENT);
     //todo: encrypt sk
     sqlite3_bind_text(pStmt,3,s_sk,strlen(s_sk),SQLITE_TRANSIENT);
@@ -247,14 +361,14 @@ static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t
     return 0;
 }
 
-int mqtt_readTopic(const char* s_topic,cJSON* j_result)
+int mqtt_readTopic(const char* s_pk,cJSON* j_result)
 {
     sqlite3* db = db_get();
 
     char strSql[256];
 
 
-    sprintf(strSql,"SELECT SK,TIME,DURATION,DATA WHERE TOPIC=?;");
+    sprintf(strSql,"SELECT SK,TIME,DURATION,DATA FROM TB_MQTT WHERE PK=?;");
 
 
     sqlite3_stmt* pStmt;
@@ -266,7 +380,7 @@ int mqtt_readTopic(const char* s_topic,cJSON* j_result)
         return -1;
     }
 
-    sqlite3_bind_text(pStmt, 1, s_topic, strlen(s_topic), SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt, 1, s_pk, strlen(s_pk), SQLITE_TRANSIENT);
 
 
     if( sqlite3_step(pStmt) == SQLITE_ROW )
@@ -288,7 +402,7 @@ int mqtt_readTopic(const char* s_topic,cJSON* j_result)
 
         if(strData)
         {
-            cJSON_AddStringToObject(j_result,"sk",strData);
+            cJSON_AddStringToObject(j_result,"data",strData);
         }
 
         sqlite3_finalize(pStmt);

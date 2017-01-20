@@ -8,6 +8,7 @@
 #include "sqlite/sqlite3.h"
 #include "db.h"
 #include "util.h"
+#include "attest.h"
 
 static int get_claim(struct mg_connection *nc, struct http_message *hm);
 static int post_claim(struct mg_connection *nc, struct http_message *hm);
@@ -290,6 +291,34 @@ int claim_read(const char* s_templateId,cJSON* result)
     return 0;
 }
 
+
+int claim_get_with_proofs(cJSON* jClaimIds,const char* sTopic,cJSON* jClaims)
+{
+    int nClaimCount=cJSON_GetArraySize(jClaimIds);
+
+    for( int i=0;i<nClaimCount;i++)
+    {
+        cJSON* jItem=cJSON_GetArrayItem(jClaimIds,i);
+
+        cJSON* jClaim = claim_read_by_claimid(jItem->valuestring);
+        cJSON* jAttests = attest_read_by_claimid(jItem->valuestring);
+        int nProofCount = cJSON_GetArraySize(jAttests);
+        for(int j=0;j<nProofCount;j++)
+        {
+            cJSON* jProof = cJSON_GetArrayItem(jAttests,j);
+            attest_replace_rask_with_verify(jProof,sTopic);
+
+        }
+        cJSON* jClaimWithAttest=cJSON_CreateObject();
+        cJSON_AddItemToObject(jClaimWithAttest,"claim",jClaim);
+        cJSON_AddItemToObject(jClaimWithAttest,"proofs",jAttests);
+
+
+
+        cJSON_AddItemToArray( jClaims,jClaimWithAttest);
+    }
+    return 0;
+}
 
 int claim_route(struct mg_connection *nc, struct http_message *hm )
 {

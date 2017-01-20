@@ -256,9 +256,9 @@ static int mqtt_got(struct mg_mqtt_message *msg)
         share_got(strTopic,jData->valuestring);
     }
 
-    if(strstr(strTopic,"auth")>0)
+    if(strstr(strTopic,"AUTH_DES")>0)
     {
-        //auth_got(strMessage);
+        auth_got(strTopic,jData->valuestring);
     }
     if(strstr(strTopic,"attest")>0)
     {
@@ -312,7 +312,7 @@ int mqtt_unsubscribe(const char* s_topic)
 
     s_topic_expr.topic = s_topic;
 
-    printf("Subscribing to '%s'\n", s_topic_expr.topic);
+    printf("Unsubscribed to '%s'\n", s_topic_expr.topic);
     mg_mqtt_unsubscribe(mqtt_conn, &s_topic_expr, 1, 42);
 
     //todo:remove subscribe record from db file
@@ -320,7 +320,7 @@ int mqtt_unsubscribe(const char* s_topic)
 }
 
 /// save the subscribe data
-/// \param s_topic ,vkey topic, mq topic consist of s_topic and s_pk like this s_topic/s_pk
+/// \param s_event ,SHARE/AUTH/ATTEST
 /// \param s_pk ,communication public key and the part of mq topic
 /// \param s_sk ,communication secret key
 /// \param t_time ,subscribe time, since the subscribe will be cancel when the duration is expired

@@ -40,33 +40,31 @@ POST HOST/share
 /// \param nc
 /// \param hm
 /// \return
-static int post_share(struct mg_connection *nc, struct http_message *hm)
+
+int share_start(cJSON* j_share,cJSON* j_result)
 {
-
-    //1 parse request body
-    cJSON *json = util_parseBody(&hm->body);
-
-    cJSON *claimIds = cJSON_GetObjectItem(json, "claimIds");
-    cJSON *duration =  cJSON_GetObjectItem(json, "duration");
-    cJSON *confirm =  cJSON_GetObjectItem(json, "confirm");
-    cJSON *desc =  cJSON_GetObjectItem(json, "desc");
+    //1 parse j_share body
+    cJSON *claimIds = cJSON_GetObjectItem(j_share, "claimIds");
+    cJSON *duration =  cJSON_GetObjectItem(j_share, "duration");
+    cJSON *confirm =  cJSON_GetObjectItem(j_share, "confirm");
+    cJSON *desc =  cJSON_GetObjectItem(j_share, "desc");
 
     if(!claimIds )
     {
-        http_response_error(nc,400,"Vkey Service : claimIds needed!");
-        return 0;
+        cJSON_AddStringToObject(j_result,"error","Vkey Service : claimIds needed!");
+        return -1;
     }
 
     if(!duration )
     {
-        http_response_error(nc,400,"Vkey Service : duration needed!");
-        return 0;
+        cJSON_AddStringToObject(j_result,"error","Vkey Service : duration needed!");
+        return -1;
     }
 
     if(!confirm )
     {
-        http_response_error(nc,400,"Vkey Service : confirm needed!");
-        return 0;
+        cJSON_AddStringToObject(j_result,"error","Vkey Service : confirm needed!");
+        return -1;
     }
 
 
@@ -87,33 +85,113 @@ static int post_share(struct mg_connection *nc, struct http_message *hm)
     time_t nTime = time(NULL);
 
 
-    char* pData = cJSON_PrintUnformatted(json);
+    char* pData = cJSON_PrintUnformatted(j_share);
 
 
     mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,pData);
     free(pData);
 
     //4 build vlink
-    cJSON* res = cJSON_CreateObject();
 
     char strTopic[128];
     sprintf(strTopic,"SHARE:%s",strPK);
     char names[128];
     //todo 2: get claim template names by claim ids
 
-    cJSON_AddStringToObject(res,"topic",strTopic);
-    cJSON_AddStringToObject(res,"names",names);
-    cJSON_AddStringToObject(res,"desc",desc->valuestring);
+    cJSON_AddStringToObject(j_result,"topic",strTopic);
+    cJSON_AddStringToObject(j_result,"names",names);
+    cJSON_AddStringToObject(j_result,"desc",desc->valuestring);
 
-    http_response_json(nc,200,res);
-
-    cJSON_Delete(json);
-    cJSON_Delete(res);
     return 0;
 }
 
+static int post_share(struct mg_connection *nc, struct http_message *hm)
+{
+
+    //1 parse request body
+    cJSON *json = util_parseBody(&hm->body);
+    cJSON *jRes = cJSON_CreateObject();
+    if(0==share_start(json,jRes))
+    {
+        http_response_json(nc,200,jRes);
+    }
+    else
+    {
+        http_response_json(nc,400,jRes);
+    }
+    cJSON_Delete(json);
+    cJSON_Delete(jRes);
+    return 0;
+
+
+//    cJSON *claimIds = cJSON_GetObjectItem(json, "claimIds");
+//    cJSON *duration =  cJSON_GetObjectItem(json, "duration");
+//    cJSON *confirm =  cJSON_GetObjectItem(json, "confirm");
+//    cJSON *desc =  cJSON_GetObjectItem(json, "desc");
+//
+//    if(!claimIds )
+//    {
+//        http_response_error(nc,400,"Vkey Service : claimIds needed!");
+//        return 0;
+//    }
+//
+//    if(!duration )
+//    {
+//        http_response_error(nc,400,"Vkey Service : duration needed!");
+//        return 0;
+//    }
+//
+//    if(!confirm )
+//    {
+//        http_response_error(nc,400,"Vkey Service : confirm needed!");
+//        return 0;
+//    }
+//
+//
+//    //todo 1: check if claims exist all
+//
+//
+//    //2 subscribe topic
+//    unsigned char PK[VKEY_KEY_SIZE];
+//    unsigned char SK[VKEY_KEY_SIZE];
+//
+//    encrypt_random(SK);
+//    encrypt_makeDHPublic(SK,PK);
+//    char strPK[65];
+//    char strSK[65];
+//    sodium_bin2hex(strPK,65,PK,VKEY_KEY_SIZE);
+//    sodium_bin2hex(strSK,65,SK,VKEY_KEY_SIZE);
+//
+//    time_t nTime = time(NULL);
+//
+//
+//    char* pData = cJSON_PrintUnformatted(json);
+//
+//
+//    mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,pData);
+//    free(pData);
+//
+//    //4 build vlink
+//    cJSON* res = cJSON_CreateObject();
+//
+//    char strTopic[128];
+//    sprintf(strTopic,"SHARE:%s",strPK);
+//    char names[128];
+//    //todo 2: get claim template names by claim ids
+//
+//    cJSON_AddStringToObject(res,"topic",strTopic);
+//    cJSON_AddStringToObject(res,"names",names);
+//    cJSON_AddStringToObject(res,"desc",desc->valuestring);
+//
+//    http_response_json(nc,200,res);
+//
+//    cJSON_Delete(json);
+//    cJSON_Delete(res);
+//    return 0;
+}
+
 /*
- * GET /api/v1/share?topic=share.123456787
+ * GET /api/v1/share?topic=123456787
  */
 static int get_share(struct mg_connection *nc, struct http_message *hm)
 {
@@ -150,10 +228,6 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
 
 
     //build data playload from claims
-    char* claimIds[1];
-    int nClaimCount;
-    nClaimCount=1;
-    claimIds[0]=jClaimIds->valuestring;
 
     //todo: parse multi claims
 
@@ -161,28 +235,8 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
     cJSON_AddStringToObject(jSend,"pid","1234");
     cJSON* jClaims = cJSON_CreateArray();
 
-    for( int i=0;i<nClaimCount;i++)
-    {
-        cJSON* jClaim = claim_read_by_claimid(claimIds[i]);
-        cJSON* jAttests = attest_read_by_claimid(claimIds[i]);
-        int nProofCount = cJSON_GetArraySize(jAttests);
-        for(int j=0;j<nProofCount;j++)
-        {
-            cJSON* jProof = cJSON_GetArrayItem(jAttests,j);
-            attest_replace_rask_with_verify(jProof,s_peerTopic);
+    claim_get_with_proofs( jClaimIds,s_peerTopic, jClaims);
 
-        }
-        cJSON* jClaimWithAttest=cJSON_CreateObject();
-        cJSON_AddItemToObject(jClaimWithAttest,"claim",jClaim);
-        cJSON_AddItemToObject(jClaimWithAttest,"proofs",jAttests);
-
-
-
-        cJSON_AddItemToArray( jClaims,jClaimWithAttest);
-        //cJSON_Delete(jClaim);
-        //cJSON_Delete(jAttests);
-        //cJSON_Delete(jClaimWithAttest);
-    }
     cJSON_AddItemToObject(jSend,"claims",jClaims);
 
     //send data to des

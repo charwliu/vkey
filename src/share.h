@@ -9,4 +9,6 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
 
 int share_got(const char* s_myTopic, const char* s_data );
 
+int share_start(cJSON* j_share,cJSON* j_result);
+
 #endif

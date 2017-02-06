@@ -192,6 +192,8 @@ int mqtt_send(const char* s_to,const char* s_event,const char* s_pk,const char* 
     char* sPayload = cJSON_PrintUnformatted(jPayload);
 
 
+    printf("Publish msg to:%s",s_to);
+
     mg_mqtt_publish(mqtt_conn, s_to, 42, MG_MQTT_QOS(0), sPayload, strlen(sPayload));
 
     free(sPayload);
@@ -246,23 +248,23 @@ static int mqtt_got(struct mg_mqtt_message *msg)
 
 
 
-    if(strstr(strTopic,"SHARE_SRC"))
+    if(strstr(jFrom->valuestring,"SHARE_DES"))
     {
         share_confirm(jFrom->valuestring,my_pk,my_sk,jSubData,jData->valuestring);
     }
 
-    if(strstr(strTopic,"SHARE_DES"))
+    if(strstr(jFrom->valuestring,"SHARE_SRC"))
     {
-        share_got(strTopic,jData->valuestring);
+        share_got(jFrom->valuestring,jData->valuestring);
     }
 
-    if(strstr(strTopic,"AUTH_DES")>0)
+    if(strstr(jFrom->valuestring,"AUTH_SRC")>0)
     {
-        auth_got(strTopic,jData->valuestring);
+        auth_got(jFrom->valuestring,jData->valuestring);
     }
-    if(strstr(strTopic,"attest")>0)
+    if(strstr(jFrom->valuestring,"ATTEST_SRC")>0)
     {
-        //attest_got(strMessage);
+        attest_got(jFrom->valuestring,jData->valuestring);
     }
 
     free(strTopic);

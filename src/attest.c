@@ -10,6 +10,7 @@
 #include "mqtt.h"
 #include "db.h"
 #include "vkey.h"
+#include "start.h"
 
 static int get_attest(struct mg_connection *nc, struct http_message *hm);
 static int post_attest(struct mg_connection *nc, struct http_message *hm);
@@ -60,24 +61,22 @@ static int get_attest(struct mg_connection *nc, struct http_message *hm)
 
 /*
  *
-POST HOST/attestation
+POST HOST/attestation?topic=123455
 {
     "claim":{
+        "id":"12345"
         "templateId":"CLMT_IDNUMBER",
         "claim":{
             "value":"110021101000000"
         }
     },
     "proof":{
-        @"from":"74444211acdaf12345",
-
         @"claimId":"2323423423",
         @"claimMd":"sdfadfa",
+        @"attestPk":"aacccc",
 
         "result":1,
-
         "name":"佛山自然人一门式",
-
         "time":"125545611",
         "expiration":"13545544",
         "link":"https://mysite.com/12323",
@@ -87,13 +86,20 @@ POST HOST/attestation
             "docs":"身份证原件，本人",
             "desc":"本人现场认证，无误"
         }
-    }
+    },
+    @"signature":"a12s112"
 }
  *
  *
  */
 static int post_attest(struct mg_connection *nc, struct http_message *hm)
 {
+
+    char strSourceTopic[128]="";
+    mg_get_http_var(&hm->query_string, "topic", strSourceTopic, 80);
+
+
+
     cJSON *json = util_parseBody(&hm->body);
     cJSON *claim = cJSON_GetObjectItem(json, "claim");
     if(!claim)
@@ -118,7 +124,7 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
 
 
     //1: add claim id to proof
-    cJSON_AddStringToObject(proof,"claimId",id->valuestring);
+    //cJSON_AddStringToObject(proof,"claimId",id->valuestring);
 
     //2: add claim hash to proof
     char* strClaim=cJSON_PrintUnformatted(claim);
@@ -128,12 +134,12 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
     char hexClaimHash[65];
     sodium_bin2hex(hexClaimHash,65,claimHash,32);
 
-    cJSON_AddStringToObject(proof,"claimHash",hexClaimHash);
+    cJSON_AddStringToObject(proof,"claimMd",hexClaimHash);
 
     //3: add attest public key to proof
     char hexAttestPK[65];
     sodium_bin2hex(hexAttestPK,65,key_getAttestPK(),32);
-    cJSON_AddStringToObject(proof,"attestPK",hexAttestPK);
+    cJSON_AddStringToObject(proof,"attestPk",hexAttestPK);
 
     //4: compute proof signature
     char* strProof=cJSON_PrintUnformatted(proof);
@@ -143,16 +149,24 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
     sodium_bin2hex(hexSigProof,129,sigProof,64);
 
     cJSON *result = cJSON_CreateObject();
-    cJSON_AddItemToObject(result,"proof",proof);
+    cJSON_AddItemToObject(result,"claim",cJSON_Duplicate( claim,1));
+    cJSON_AddItemToObject(result,"proof",cJSON_Duplicate(proof,1));
     cJSON_AddStringToObject(result,"signature",hexSigProof);
 
 
     //todo: 5 send transction
 
-    char topic[256];
+    unsigned char PK[VKEY_KEY_SIZE];
+    unsigned char SK[VKEY_KEY_SIZE];
+
+    encrypt_random(SK);
+    encrypt_makeDHPublic(SK,PK);
+
 //    sprintf(topic,"%s/attest",peer->valuestring);
     //3 publish to mq
   //  mqtt_send(topic,jwt,strlen(jwt));
+    char* pData = cJSON_PrintUnformatted(result);
+    mqtt_send(strSourceTopic,"ATTEST_SRC",PK,SK,pData);
 
 
     free(strProof);
@@ -164,21 +178,6 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
     http_response_text(nc,200,"Attestation post ok!");
 }
 
-
-int attest_got(const char* s_msg)
-{
-    printf("Got attestation data : %s \n", s_msg);
-
-    //todo:1 parse and descrypt jwt
-
-
-    eth_register("cn.guoqc.3","vid1233","pid1233","suk1233","vuk1233");
-
-    //todo:2 notify app with json
-
-    return 0;
-
-}
 
 cJSON* attest_read_by_claimid(const char* s_claimId)
 {
@@ -262,6 +261,17 @@ int attest_replace_rask_with_verify(cJSON* jAttest,const char* s_msg)
 }
 
 
+int attest_got( const char* s_peerTopic, const char* s_data )
+{
+    printf("Got attestation data : %s \n", s_data);
+
+    //todo:1 parse and descrypt jwt
+
+    eth_register("cn.guoqc.3","vid1233","pid1233","suk1233","vuk1233");
+
+    g_notify(s_peerTopic,s_data);
+    return 0;
+}
 
 int attest_route(struct mg_connection *nc, struct http_message *hm )
 {

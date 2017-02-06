@@ -3,7 +3,7 @@
 
 int attest_route(struct mg_connection *nc, struct http_message *hm );
 
-int attest_got(const char* s_msg);
+int attest_got( const char* s_peerTopic, const char* s_data );
 
 cJSON* attest_read_by_claimid(const char* s_claimId);
 

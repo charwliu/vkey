@@ -13,10 +13,10 @@
 
 FN_Notify g_fn_notity;
 
-int g_notify(const char* s_msg)
+int g_notify(const char* s_topic,const char* s_msg)
 {
-    printf("Got data : %s \n", s_msg);
-    g_fn_notity(s_msg);
+    printf("Got data from: %s \n %s", s_msg,s_topic);
+    g_fn_notity(s_topic,s_msg);
 }
 
 int start_vkey(FN_Notify fn_notify,const char* s_dbPath,const char* s_port){

@@ -30,8 +30,12 @@ static http_router routers[2]={
       "desc":"description about the share"
     },
     req:{
-    "templateIds":["CLMT_IDNUMBER","CLMT_NAME"]
+        "templateIds":["CLMT_IDNUMBER","CLMT_NAME"]
+    },
+    attest:{
+        "templateIds":["CLMT_IDNUMBER","CLMT_NAME"]"
     }
+
  }
  * */
 int auth_start_req(cJSON* jReq,cJSON* jResult)
@@ -153,6 +157,8 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     char strTopic[128];
     sprintf(strTopic,"AUTH_DES/%s",jTopic->valuestring);
 
+    time_t nTime = time(NULL);
+    mqtt_subscribe("AUTH_SRC",PK,SK,nTime,0,"");
     mqtt_send(strTopic,"AUTH_SRC",PK,SK,pData);
 
     //release resource
@@ -194,10 +200,9 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 //    return 0;
 }
 
-int auth_got( const char* s_myTopic, const char* s_data )
+int auth_got( const char* s_peerTopic, const char* s_data )
 {
-    g_notify(s_data);
-    mqtt_unsubscribe(s_myTopic);
+    g_notify(s_peerTopic,s_data);
     return 0;
 }
 

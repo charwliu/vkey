@@ -242,6 +242,8 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
     //send data to des
     char* pData=cJSON_PrintUnformatted(jSend);
 
+    time_t nTime = time(NULL);
+    mqtt_subscribe("SHARE_SRC",s_pk,s_sk,nTime,0,"");
     mqtt_send(s_peerTopic,"SHARE_SRC",s_pk,s_sk,pData);
 
     //release resource
@@ -251,10 +253,9 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
     return 0;
 }
 
-int share_got( const char* s_myTopic, const char* s_data )
+int share_got( const char* s_peerTopic, const char* s_data )
 {
-    g_notify(s_data);
-    mqtt_unsubscribe(s_myTopic);
+    g_notify(s_peerTopic,s_data);
     return 0;
 }
 

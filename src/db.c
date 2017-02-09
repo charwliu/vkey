@@ -99,6 +99,19 @@ static int db_checkMqttTable()
     return db_checkTable("TB_MQTT",sql);
 }
 
+
+static int db_checkRegSiteTable()
+{
+    const char* sql = "CREATE TABLE TB_REG_SITE( URL TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, PK TEXT NOT NULL, TIME INT NOT NULL );";
+    return db_checkTable("TB_REG_SITE",sql);
+}
+
+static int db_checkRegClientTable()
+{
+    const char* sql = "CREATE TABLE TB_REG_CLIENT( RID TEXT PRIMARY KEY NOT NULL, URL TEXT NOT NULL, RPK TEXT NOT NULL, TIME INT NOT NULL, STATE INT NOT NULL );";
+    return db_checkTable("TB_REG_CLIENT",sql);
+}
+
 static int db_checkTable(const char* s_table,const char* s_createSQL)
 {
     if(1==db_exist(s_table))
@@ -140,6 +153,16 @@ int db_init(const char *s_path)
     }
 
     if(0!=db_checkMqttTable())
+    {
+        return -1;
+    }
+
+    if(0!=db_checkRegSiteTable())
+    {
+        return -1;
+    }
+
+    if(0!=db_checkRegClientTable())
     {
         return -1;
     }

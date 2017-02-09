@@ -95,6 +95,7 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     unsigned char ADDRESS[VKEY_KEY_SIZE];
     unsigned char AUTHTAG[VKEY_KEY_SIZE+1];
 
+    //IUK,ILK,IMK
     encrypt_random(IUK);
     encrypt_makeDHPublic(IUK,ILK);
     encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);

@@ -247,3 +247,18 @@ int eth_attest(char* from, char* to, char* pid, char* claimId, char* signature)
 {
     return -1;
 }
+
+
+int eth_register_client(const char* s_rid, const char* s_rpk, const char* s_vuk, const char* s_suk)
+{
+    return 0;
+}
+
+/// site submit register
+/// \param RID
+/// \param sigRID
+/// \return
+int eth_register_site(char* RID,char* sigRID)
+{
+    return 0;
+}

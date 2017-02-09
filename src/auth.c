@@ -10,6 +10,8 @@
 #include "vkey.h"
 #include "encrypt.h"
 #include "start.h"
+#include "register.h"
+#include "eth.h"
 
 static int post_auth(struct mg_connection *nc, struct http_message *hm);
 static int req_auth(struct mg_connection *nc, struct http_message *hm);
@@ -22,38 +24,27 @@ static http_router routers[2]={
 
 /*
 
- {
-    share:{
-      "claimIds":["1234","5678","9998"],
+  {
+      "reg":"www.xxxx.cn",
+      "templateIds":["CLMT_IDNUMBER","CLMT_NAME"],
       "duration":60,
-      "confirm":1,
       "desc":"description about the share"
-    },
-    req:{
-        "templateIds":["CLMT_IDNUMBER","CLMT_NAME"]
-    },
-    attest:{
-        "templateIds":["CLMT_IDNUMBER","CLMT_NAME"]"
-    }
-
  }
  * */
-int auth_start_req(cJSON* jReq,cJSON* jResult)
+/// submit a auth requirement, reg is optional param, if it exist, sdk will compute register publick key ,secret key , and save them with url
+/// \param jReq
+/// \param jResult
+/// \return
+int auth_start(cJSON* jReq,cJSON* jResult)
 {
     //start auth req
+    cJSON *reg =  cJSON_GetObjectItem(jReq, "reg");
     cJSON *templateIds =  cJSON_GetObjectItem(jReq, "templateIds");
     cJSON *duration =  cJSON_GetObjectItem(jReq, "duration");
     cJSON *desc =  cJSON_GetObjectItem(jReq, "desc");
 
 
-    if(!templateIds )
-    {
-        cJSON_AddStringToObject(jResult,"error","Vkey Service : claimIds needed!");
-        return -1;
-    }
-
-
-    //2 subscribe topic
+    //subscribe topic
     unsigned char PK[VKEY_KEY_SIZE];
     unsigned char SK[VKEY_KEY_SIZE];
 
@@ -69,18 +60,32 @@ int auth_start_req(cJSON* jReq,cJSON* jResult)
     mqtt_subscribe("AUTH_DES",PK,SK,nTime,duration->valueint,pData);
     free(pData);
 
-    //4 build vlink
-
+    //build topic
     char strTopic[128];
     sprintf(strTopic,"AUTH:%s",strPK);
+    cJSON_AddStringToObject(jResult,"topic",strTopic);
+
+    //if need register, compute RPK (Register Public Key), and save to db with reg url
+    if(reg)
+    {
+
+        char strRPK[65];
+        if(0!=register_start(reg->valuestring,strRPK))
+        {
+            return -1;
+        }
+
+        cJSON_AddStringToObject(jResult,"reg",reg->valuestring);
+        cJSON_AddStringToObject(jResult,"rpk",strRPK);
+    }
+
+
     char names[128]="";
     //todo 2: get claim template names by templateIds
 
-    cJSON* jTids =  cJSON_Duplicate(templateIds,0);
-
-    cJSON_AddStringToObject(jResult,"topic",strTopic);
     cJSON_AddStringToObject(jResult,"names",names);
 
+    cJSON* jTids =  cJSON_Duplicate(templateIds,0);
     cJSON_AddStringToObject(jResult,"claimTemplates",jTids);
     cJSON_AddStringToObject(jResult,"desc",desc->valuestring);
 
@@ -88,6 +93,26 @@ int auth_start_req(cJSON* jReq,cJSON* jResult)
 
 }
 
+
+/*
+ {
+    share:{
+      "claimIds":["1234","5678","9998"],
+      "duration":60,
+      "confirm":1,
+      "desc":"description about the share"
+    },
+
+   req:{
+        "reg":"www.xxxx.cn",
+        "templateIds":["CLMT_IDNUMBER","CLMT_NAME"],
+        "duration":60,
+        "desc":"description about the share"
+    },
+    "session":"33232"
+
+ }
+ * */
 static int req_auth(struct mg_connection *nc, struct http_message *hm)
 {
     cJSON *json = util_parseBody(&hm->body);
@@ -96,14 +121,16 @@ static int req_auth(struct mg_connection *nc, struct http_message *hm)
     cJSON *jShareRes = cJSON_CreateObject();
     if(0!=share_start(jShare,jShareRes))
     {
+        //todo: false handle.
         //http_response_json(nc,400,jShareRes);
     }
 
     cJSON *jReqRes = cJSON_CreateObject();
     cJSON* jReq = cJSON_GetObjectItem(json,"req");
-    if(0!=auth_start_req(jReq,jReqRes))
+    if(0!=auth_start(jReq,jReqRes))
     {
-        //http_response_json(nc,400,jReqRes);
+        //todo: false handle.
+        //http_response_error(nc,400,"veky:register requirem failed");
     }
 
     cJSON* jRes=cJSON_CreateObject();
@@ -122,18 +149,37 @@ static int req_auth(struct mg_connection *nc, struct http_message *hm)
 POST
 {
   "topic":"as84s8f7a8dfagyerwrg",
+  "reg":"www.xxxx.com",
+  "rpk":"12334",
   "claims":["123","456"]
 }
  * */
+/// reg and rpk are optional attributes,if they exist, client execute register process
+/// \param nc
+/// \param hm
+/// \return
 static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 
     cJSON *json = util_parseBody(&hm->body);
     cJSON *jTopic = cJSON_GetObjectItem(json, "topic");
+    cJSON *jReg = cJSON_GetObjectItem(json, "reg");
+    cJSON *jRPK = cJSON_GetObjectItem(json, "rpk");
     cJSON *jClaimIds = cJSON_GetObjectItem(json, "claims");
     if(!jTopic)
     {
         http_response_error(nc,400,"Vkey Service : peer error");
         return 0;
+    }
+
+    cJSON* jSend = cJSON_CreateObject();
+
+    if( jReg )
+    {
+        char strIPK[65];
+        register_create(jReg->valuestring, jRPK->valuestring, strIPK);
+
+        cJSON_AddStringToObject(jSend,"ipk",strIPK);
+        cJSON_AddStringToObject(jSend,"url",jReg->valuestring);
     }
 
     unsigned char PK[VKEY_KEY_SIZE];
@@ -143,9 +189,6 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     encrypt_makeDHPublic(SK,PK);
 
 
-
-    cJSON* jSend = cJSON_CreateObject();
-    cJSON_AddStringToObject(jSend,"pid","1234");
     cJSON* jClaims = cJSON_CreateArray();
 
     claim_get_with_proofs( jClaimIds,jTopic->valuestring, jClaims);
@@ -166,6 +209,8 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     cJSON_Delete(json);
     cJSON_Delete(jSend);
     http_response_text(nc,200,"ok");
+
+    return 0;
 
 //
 //    cJSON *claimTemplates = cJSON_GetObjectItem(json, "claims");
@@ -200,9 +245,36 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 //    return 0;
 }
 
+/// when site got auth message, maybe include register requirement
+/// \param s_peerTopic
+/// \param s_data
+/// \return
 int auth_got( const char* s_peerTopic, const char* s_data )
 {
-    g_notify(s_peerTopic,s_data);
+    //handle register message
+    cJSON* jData = cJSON_Parse(s_data);
+    cJSON* jReg = cJSON_GetObjectItem(jData,"reg");
+    cJSON* jIPK = cJSON_GetObjectItem(jData,"ipk");
+    char strRPK[65];
+    char strRSK[65];
+    if(0==register_getKeys(jReg->valuestring,strRPK,strRSK))
+    {
+        //todo: verify signature by isk
+
+        char strRID[VKEY_KEY_SIZE];
+        char strSigRID[VKEY_SIG_SIZE];
+
+        //todo: compute RID and sig
+        eth_register_site(strRID,strSigRID);
+        cJSON_AddItemToObject(jData,"rid",strRID);
+    }
+
+    char *pData = cJSON_PrintUnformatted(jData);
+
+    g_notify(s_peerTopic,pData);
+
+    free(pData);
+    cJSON_Delete(jData);
     return 0;
 }
 

@@ -9,6 +9,7 @@
 #include "collect.h"
 #include "vlink.h"
 #include "util.h"
+#include "register.h"
 
 static int test(struct mg_connection *nc, struct http_message *hm);
 
@@ -20,6 +21,7 @@ static http_router routers[8]={
         {attest_route,"*","/api/v1/attestation"},
         {share_route,"*","/api/v1/share"},
         {collect_route,"*","/api/v1/collection"},
+        {register_route,"*","/api/v1/register"},
         {vlink_route,"*","/api/v1/vlink"},
         {test,"GET","/test"}
 };

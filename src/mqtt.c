@@ -31,8 +31,12 @@
 #include "encrypt.h"
 #include "vkey.h"
 
-static const char *s_user_name = "guoqc";
-static const char *s_password = "123";
+//static const char *s_user_name = "guoqc";
+//static const char *s_password = "123";
+
+
+static const char *s_user_name = "guest";
+static const char *s_password = "guest";
 
 static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
 static struct mg_connection *mqtt_conn=NULL;
@@ -56,7 +60,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             memset(&opts, 0, sizeof(opts));
             opts.user_name = s_user_name;
             opts.password = s_password;
-            opts.keep_alive=600;
+            opts.keep_alive=60000;
 
             mg_set_protocol_mqtt(nc);
             char clientId[33];

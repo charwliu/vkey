@@ -23,7 +23,6 @@ static http_router routers[2]={
 };
 
 /*
-
   {
       "reg":"www.xxxx.cn",
       "templateIds":["CLMT_IDNUMBER","CLMT_NAME"],
@@ -81,12 +80,15 @@ int auth_start(cJSON* jReq,cJSON* jResult)
 
 
     char names[128]="";
-    //todo 2: get claim template names by templateIds
+    if(templateIds)
+    {
+        //todo 2: get claim template names by templateIds
 
-    cJSON_AddStringToObject(jResult,"names",names);
+        cJSON_AddStringToObject(jResult, "names", names);
 
-    cJSON* jTids =  cJSON_Duplicate(templateIds,0);
-    cJSON_AddStringToObject(jResult,"claimTemplates",jTids);
+        cJSON *jTids = cJSON_Duplicate(templateIds, 0);
+        cJSON_AddStringToObject(jResult, "claimTemplates", jTids);
+    }
     cJSON_AddStringToObject(jResult,"desc",desc->valuestring);
 
     return 0;
@@ -179,7 +181,7 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
         register_create(jReg->valuestring, jRPK->valuestring, strIPK);
 
         cJSON_AddStringToObject(jSend,"ipk",strIPK);
-        cJSON_AddStringToObject(jSend,"url",jReg->valuestring);
+        cJSON_AddStringToObject(jSend,"reg",jReg->valuestring);
     }
 
     unsigned char PK[VKEY_KEY_SIZE];
@@ -188,13 +190,14 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     encrypt_random(SK);
     encrypt_makeDHPublic(SK,PK);
 
+    if(jClaimIds)
+    {
+        cJSON *jClaims = cJSON_CreateArray();
 
-    cJSON* jClaims = cJSON_CreateArray();
+        claim_get_with_proofs(jClaimIds, jTopic->valuestring, jClaims);
 
-    claim_get_with_proofs( jClaimIds,jTopic->valuestring, jClaims);
-
-    cJSON_AddItemToObject(jSend,"claims",jClaims);
-
+        cJSON_AddItemToObject(jSend, "claims", jClaims);
+    }
     //send data to des
     char* pData=cJSON_PrintUnformatted(jSend);
     char strTopic[128];
@@ -257,16 +260,19 @@ int auth_got( const char* s_peerTopic, const char* s_data )
     cJSON* jIPK = cJSON_GetObjectItem(jData,"ipk");
     char strRPK[65];
     char strRSK[65];
-    if(0==register_getKeys(jReg->valuestring,strRPK,strRSK))
+    if(jReg && 0==register_getKeys(jReg->valuestring,strRPK,strRSK))
     {
         //todo: verify signature by isk
 
-        char strRID[VKEY_KEY_SIZE];
+        char RID[VKEY_KEY_SIZE];
         char strSigRID[VKEY_SIG_SIZE];
+        encrypt_hash(RID,jIPK->valuestring,strlen(jIPK->valuestring));
+        char strRID[65];
+        sodium_bin2hex(strRID,65,RID,VKEY_KEY_SIZE);
 
         //todo: compute RID and sig
         eth_register_site(strRID,strSigRID);
-        cJSON_AddItemToObject(jData,"rid",strRID);
+        cJSON_AddStringToObject(jData,"rid",strRID);
     }
 
     char *pData = cJSON_PrintUnformatted(jData);

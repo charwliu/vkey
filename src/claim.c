@@ -144,14 +144,40 @@ static int del_claim(struct mg_connection *nc, struct http_message *hm)
         http_response_error(nc,400,"Vkey Service : claimId error");
         return 0;
     }
+    char* strID=claimId->valuestring;
     //todo: 1 check exist
 
     //todo: 2 delete auth and attestation records
 
     //todo: 3 delete claim record
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"DELETE FROM TB_CLAIM WHERE ID='%s'",strID);
+    sqlite3_exec(db,strSql,NULL,NULL,NULL);
 
 
-    http_response_text(nc,200,"[Not Ready!] Claim deleted!");
+//    sqlite3_stmt* pStmt;
+//    const char* strTail=NULL;
+//    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+//    if( ret != SQLITE_OK )
+//    {
+//        sqlite3_finalize(pStmt);
+//        return -1;
+//    }
+//    sqlite3_bind_text(pStmt,1,strID,strlen(strID),SQLITE_TRANSIENT);
+//
+//    ret = sqlite3_step(pStmt);
+//    if( ret != SQLITE_DONE )
+//    {
+//        sqlite3_finalize(pStmt);
+//        return -1;
+//    }
+//    sqlite3_finalize(pStmt);
+
+
+
+
+    http_response_text(nc,200,"veky: Claim deleted!");
 }
 
 
@@ -191,10 +217,44 @@ static int insert_claim(const char* s_id,const char * s_templateId,const char* s
 
 
 
-static int update_claim(const char* s_id,const char* s_data,int n_timec)
+static int update_claim(const char* s_id,const char* s_data,int n_timeu)
 {
+    //read claim from db, if not exist ,return failed
+
+    //if exist, check old value and new value, if equals return failed
+
+    //update data and time
+
+
 
     //todo: encrypt s_json
+
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"UPDATE TB_CLAIM SET DATA=?,TIMEU=? WHERE ID=?");
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_bind_text(pStmt,1,s_data,strlen(s_data),SQLITE_TRANSIENT);
+    sqlite3_bind_int(pStmt,2,n_timeu);
+    sqlite3_bind_text(pStmt,3,s_id,strlen(s_id),SQLITE_TRANSIENT);
+
+    ret = sqlite3_step(pStmt);
+    if( ret != SQLITE_DONE )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_finalize(pStmt);
+
+
+    //remove attestation data
 
     return 0;
 }
@@ -322,5 +382,5 @@ int claim_get_with_proofs(cJSON* jClaimIds,const char* sTopic,cJSON* jClaims)
 
 int claim_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,2,nc,hm);
+    return http_routers_handle(routers,4,nc,hm);
 }

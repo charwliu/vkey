@@ -10,6 +10,7 @@
 
 static int post_recover(struct mg_connection *nc, struct http_message *hm);
 static int register_write(const char* s_rid,const char* s_url,const char* s_rpk,int n_state);
+static int register_recover(const char* s_IUK,const char* s_IMK,const char* s_RID,const char* s_URL,const char* s_RPK);
 
 static http_router routers[1]={
         {post_recover,"POST","/api/v1/register/recover"}
@@ -75,12 +76,92 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
 {
     //todo 1: check db file
 
+    cJSON *json = util_parseBody(&hm->body);
+
+    cJSON *rescureCode = cJSON_GetObjectItem(json, "rescure");
+    if(!rescureCode)
+    {
+        http_response_error(nc,400,"Vkey Service : rescure error");
+        return 0;
+    }
+    cJSON *jCipherIUK = cJSON_GetObjectItem(json, "iuk");
+    if(!jCipherIUK)
+    {
+        http_response_error(nc,400,"Vkey Service : iuk error");
+        return 0;
+    }
+
+    char* strSecure = rescureCode->valuestring;
+    char* strCipherIUK = jCipherIUK->valuestring;
+
+
+    sqlite3* db = db_get();
+    if(!db)
+    {
+        http_response_error(nc,400,"vkey:has not db file");
+        return -1;
+    }
+
     //todo 2: descrypt iuk, compute old ilk,imk
+
+    //descrypt iuk by hash of rescure code
+    unsigned char hashRescure[VKEY_KEY_SIZE];
+    encrypt_hash(hashRescure,strSecure,strlen(strSecure));
+
+    char cipherIUK[VKEY_KEY_SIZE];
+    size_t len;
+    sodium_hex2bin(cipherIUK,VKEY_KEY_SIZE,strCipherIUK,64,NULL,&len,NULL);
+
+    unsigned char IUK[VKEY_KEY_SIZE];
+    encrypt_decrypt(IUK,cipherIUK,VKEY_KEY_SIZE,hashRescure,NULL,NULL,0,NULL);
+
+    //compute ilk,imk
+    //1:generate keys
+    unsigned char ILK[VKEY_KEY_SIZE];
+    unsigned char IMK[VKEY_KEY_SIZE];
+    unsigned char AUTHTAG[VKEY_KEY_SIZE+1];
+
+    //IUK,ILK,IMK
+    encrypt_makeDHPublic(IUK,ILK);
+    encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);
+
 
     //todo 3: read register recordset, descrypt
 
-    //todo 4: start loop
+    char strSql[256];
+    sprintf(strSql,"SELECT RID,URL,RPK FROM TB_REG_CLIENT WHERE STATE=1;");
 
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return NULL;
+    }
+
+    //todo 4: start loop
+    while( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        char *strRID = (char *) sqlite3_column_text(pStmt, 0);
+        char *strURL = (char *) sqlite3_column_text(pStmt, 1);
+        char *strRPK = (char *) sqlite3_column_text(pStmt, 2);
+        //todo: descrypt data
+
+        register_recover(IUK,IMK,strRID,strURL,strRPK);
+    }
+    sqlite3_finalize(pStmt);
+
+    //todo 5: finish loop
+
+    //todo 6: start monitor block chain transaction state
+
+    //todo 7: finish
+
+}
+
+static int register_recover(const char* s_IUK,const char* s_IMK,const char* s_RID,const char* s_URL,const char* s_RPK)
+{
     //todo 4.1: compute old ipk, rid
 
     //todo 4.2: get suk from bc by rid
@@ -94,15 +175,8 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
     //todo 4.6: send old ipk,new ipk, signature of ipk by new isk to site
 
     //todo 4.7: finish one site recover
-
-    //todo 5: finish loop
-
-    //todo 6: start monitor block chain transaction state
-
-    //todo 7: finish
-
+    return 0;
 }
-
 
 /// register to a site, compute keys and store register record to db, return ipk
 /// \param j_reg

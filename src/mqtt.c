@@ -303,9 +303,12 @@ int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t 
 
 
     printf("Subscribing to '%s'\n", s_topic_expr.topic);
+    mqtt_log(s_event,strPK,strSK,t_time,n_duration,s_data);
+
+
     mg_mqtt_subscribe(mqtt_conn, &s_topic_expr, 1, 42);
 
-    mqtt_log(s_event,strPK,strSK,t_time,n_duration,s_data);
+
     return 0;
 }
 
@@ -388,8 +391,8 @@ int mqtt_readTopic(const char* s_pk,cJSON* j_result)
 
     sqlite3_bind_text(pStmt, 1, s_pk, strlen(s_pk), SQLITE_TRANSIENT);
 
-
-    if( sqlite3_step(pStmt) == SQLITE_ROW )
+    ret=sqlite3_step(pStmt);
+    if( ret == SQLITE_ROW )
     {
         char *strSK = (char *) sqlite3_column_text(pStmt, 0);
         time_t time = (time_t)sqlite3_column_int(pStmt,1);
@@ -414,5 +417,5 @@ int mqtt_readTopic(const char* s_pk,cJSON* j_result)
         sqlite3_finalize(pStmt);
         return 0;
     }
-    return -1;
+    return ret;
 }

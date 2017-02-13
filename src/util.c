@@ -73,7 +73,7 @@ char* util_getStr(struct mg_str* msg)
 {
     char *topic=malloc(msg->len + 1);
     memcpy(topic, msg->p, msg->len);
-    topic[msg->len + 1] = 0;
+    topic[msg->len] = 0;
     return topic;
 }
 

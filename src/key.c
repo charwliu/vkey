@@ -66,7 +66,7 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     if( strlen(key_address)>0 )
     {
         http_response_error(nc,400,"Vkey Service : veky exist");
-        return 0;
+        return 1;
     }
 
     cJSON *json = util_parseBody(&hm->body);

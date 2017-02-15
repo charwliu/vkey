@@ -2,6 +2,8 @@
 #define CS_VKEY_ATTEST_H_
 
 int attest_route(struct mg_connection *nc, struct http_message *hm );
+int post_attest(struct mg_connection *nc, struct http_message *hm);
+
 
 int attest_got( const char* s_peerTopic, const char* s_data );
 

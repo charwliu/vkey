@@ -86,8 +86,8 @@ int auth_start(cJSON* jReq,cJSON* jResult)
 
         cJSON_AddStringToObject(jResult, "names", names);
 
-        cJSON *jTids = cJSON_Duplicate(templateIds, 0);
-        cJSON_AddStringToObject(jResult, "claimTemplates", jTids);
+        cJSON *jTids = cJSON_Duplicate(templateIds, 1);
+        cJSON_AddItemToObject(jResult, "claimTemplates", jTids);
     }
     cJSON_AddStringToObject(jResult,"desc",desc->valuestring);
 
@@ -254,6 +254,10 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 /// \return
 int auth_got( const char* s_peerTopic, const char* s_data )
 {
+
+    printf("Auth From:%s\n",s_peerTopic);
+    printf("Auth Message:%s\n",s_data);
+
     //handle register message
     cJSON* jData = cJSON_Parse(s_data);
     cJSON* jReg = cJSON_GetObjectItem(jData,"reg");

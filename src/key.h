@@ -5,11 +5,8 @@
 
 
 
-int key_load();
+int key_exist();
 int key_route(struct mg_connection *nc, struct http_message *hm );
-const char* key_getAddress();
 
-const char* key_getAttestSK();
-const char* key_getAttestPK();
 
 #endif

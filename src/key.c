@@ -17,15 +17,15 @@ static http_router routers[1]={
 };
 
 
-static char key_address[VKEY_KEY_SIZE*2+1]="";
+//static char key_address[VKEY_KEY_SIZE*2+1]="";
 
 
 
-static int write_key(const char* s_address,const char * s_imk,const char* s_ilk,const char* s_tag,int n_time)
+static int write_key(const char* s_apk,const char* s_ask, const char * s_imk,const char* s_ilk,const char* s_tag,int n_time)
 {
     sqlite3* db = db_get();
     char strSql[1024];
-    sprintf(strSql,"INSERT INTO TB_KEY (ADDRESS,IMK,ILK,TAG,TIME) VALUES(?,?,?,?,?)");
+    sprintf(strSql,"INSERT INTO TB_KEY (APK,ASK,IMK,ILK,TAG,TIME) VALUES(?,?,?,?,?,?)");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -35,11 +35,12 @@ static int write_key(const char* s_address,const char * s_imk,const char* s_ilk,
         sqlite3_finalize(pStmt);
         return -1;
     }
-    sqlite3_bind_text(pStmt,1,s_address,-1,SQLITE_TRANSIENT);
-    sqlite3_bind_blob(pStmt,2,s_imk,32,SQLITE_TRANSIENT);
-    sqlite3_bind_blob(pStmt,3,s_ilk,32,SQLITE_TRANSIENT);
-    sqlite3_bind_text(pStmt,4,s_tag,-1,SQLITE_TRANSIENT);
-    sqlite3_bind_int(pStmt,5,n_time);
+    sqlite3_bind_text(pStmt,1,s_apk,-1,SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,2,s_ask,-1,SQLITE_TRANSIENT);
+    sqlite3_bind_blob(pStmt,3,s_imk,32,SQLITE_TRANSIENT);
+    sqlite3_bind_blob(pStmt,4,s_ilk,32,SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,5,s_tag,-1,SQLITE_TRANSIENT);
+    sqlite3_bind_int(pStmt,6,n_time);
 
 
     ret = sqlite3_step(pStmt);
@@ -63,10 +64,10 @@ static int write_key(const char* s_address,const char * s_imk,const char* s_ilk,
 /// request by secure code and main password hash , saved ilk,encrytped imk,create address, return encryped iuk,address
 static int post_key(struct mg_connection *nc, struct http_message *hm )
 {
-    if( strlen(key_address)>0 )
+    if( key_exist()==1 )
     {
         http_response_error(nc,400,"Vkey Service : veky exist");
-        return 1;
+        return 0;
     }
 
     cJSON *json = util_parseBody(&hm->body);
@@ -91,8 +92,8 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     unsigned char IUK[VKEY_KEY_SIZE];
     unsigned char ILK[VKEY_KEY_SIZE];
     unsigned char IMK[VKEY_KEY_SIZE];
-    unsigned char ISK[VKEY_KEY_SIZE];
-    unsigned char ADDRESS[VKEY_KEY_SIZE];
+    unsigned char ASK[VKEY_KEY_SIZE];
+    unsigned char APK[VKEY_KEY_SIZE];
     unsigned char AUTHTAG[VKEY_KEY_SIZE+1];
 
     //IUK,ILK,IMK
@@ -100,10 +101,14 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     encrypt_makeDHPublic(IUK,ILK);
     encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);
 
-    encrypt_hmac(IMK,g_config.sde_url,strlen(g_config.sde_url),ISK);
-    encrypt_makeSignPublic(ISK,ADDRESS);
-    memset(ISK,0,VKEY_KEY_SIZE);
-    sodium_bin2hex(key_address,65,ADDRESS,VKEY_KEY_SIZE);
+    encrypt_hmac(IMK,g_config.sde_url,strlen(g_config.sde_url),ASK);
+    encrypt_makeSignPublic(ASK,APK);
+
+    //APK,ASK
+    char strAPK[65];
+    char strASK[65];
+    sodium_bin2hex(strAPK,65,APK,VKEY_KEY_SIZE);
+    sodium_bin2hex(strASK,65,ASK,VKEY_KEY_SIZE);
 
 
     //IUK使用救援码的HASH进行加密
@@ -125,7 +130,7 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
 
     //2:write to db
     time_t nTime = time(NULL);
-    int ret = write_key(key_address,IMK,ILK,AUTHTAG,nTime);
+    int ret = write_key(strAPK,strASK,IMK,ILK,AUTHTAG,nTime);
     if(ret!=0)
     {
         http_response_text(nc,400,"Vkey Service : Write key error");
@@ -148,13 +153,13 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
 }
 
 /// load address imk from table TB_KEY
-int key_load()
+int key_exist()
 {
     sqlite3* db = db_get();
 
     char strSql[256];
 
-    sprintf(strSql,"SELECT ADDRESS FROM TB_KEY LIMIT 1;");
+    sprintf(strSql,"SELECT APK FROM TB_KEY LIMIT 1;");
 
 
     sqlite3_stmt* pStmt;
@@ -164,7 +169,7 @@ int key_load()
     {
         printf("No key!");
         sqlite3_finalize(pStmt);
-        return -1;
+        return 0;
     }
 
 
@@ -172,36 +177,15 @@ int key_load()
     if( ret != SQLITE_ROW )
     {
         sqlite3_finalize(pStmt);
-        return -1;
+        return 0;
     }
-
-    char *strADDRESS = (char *) sqlite3_column_text(pStmt, 0);
-    memcpy(key_address,strADDRESS,strlen(strADDRESS));
-
-    printf("Address:%s\n",key_address);
 
     sqlite3_finalize(pStmt);
 
-    return 0;
+    return 1;
 }
 
 int key_route(struct mg_connection *nc, struct http_message *hm )
 {
     return http_routers_handle(routers,1,nc,hm);
-}
-
-const char* key_getAddress()
-{
-    return key_address;
-}
-
-
-const char* key_getAttestSK()
-{
-    return key_address;
-}
-
-const char* key_getAttestPK()
-{
-    return key_address;
 }

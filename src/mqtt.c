@@ -31,14 +31,15 @@
 #include "encrypt.h"
 #include "vkey.h"
 
-//static const char *s_user_name = "guoqc";
-//static const char *s_password = "123";
+static const char *s_user_name = "guoqc";
+static const char *s_password = "123";
 
+//
+//static const char *s_user_name = "guest";
+//static const char *s_password = "guest";
 
-static const char *s_user_name = "guest";
-static const char *s_password = "guest";
-
-static struct mg_mqtt_topic_expression s_topic_expr = {NULL, 0};
+static struct mg_mgr *mqtt_mgr;
+//static struct mg_mqtt_topic_expression s_topic_expr = {"", 0};
 static struct mg_connection *mqtt_conn=NULL;
 static int mqtt_ready=0;
 
@@ -60,7 +61,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             memset(&opts, 0, sizeof(opts));
             opts.user_name = s_user_name;
             opts.password = s_password;
-            opts.keep_alive=60000;
+            opts.keep_alive=200;
 
             mg_set_protocol_mqtt(nc);
             char clientId[33];
@@ -77,22 +78,27 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             }
 
             mqtt_ready = 1;
-            char topic[256];
-            sprintf(topic, "%s.*",key_getAddress());
-            s_topic_expr.topic = topic;
-            
-            printf("Subscribing to '%s'\n", s_topic_expr.topic);
-            mg_mqtt_subscribe(nc, &s_topic_expr, 1, 42);
+            mqtt_reSubscribe();
+            printf("MQTT connected and resubscribed all topics. \n\n");
+
+//            char topic[256];
+//            sprintf(topic, "%s.*",key_getAddress());
+//            s_topic_expr.topic = topic;
+//
+//            printf("Subscribing to '%s'\n", s_topic_expr.topic);
+//            mg_mqtt_subscribe(nc, &s_topic_expr, 1, 42);
             break;
         }
         case MG_EV_MQTT_PUBACK:
         {
-            printf("Message publishing acknowledged (msg_id: %d)\n", msg->message_id);
+            char* strTopic = util_getStr(&msg->topic);
+            printf("Publishing acknowledged. %s\n\n", strTopic);
             break;
         }
         case MG_EV_MQTT_SUBACK:
         {
-            printf("Subscription acknowledged, forwarding to '/test'\n");
+            char* strTopic = util_getStr(&msg->topic);
+            printf("Subscription acknowledged. %s\n\n",strTopic);
             break;
         }
         case MG_EV_MQTT_PUBLISH:
@@ -130,8 +136,12 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
         case MG_EV_CLOSE:
         {
             printf("MQTT connection closed\n");
-            mqtt_ready=0;
+            mqtt_conn=NULL;
+            mqtt_connect(mqtt_mgr);
+
+            //mqtt_ready=0;
             //exit(1);
+            break;
         }
     }
 }
@@ -141,6 +151,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 /// \return
 int mqtt_connect(struct mg_mgr *mgr)
 {
+    mqtt_mgr = mgr;
+
     if(mqtt_conn){
         return 0;
     }
@@ -196,9 +208,9 @@ int mqtt_send(const char* s_to,const char* s_event,const char* s_pk,const char* 
     char* sPayload = cJSON_PrintUnformatted(jPayload);
 
 
-    printf("Publish msg to:%s",s_to);
+    printf("Publish msg to:%s \nMessage:%s\n",s_to,sPayload);
 
-    mg_mqtt_publish(mqtt_conn, s_to, 42, MG_MQTT_QOS(0), sPayload, strlen(sPayload));
+    mg_mqtt_publish(mqtt_conn, s_to, 42, MG_MQTT_QOS(1), sPayload, strlen(sPayload));
 
     free(sPayload);
     cJSON_Delete(jPayload);
@@ -212,6 +224,8 @@ static int mqtt_got(struct mg_mqtt_message *msg)
     //get secret key and subscribe data by topic
     char* strTopic = util_getStr(&msg->topic);
     char* strPK = util_getPk(strTopic);
+
+    printf("Got Message at:%s\n",strTopic);
 
     cJSON* jSubscribe=cJSON_CreateObject();
 
@@ -260,6 +274,7 @@ static int mqtt_got(struct mg_mqtt_message *msg)
     if(strstr(jFrom->valuestring,"SHARE_SRC"))
     {
         share_got(jFrom->valuestring,jData->valuestring);
+        mqtt_unsubscribe(strTopic);
     }
 
     if(strstr(jFrom->valuestring,"AUTH_SRC")>0)
@@ -298,20 +313,61 @@ int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t 
     sodium_bin2hex(strPK,65,s_pk,VKEY_KEY_SIZE);
     sodium_bin2hex(strSK,65,s_sk,VKEY_KEY_SIZE);
 
+    char strTopic[256];
+    sprintf(strTopic,"%s/%s",s_event,strPK);
 
-    sprintf(s_topic_expr.topic,"%s/%s",s_event,strPK);
+    struct mg_mqtt_topic_expression topic_expr={strTopic,0};
 
-
-    printf("Subscribing to '%s'\n", s_topic_expr.topic);
+    printf("Subscribing to '%s'\n", strTopic);
     mqtt_log(s_event,strPK,strSK,t_time,n_duration,s_data);
 
 
-    mg_mqtt_subscribe(mqtt_conn, &s_topic_expr, 1, 42);
+    mg_mqtt_subscribe(mqtt_conn, &topic_expr, 1, 42);
 
 
     return 0;
 }
 
+int mqtt_reSubscribe()
+{
+    sqlite3* db = db_get();
+
+    char strSql[256];
+    sprintf(strSql,"SELECT TOPIC,PK,SK,TIME,DURATION,DATA FROM TB_MQTT;");
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+
+    while( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        char *strEvent = (char *) sqlite3_column_text(pStmt, 0);
+        char *strPK = (char *) sqlite3_column_text(pStmt, 1);
+
+        time_t time = (time_t)sqlite3_column_int(pStmt,3);
+        int duration = sqlite3_column_int(pStmt,2);
+
+        char strTopic[256];
+        sprintf(strTopic,"%s/%s",strEvent,strPK);
+
+        struct mg_mqtt_topic_expression topic_expr={strTopic,0};
+
+        printf("Subscribing to '%s'\n", strTopic);
+
+        mg_mqtt_subscribe(mqtt_conn, &topic_expr, 1, 42);
+
+    }
+    sqlite3_finalize(pStmt);
+
+    return 0;
+
+}
 /// subscribe topic to mqtt
 /// \param s_topic
 /// \return
@@ -319,12 +375,20 @@ int mqtt_unsubscribe(const char* s_topic)
 {
     if(!mqtt_ready) return -1;
 
-    s_topic_expr.topic = s_topic;
+    char* strPK = util_getPk(s_topic);
 
-    printf("Unsubscribed to '%s'\n", s_topic_expr.topic);
-    mg_mqtt_unsubscribe(mqtt_conn, &s_topic_expr, 1, 42);
+    struct mg_mqtt_topic_expression topic_expr={s_topic,0};
 
-    //todo:remove subscribe record from db file
+
+    printf("Unsubscribed to '%s'\n---\n\n", s_topic);
+    mg_mqtt_unsubscribe(mqtt_conn, &topic_expr, 1, 42);
+
+    //remove subscribe record from db file
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"DELETE FROM TB_MQTT WHERE PK='%s'",strPK);
+    sqlite3_exec(db,strSql,NULL,NULL,NULL);
+
     return 0;
 }
 

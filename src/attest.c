@@ -11,13 +11,17 @@
 #include "db.h"
 #include "vkey.h"
 #include "start.h"
+#include "claim.h"
+#include "attest.h"
 
 static int get_attest(struct mg_connection *nc, struct http_message *hm);
-static int post_attest(struct mg_connection *nc, struct http_message *hm);
+static int post_attest_self(struct mg_connection *nc, struct http_message *hm);
+static int attest_create(const char* s_cid,const char* s_tid, cJSON* j_proof,cJSON* j_signature);
 
 static http_router routers[2]={
         {get_attest,"GET","/api/v1/attestation"},
-        {post_attest,"POST","/api/v1/attestation"}
+        {post_attest,"POST","/api/v1/attestation"},
+        {post_attest_self,"POST","/api/v1/attestation/self"},
 };
 
 
@@ -58,6 +62,45 @@ static int get_attest(struct mg_connection *nc, struct http_message *hm)
     cJSON_Delete(res);
 }
 
+static int attest_getKeys(char* s_apk,char* s_ask)
+{
+
+    sqlite3* db = db_get();
+
+    char strSql[256];
+
+    sprintf(strSql,"SELECT APK,ASK FROM TB_KEY LIMIT 1;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        printf("No key!");
+        sqlite3_finalize(pStmt);
+        return 0;
+    }
+
+
+    ret = sqlite3_step(pStmt);
+    if( ret != SQLITE_ROW )
+    {
+        sqlite3_finalize(pStmt);
+        return 0;
+    }
+
+    char *strAPK = (char *) sqlite3_column_text(pStmt, 0);
+    char *strASK = (char *) sqlite3_column_text(pStmt, 1);
+    strcpy(s_apk,strAPK);
+    strcpy(s_ask,strASK);
+
+
+    sqlite3_finalize(pStmt);
+
+    return 1;
+}
+
 
 /*
  *
@@ -92,7 +135,7 @@ POST HOST/attestation?topic=123455
  *
  *
  */
-static int post_attest(struct mg_connection *nc, struct http_message *hm)
+int post_attest(struct mg_connection *nc, struct http_message *hm)
 {
 
     char strSourceTopic[128]="";
@@ -134,17 +177,25 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
     char hexClaimHash[65];
     sodium_bin2hex(hexClaimHash,65,claimHash,32);
 
-    cJSON_AddStringToObject(proof,"claimMd",hexClaimHash);
+    cJSON_AddStringToObject(proof,"md",hexClaimHash);
 
     //3: add attest public key to proof
     char hexAttestPK[65];
-    sodium_bin2hex(hexAttestPK,65,key_getAttestPK(),32);
-    cJSON_AddStringToObject(proof,"attestPk",hexAttestPK);
+    char hexAttestSK[65];
+    attest_getKeys(hexAttestPK,hexAttestSK);
+
+    cJSON_AddStringToObject(proof,"apk",hexAttestPK);
 
     //4: compute proof signature
+    char ask[32];
+    size_t len;
+    sodium_hex2bin(ask,32,hexAttestSK,65,NULL,&len,NULL);
     char* strProof=cJSON_PrintUnformatted(proof);
     char sigProof[64];
-    encrypt_sign(strProof,strlen(strProof),key_getAttestSK(),sigProof);
+    encrypt_sign(strProof,strlen(strProof),ask,sigProof);
+    memset(ask,0,32);
+    memset(hexAttestSK,0,65);
+
     char hexSigProof[129];
     sodium_bin2hex(hexSigProof,129,sigProof,64);
 
@@ -179,12 +230,92 @@ static int post_attest(struct mg_connection *nc, struct http_message *hm)
 }
 
 
+
+/*
+ {
+    "claim":{
+        "id":"40d27017ddf91223a7bfaf90b6a21ee2",
+        "templateId":"CLMT_IDNUMBER"
+    },
+    "proof":{
+        "md":"1212",
+        "apk":"13432435",
+        "result":1,
+        "name":"佛山自然人一门式",
+        "time":"125545611",
+        "expiration":"13545544",
+        "link":"https://mysite.com/12323",
+
+        "extra":{
+            "staff":"20112313 李敏",
+            "docs":"身份证原件，本人",
+            "desc":"本人现场认证，无误"
+        }
+    },
+    "signature":1231231
+}
+ */
+static int post_attest_self(struct mg_connection *nc, struct http_message *hm)
+{
+
+    cJSON *json = util_parseBody(&hm->body);
+    cJSON *jClaim = cJSON_GetObjectItem(json, "claim");
+    cJSON *jProof = cJSON_GetObjectItem(json, "proof");
+    cJSON* jSignature = cJSON_GetObjectItem(json,"signature");
+
+    if(!json)
+    {
+        http_response_error(nc,400,"Vkey Service : claim could not be parsed");
+        return 0;
+    }
+
+    if(!jClaim)
+    {
+        http_response_error(nc,400,"Vkey Service : claim could not be parsed");
+        return 0;
+    }
+
+    if(!jProof)
+    {
+        http_response_error(nc,400,"Vkey Service : proof could not be parsed");
+        return 0;
+    }
+
+    if(!jSignature)
+    {
+        http_response_error(nc,400,"Vkey Service : signature could not be parsed");
+        return 0;
+    }
+
+
+    cJSON* jCID = cJSON_GetObjectItem(jClaim,"id");
+    cJSON* jTID = cJSON_GetObjectItem(jClaim,"templateId");
+
+
+    int ret = attest_create(jCID->valuestring,jTID->valuestring,jProof,jSignature);
+    if(ret==0)
+    {
+        http_response_text(nc,200,"Attestation post ok!");
+    }
+    else if(ret==-1)
+    {
+        http_response_error(nc,400,"claim is not exist!");
+    }
+    else if(ret==-2)
+    {
+        http_response_error(nc,400,"claim md is not match!");
+    }
+
+    cJSON_Delete(json);
+    return 0;
+}
+
 cJSON* attest_read_by_claimid(const char* s_claimId)
 {
     sqlite3* db = db_get();
 
     char strSql[256];
-    sprintf(strSql,"SELECT ATTEST,RASK,TIME FROM TB_ATTEST WHERE CID=?;");
+    sprintf(strSql,"SELECT PROOF,RASK,TIME FROM TB_ATTEST WHERE CID=?;");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -200,16 +331,16 @@ cJSON* attest_read_by_claimid(const char* s_claimId)
 
     while( sqlite3_step(pStmt) == SQLITE_ROW )
     {
-        char *strAttest = (char *) sqlite3_column_text(pStmt, 0);
+        char *strProof = (char *) sqlite3_column_text(pStmt, 0);
         char *strRASK = (char *) sqlite3_column_text(pStmt, 1);
         //todo: descrypt data
-        cJSON* jData = cJSON_Parse(strAttest);
+        cJSON* jData = cJSON_Parse(strProof);
         if(jData&&strRASK)
         {
             cJSON_AddStringToObject(jData,"rask",strRASK);
         }
         cJSON_AddItemToArray(jResult,jData);
-        cJSON_Delete(jData);
+       // cJSON_Delete(jData);
     }
     sqlite3_finalize(pStmt);
     return jResult;
@@ -260,18 +391,137 @@ int attest_replace_rask_with_verify(cJSON* jAttest,const char* s_msg)
     return 0;
 }
 
+///write proof to db
+static int attest_write(const char* s_cid,const char* s_proof,const char* s_sig,const char* s_rask)
+{
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"INSERT INTO TB_ATTEST (CID,PROOF,SIGNATURE,RASK,TIME) VALUES(?,?,?,?,?)");
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    time_t nTime = time(NULL);
+    sqlite3_bind_text(pStmt,1,s_cid,strlen(s_cid),SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,2,s_proof,strlen(s_proof),SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,3,s_sig,strlen(s_sig),SQLITE_TRANSIENT);
+    sqlite3_bind_int(pStmt,4,nTime);
+
+    ret = sqlite3_step(pStmt);
+    if( ret != SQLITE_DONE )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_finalize(pStmt);
+
+    return 0;
+}
+
+///local handle attest
+static int attest_create(const char* s_cid,const char* s_tid, cJSON* j_proof,cJSON* j_signature)
+{
+    //todo:1 parse and descrypt jwt
+    cJSON* jAPK = cJSON_GetObjectItem(j_proof,"apk");
+    char* strProof = cJSON_PrintUnformatted(j_proof);
+
+
+    char RASK[32],RAPK[32];
+
+    encrypt_random(RASK);
+    encrypt_makeSignPublic(RASK,RAPK);
+    char strRASK[65],strRAPK[65];
+    sodium_bin2hex(strRASK,65,RASK,32);
+    sodium_bin2hex(strRAPK,65,RAPK,32);
+
+
+    cJSON* jLocalClaim = claim_read_by_claimid(s_cid);
+    int ret=-1;
+    if(jLocalClaim)
+    {
+
+        char* strClaim=cJSON_PrintUnformatted(jLocalClaim);
+        char claimHash[32];
+        encrypt_hash(claimHash,strClaim,strlen(strClaim));
+
+        char hexClaimHash[65];
+        sodium_bin2hex(hexClaimHash,65,claimHash,32);
+        cJSON* jMD = cJSON_GetObjectItem(j_proof,"md");
+        if( 1||strcmp(hexClaimHash,jMD->valuestring)==0)
+        {
+            attest_write(s_cid,strProof,j_signature->valuestring,strRASK);
+
+            eth_attest_write(j_signature->valuestring,jAPK->valuestring,strRAPK,s_tid);
+            ret=0;
+        }
+        else
+        {
+            ret=-2;
+        }
+        cJSON_Delete(jLocalClaim);
+    }
+    else
+    {
+        ret=-1;
+    }
+    free(strProof);
+    return ret;
+}
+
 
 int attest_got( const char* s_peerTopic, const char* s_data )
 {
     printf("Got attestation data : %s \n", s_data);
 
     //todo:1 parse and descrypt jwt
+    cJSON* jData = cJSON_Parse(s_data);
+    cJSON* jClaim = cJSON_GetObjectItem(jData,"claim");
+    cJSON* jProof = cJSON_GetObjectItem(jData,"proof");
+    cJSON* jSignature = cJSON_GetObjectItem(jData,"signature");
+    if(jClaim&&jProof&&jSignature)
+    {
 
-    eth_register("cn.guoqc.3","vid1233","pid1233","suk1233","vuk1233");
 
-    g_notify(s_peerTopic,s_data);
+        cJSON *jCID = cJSON_GetObjectItem(jClaim, "id");
+        cJSON *jTID = cJSON_GetObjectItem(jClaim, "templateId");
+
+        int ret = attest_create(jCID->valuestring, jTID->valuestring, jProof, jSignature);
+        if (ret == 0)
+        {
+            cJSON_AddStringToObject(jData, "state", "0:attest confirmed");
+        }
+        else if (ret == -1)
+        {
+            cJSON_AddStringToObject(jData, "state", "-1:claim is not exist");
+
+        }
+        else if (ret == -2)
+        {
+            cJSON_AddStringToObject(jData, "state", "-2:claim md is not match");
+        }
+    }
+    else
+    {
+
+        cJSON_AddStringToObject(jData, "state", "-3:attest data invalid format");
+    }
+
+
+    char* strData = cJSON_PrintUnformatted(jData);
+
+    g_notify(s_peerTopic,strData);
+
+    free(strData);
+    cJSON_Delete(jData);
     return 0;
 }
+
+
 
 int attest_route(struct mg_connection *nc, struct http_message *hm )
 {

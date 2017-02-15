@@ -74,7 +74,7 @@ static int db_checkKeyTable()
 //        fprintf(stdout, "Table created successfully\n");
 //    }
 //    return 0;
-    const char* sql = "CREATE TABLE TB_KEY( ADDRESS TEXT PRIMARY KEY NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
+    const char* sql = "CREATE TABLE TB_KEY( APK TEXT PRIMARY KEY NOT NULL, ASK TEXT NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
     return db_checkTable("TB_KEY",sql);
 }
 
@@ -88,7 +88,7 @@ static int db_checkClaimTable()
 
 static int db_checkAttestTable()
 {
-    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, ATTEST TEXT NOT NULL, RASK TEXT NOT NULL, TIME INT );";
+    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, PROOF TEXT NOT NULL, SIGNATURE TEXT NOT NULL, RASK TEXT NOT NULL, TIME INT );";
     return db_checkTable("TB_ATTEST",sql);
 }
 
@@ -128,7 +128,7 @@ static int db_checkTable(const char* s_table,const char* s_createSQL)
         sqlite3_free(sErrMsg);
         return -1;
     }else{
-        fprintf(stdout, "Table created successfully\n");
+        fprintf(stdout, "Table %s created successfully\n",s_table);
     }
     return 0;
 }

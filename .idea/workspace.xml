@@ -12,20 +12,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd422a73-f682-4280-8ebf-09854eb96d1b" name="Default" comment="router array count">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/template.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/template.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config.c" afterPath="$PROJECT_DIR$/src/config.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config.h" afterPath="$PROJECT_DIR$/src/config.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/http.c" afterPath="$PROJECT_DIR$/src/http.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/key.c" afterPath="$PROJECT_DIR$/src/key.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mqtt.c" afterPath="$PROJECT_DIR$/src/mqtt.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network.c" afterPath="$PROJECT_DIR$/src/network.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/register.c" afterPath="$PROJECT_DIR$/src/register.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/start.c" afterPath="$PROJECT_DIR$/src/start.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/start.h" afterPath="$PROJECT_DIR$/src/start.h" />
-    </list>
+    <list default="true" id="cd422a73-f682-4280-8ebf-09854eb96d1b" name="Default" comment="router array count" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,11 +29,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="attest.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mqtt.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mqtt.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="87">
+              <caret line="279" column="0" lean-forward="false" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attest.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/attest.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="255" column="1" lean-forward="true" selection-start-line="234" selection-start-column="1" selection-end-line="255" selection-end-column="1" />
+            <state relative-caret-position="87">
+              <caret line="456" column="0" lean-forward="false" selection-start-line="456" selection-start-column="0" selection-end-line="456" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -72,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="claim.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="claim.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/claim.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-212">
-              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="289">
+              <caret line="74" column="21" lean-forward="false" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -88,19 +85,6 @@
             <state relative-caret-position="114">
               <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="32" selection-end-column="1" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="readme.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/readme.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="439">
-                <caret line="351" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="351" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -206,7 +190,6 @@
         <option value="$PROJECT_DIR$/src/auth.h" />
         <option value="$PROJECT_DIR$/src/register.h" />
         <option value="$PROJECT_DIR$/readme.md" />
-        <option value="$PROJECT_DIR$/src/claim.c" />
         <option value="$PROJECT_DIR$/src/util.c" />
         <option value="$PROJECT_DIR$/src/http.h" />
         <option value="$PROJECT_DIR$/src/sqlite/sqlite3.h" />
@@ -232,6 +215,7 @@
         <option value="$PROJECT_DIR$/src/mqtt.c" />
         <option value="$PROJECT_DIR$/src/start.c" />
         <option value="$PROJECT_DIR$/src/register.c" />
+        <option value="$PROJECT_DIR$/src/claim.c" />
       </list>
     </option>
   </component>
@@ -245,7 +229,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="37" />
     <option name="y" value="24" />
-    <option name="width" value="1879" />
+    <option name="width" value="1679" />
     <option name="height" value="955" />
   </component>
   <component name="ProjectView">
@@ -320,7 +304,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.vkeytest2">
+  <component name="RunManager" selected="Application.vkeytest1">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
@@ -570,7 +554,7 @@
       <workItem from="1487042092267" duration="3708000" />
       <workItem from="1487050378910" duration="14663000" />
       <workItem from="1487125542116" duration="22827000" />
-      <workItem from="1487212512088" duration="12785000" />
+      <workItem from="1487212512088" duration="14075000" />
     </task>
     <task id="LOCAL-00001" summary="router array count">
       <created>1483666884834</created>
@@ -590,7 +574,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="278926000" />
+    <option name="totallyTimeSpent" value="280216000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -602,20 +586,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="37" y="24" width="1879" height="955" extended-state="6" />
+    <frame x="37" y="24" width="1679" height="955" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21014492" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12835473" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2252042" sideWeight="0.49137932" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50875145" sideWeight="0.49137932" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48891482" sideWeight="0.51293105" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4714119" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37922987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1945043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19836639" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6161027" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23570596" sideWeight="0.48706895" order="3" side_tool="false" content_ui="tabs" x="330" y="555" width="1408" height="262" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29871646" sideWeight="0.48706895" order="3" side_tool="false" content_ui="tabs" x="330" y="555" width="1408" height="262" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -662,18 +646,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/claim.c</url>
-          <line>141</line>
+          <line>148</line>
           <option name="timeStamp" value="121" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/mqtt.c</url>
-          <line>279</line>
-          <option name="timeStamp" value="214" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/attest.c</url>
-          <line>456</line>
-          <option name="timeStamp" value="217" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -989,14 +963,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mqtt.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1076">
-          <caret line="390" column="5" lean-forward="true" selection-start-line="390" selection-start-column="5" selection-end-line="390" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1058,14 +1024,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/claim.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-212">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/share.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -1074,10 +1032,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/mqtt.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="279" column="0" lean-forward="false" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/attest.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="255" column="1" lean-forward="true" selection-start-line="234" selection-start-column="1" selection-end-line="255" selection-end-column="1" />
+        <state relative-caret-position="87">
+          <caret line="456" column="0" lean-forward="false" selection-start-line="456" selection-start-column="0" selection-end-line="456" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/claim.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="74" column="21" lean-forward="false" selection-start-line="74" selection-start-column="21" selection-end-line="74" selection-end-column="21" />
           <folding />
         </state>
       </provider>

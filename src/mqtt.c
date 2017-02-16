@@ -37,6 +37,7 @@ static struct mg_mgr *mqtt_mgr;
 static struct mg_connection *mqtt_conn=NULL;
 static int mqtt_ready=0;
 
+static int mqtt_reSubscribe();
 static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data);
 
 /// event handler of mqtt
@@ -322,7 +323,7 @@ int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t 
     return 0;
 }
 
-int mqtt_reSubscribe()
+static int mqtt_reSubscribe()
 {
     sqlite3* db = db_get();
 

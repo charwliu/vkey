@@ -31,12 +31,6 @@
 #include "encrypt.h"
 #include "vkey.h"
 
-static const char *s_user_name = "guoqc";
-static const char *s_password = "123";
-
-//
-//static const char *s_user_name = "guest";
-//static const char *s_password = "guest";
 
 static struct mg_mgr *mqtt_mgr;
 //static struct mg_mqtt_topic_expression s_topic_expr = {"", 0};
@@ -59,8 +53,8 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
         {
             struct mg_send_mqtt_handshake_opts opts;
             memset(&opts, 0, sizeof(opts));
-            opts.user_name = s_user_name;
-            opts.password = s_password;
+            opts.user_name = g_config.mqtt_user;
+            opts.password = g_config.mqtt_password;
             opts.keep_alive=200;
 
             mg_set_protocol_mqtt(nc);
@@ -156,13 +150,13 @@ int mqtt_connect(struct mg_mgr *mgr)
     if(mqtt_conn){
         return 0;
     }
-    mqtt_conn = mg_connect(mgr, g_config.sde_url, ev_handler);
+    mqtt_conn = mg_connect(mgr, g_config.mqtt_url, ev_handler);
     if (mqtt_conn == NULL)
     {
-        fprintf(stderr, "MQTT Connect to (%s) failed\n", g_config.sde_url);
+        fprintf(stderr, "MQTT Connect to (%s) failed\n", g_config.mqtt_url);
         return -1;
     }
-    printf("Connected MQTT server on %s \n", g_config.sde_url);
+    printf("Connected MQTT server on %s \n", g_config.mqtt_url);
     return 0;
 }
 
@@ -333,7 +327,7 @@ int mqtt_reSubscribe()
     sqlite3* db = db_get();
 
     char strSql[256];
-    sprintf(strSql,"SELECT TOPIC,PK,SK,TIME,DURATION,DATA FROM TB_MQTT;");
+    sprintf(strSql,"SELECT COUNT(*) FROM TB_MQTT;");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -345,6 +339,27 @@ int mqtt_reSubscribe()
     }
 
 
+    int nCount=0;
+    if( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        nCount = sqlite3_column_int(pStmt,0);
+
+    }
+    sqlite3_finalize(pStmt);
+
+    sprintf(strSql,"SELECT TOPIC,PK,SK,TIME,DURATION,DATA FROM TB_MQTT;");
+
+    ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    ///
+
+    struct mg_mqtt_topic_expression topics[nCount];
+
+    int i=0;
     while( sqlite3_step(pStmt) == SQLITE_ROW )
     {
         char *strEvent = (char *) sqlite3_column_text(pStmt, 0);
@@ -353,16 +368,31 @@ int mqtt_reSubscribe()
         time_t time = (time_t)sqlite3_column_int(pStmt,3);
         int duration = sqlite3_column_int(pStmt,2);
 
-        char strTopic[256];
+        char *strTopic=malloc(256);
+
         sprintf(strTopic,"%s/%s",strEvent,strPK);
 
-        struct mg_mqtt_topic_expression topic_expr={strTopic,0};
+        //struct mg_mqtt_topic_expression topic_expr={strTopic,0};
+        topics[i].topic=strTopic;
+        topics[i].qos=0;
+        i++;
 
-        printf("Subscribing to '%s'\n", strTopic);
+        printf("Recover topic : '%s'\n", strTopic);
 
-        mg_mqtt_subscribe(mqtt_conn, &topic_expr, 1, 42);
+        //mg_mqtt_subscribe(mqtt_conn, &topic_expr, 1, 42);
 
     }
+
+    mg_mqtt_subscribe(mqtt_conn, topics, nCount, 42);
+
+    for( int i=0;i<nCount;i++)
+    {
+        free(topics[i].topic);
+    }
+
+
+    printf("Resubscribe %d topics .\n", nCount);
+
     sqlite3_finalize(pStmt);
 
     return 0;

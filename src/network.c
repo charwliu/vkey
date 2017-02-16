@@ -4,11 +4,14 @@
 #include "mqtt.h"
 #include "config.h"
 #include "eth.h"
+#include "template.h"
 
 int network_start()
 {
     struct mg_mgr mgr;
     mg_mgr_init(&mgr, NULL);
+
+    template_update(&mgr);
 
     http_start(&mgr);
 

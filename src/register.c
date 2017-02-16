@@ -64,10 +64,13 @@ static http_router routers[1]={
 
 /*
 {
-"iuk":"as84s8f7a8dfagyerwrg",
-"rescure":"11111"
+ "iukOld":"as84s8f7a8dfagyerwrg",
+ "rescureOld":"11111",
+ "rescureNew":"2222",
+ "passwordNew":"33333"
 }
- */
+*/
+
 /// recover for all register sites, the sites should subscribe recover topic
 /// \param nc
 /// \param hm

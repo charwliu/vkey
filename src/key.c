@@ -101,7 +101,7 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     encrypt_makeDHPublic(IUK,ILK);
     encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);
 
-    encrypt_hmac(IMK,g_config.sde_url,strlen(g_config.sde_url),ASK);
+    encrypt_hmac(IMK,g_config.mqtt_url,strlen(g_config.mqtt_url),ASK);
     encrypt_makeSignPublic(ASK,APK);
 
     //APK,ASK

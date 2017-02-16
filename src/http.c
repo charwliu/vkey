@@ -10,12 +10,14 @@
 #include "vlink.h"
 #include "util.h"
 #include "register.h"
+#include "start.h"
 
 static int test(struct mg_connection *nc, struct http_message *hm);
 
 static struct mg_mgr *http_mgr;
 /// router gateway
-static http_router routers[8]={
+static http_router routers[9]={
+        {start_route,"*","/api/v1/stop"},
         {key_route,"*","/api/v1/key"},
         {claim_route,"*","/api/v1/claim"},
         {auth_route,"*","/api/v1/auth"},

@@ -14,6 +14,13 @@
 FN_Notify g_fn_notity;
 const char *g_callback_url;
 
+static int post_stop(struct mg_connection *nc, struct http_message *hm );
+
+static http_router routers[1]={
+        {post_stop,"POST","/api/v1/stop"},
+};
+
+
 int g_notify(const char *s_topic, const char *s_msg)
 {
     if (g_fn_notity)
@@ -69,4 +76,22 @@ int start_vkey(const char *s_dbPath, const char *s_port, FN_Notify fn_notify, co
     network_start();
 
     return 0;
+}
+
+
+static int post_stop(struct mg_connection *nc, struct http_message *hm )
+{
+    //todo: release resource and stop vkey
+    //todo:1 unsubsribe topic from mqtt
+
+    //todo:2 close db file
+
+    //todo:3
+    return 0;
+}
+
+
+int start_route(struct mg_connection *nc, struct http_message *hm )
+{
+    return http_routers_handle(routers,1,nc,hm);
 }

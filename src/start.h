@@ -15,4 +15,7 @@ int start_vkey(const char* s_dbPath,const char* s_port,FN_Notify fn_notify,const
 
 int g_notify(const char* s_topic,const char* s_msg);
 
+
+int start_route(struct mg_connection *nc, struct http_message *hm );
+
 #endif

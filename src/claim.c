@@ -59,14 +59,21 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
         http_response_error(nc,400,"Vkey Service : templateId error");
         return 0;
     }
+    cJSON *jId = cJSON_GetObjectItem(json, "id");
 
 
     char strId[33];
-    if(NULL==util_getUUID(strId,33))
+    if( jId )
+    {//has id
+        strcpy(strId,jId->valuestring);
+    }
+    else
     {
-        http_response_error(nc,400,"Vkey Service : Could not generate uuid");
-        return 0;
-
+        if (NULL == util_getUUID(strId, 33))
+        {
+            http_response_error(nc, 400, "Vkey Service : Could not generate uuid");
+            return 0;
+        }
     }
     const char* strTemplateId=templateId->valuestring;
 

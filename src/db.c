@@ -168,3 +168,14 @@ int db_init(const char *s_path)
     }
     return 0;
 }
+
+int db_close()
+{
+    sqlite3* db = db_get();
+    if(db)
+    {
+        sqlite3_close_v2(db);
+    }
+    return 0;
+
+}

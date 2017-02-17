@@ -30,6 +30,7 @@
 #include "share.h"
 #include "encrypt.h"
 #include "vkey.h"
+#include "network.h"
 
 
 static struct mg_mgr *mqtt_mgr;
@@ -37,7 +38,7 @@ static struct mg_mgr *mqtt_mgr;
 static struct mg_connection *mqtt_conn=NULL;
 static int mqtt_ready=0;
 
-static int mqtt_reSubscribe();
+static int mqtt_doForAllTopics(int n_action);
 static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data);
 
 /// event handler of mqtt
@@ -73,15 +74,9 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             }
 
             mqtt_ready = 1;
-            mqtt_reSubscribe();
+            mqtt_doForAllTopics(1);
             printf("MQTT connected and resubscribed all topics. \n\n");
 
-//            char topic[256];
-//            sprintf(topic, "%s.*",key_getAddress());
-//            s_topic_expr.topic = topic;
-//
-//            printf("Subscribing to '%s'\n", s_topic_expr.topic);
-//            mg_mqtt_subscribe(nc, &s_topic_expr, 1, 42);
             break;
         }
         case MG_EV_MQTT_PUBACK:
@@ -104,38 +99,17 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
 
 
             mqtt_got(msg);
-            /*
-            if(util_strstr(&msg->topic,"SHARE_SRC")==0)
-            {
-                share_confirm(msg);
-            }
 
-            if(util_strstr(&msg->topic,"SHARE_DES")==0)
-            {
-                share_got(strMessage);
-            }
-
-            if(util_strstr(&msg->topic,"auth")>0)
-            {
-                auth_got(strMessage);
-            }
-            if(util_strstr(&msg->topic,"attest")>0)
-            {
-                attest_got(strMessage);
-            }
-
-            free(strMessage);*/
-            //mg_mqtt_publish(nc, "/test", 65, MG_MQTT_QOS(0), msg->payload.p, msg->payload.len);
             break;
         }
         case MG_EV_CLOSE:
         {
             printf("MQTT connection closed\n");
             mqtt_conn=NULL;
-            mqtt_connect(mqtt_mgr);
-
-            //mqtt_ready=0;
-            //exit(1);
+            if(!network_isFinish())
+            {
+                mqtt_connect(mqtt_mgr);
+            }
             break;
         }
     }
@@ -323,7 +297,10 @@ int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t 
     return 0;
 }
 
-static int mqtt_reSubscribe()
+/// do sth for all topics stored in db
+/// \param n_action 1:subscribe,0:unsubscribe
+/// \return
+static int mqtt_doForAllTopics(int n_action)
 {
     sqlite3* db = db_get();
 
@@ -359,6 +336,7 @@ static int mqtt_reSubscribe()
     ///
 
     struct mg_mqtt_topic_expression topics[nCount];
+    char* strTopics[nCount];
 
     int i=0;
     while( sqlite3_step(pStmt) == SQLITE_ROW )
@@ -373,32 +351,44 @@ static int mqtt_reSubscribe()
 
         sprintf(strTopic,"%s/%s",strEvent,strPK);
 
-        //struct mg_mqtt_topic_expression topic_expr={strTopic,0};
+        strTopics[i]=strTopic;
         topics[i].topic=strTopic;
         topics[i].qos=0;
         i++;
 
-        printf("Recover topic : '%s'\n", strTopic);
-
-        //mg_mqtt_subscribe(mqtt_conn, &topic_expr, 1, 42);
-
+        printf("read topic : '%s'\n", strTopic);
     }
 
-    mg_mqtt_subscribe(mqtt_conn, topics, nCount, 42);
+    if( n_action==1 )
+    {
+        mg_mqtt_subscribe(mqtt_conn, topics, nCount, 42);
+        printf("Resubscribe %d topics .\n", nCount);
+    }
+    else if(n_action==0)
+    {
+        mg_mqtt_unsubscribe(mqtt_conn, strTopics, nCount, 42);
+        printf("Unsubscribe %d topics .\n", nCount);
+    }
+
 
     for( int i=0;i<nCount;i++)
     {
-        free(topics[i].topic);
+        free(strTopics[i]);
     }
-
-
-    printf("Resubscribe %d topics .\n", nCount);
 
     sqlite3_finalize(pStmt);
 
     return 0;
+}
+
+
+
+int mqtt_close()
+{
+    mqtt_doForAllTopics(0);
 
 }
+
 /// subscribe topic to mqtt
 /// \param s_topic
 /// \return

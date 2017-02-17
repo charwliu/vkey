@@ -5,6 +5,7 @@
 #include "cjson/cJSON.h"
 
 int mqtt_connect(struct mg_mgr *mgr);
+int mqtt_close();
 
 //int mqtt_send(const char* s_address,const char* s_data, int n_size);
 //int mqtt_send(const char* s_to,const char* s_from,const char* s_sk,const char* s_data );

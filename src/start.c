@@ -81,12 +81,14 @@ int start_vkey(const char *s_dbPath, const char *s_port, FN_Notify fn_notify, co
 
 static int post_stop(struct mg_connection *nc, struct http_message *hm )
 {
-    //todo: release resource and stop vkey
     //todo:1 unsubsribe topic from mqtt
+    mqtt_close();
 
     //todo:2 close db file
+    db_close();
 
-    //todo:3
+    //todo:3 stop network
+    network_stop();
     return 0;
 }
 

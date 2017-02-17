@@ -6,8 +6,11 @@
 #include "eth.h"
 #include "template.h"
 
+static int network_finish=0;
+
 int network_start()
 {
+    network_finish=0;
     struct mg_mgr mgr;
     mg_mgr_init(&mgr, NULL);
 
@@ -19,10 +22,20 @@ int network_start()
 
     eth_init(&mgr);
 
-    while (1)
+    while (!network_finish)
     {
         mg_mgr_poll(&mgr, 1000);
     }
 
     mg_mgr_free(&mgr);
+}
+
+int network_stop()
+{
+    network_finish=1;
+}
+
+int network_isFinish()
+{
+    return network_finish;
 }

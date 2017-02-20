@@ -17,6 +17,8 @@ int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public);
 int encrypt_enHash(const uint64_t *in,uint64_t *out);
 int encrypt_hash( uint8_t *out,  const uint8_t *in, int len);
 
+int encrypt_enScrypt(uint8_t *out, const uint8_t *in, int len,const char* s_salt);
+
 int encrypt_hmac(const uint8_t *secrect, const uint8_t *msg, int len, uint8_t *out);
 
 

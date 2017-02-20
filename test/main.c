@@ -12,7 +12,13 @@ int main(int arg,char* args[]) {
     if(arg>2)
         port=args[2];
 
-    start_vkey(db,port,notify,"localhost:3000/vkey");
+    char IUK[65];
+
+    init_key();
+
+    create_key(db,"password123","rescure-code","random hex data",IUK);
+
+    start_vkey(db,"password123",port,notify,"localhost:3000/vkey");
     return 0;
 }
 

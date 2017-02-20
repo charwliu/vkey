@@ -83,21 +83,18 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
         {
             char* strTopic = util_getStr(&msg->topic);
             printf("Publishing acknowledged. %s\n\n", strTopic);
+            free(strTopic);
             break;
         }
         case MG_EV_MQTT_SUBACK:
         {
             char* strTopic = util_getStr(&msg->topic);
             printf("Subscription acknowledged. %s\n\n",strTopic);
+            free(strTopic);
             break;
         }
         case MG_EV_MQTT_PUBLISH:
         {
-            char* strMessage=malloc(msg->payload.len+1);
-            memcpy(strMessage,msg->payload.p,msg->payload.len);
-            strMessage[msg->payload.len]=0;
-
-
             mqtt_got(msg);
 
             break;
@@ -499,6 +496,7 @@ int mqtt_readTopic(const char* s_pk,cJSON* j_result)
             cJSON_AddStringToObject(j_result,"data",strData);
         }
 
+        cJSON_Delete(jData);
         sqlite3_finalize(pStmt);
         return 0;
     }

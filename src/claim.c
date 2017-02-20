@@ -162,6 +162,7 @@ static int del_claim(struct mg_connection *nc, struct http_message *hm)
     sprintf(strSql,"DELETE FROM TB_CLAIM WHERE ID='%s'",strID);
     sqlite3_exec(db,strSql,NULL,NULL,NULL);
 
+    cJSON_Delete(json);
 
 //    sqlite3_stmt* pStmt;
 //    const char* strTail=NULL;

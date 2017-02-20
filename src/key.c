@@ -58,7 +58,8 @@ static int write_key(const char* s_apk,const char* s_ask, const char * s_imk,con
 /*
  {
     "rescure":"rescure code",
-    "password":"123"
+    "password":"123",
+    "random":"hexdata"
  }
  * */
 /// request by secure code and main password hash , saved ilk,encrytped imk,create address, return encryped iuk,address
@@ -72,21 +73,57 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
 
     cJSON *json = util_parseBody(&hm->body);
 
-    cJSON *rescureCode = cJSON_GetObjectItem(json, "rescure");
-    if(!rescureCode)
+    cJSON *jRescureCode = cJSON_GetObjectItem(json, "rescure");
+    if(!jRescureCode)
     {
         http_response_error(nc,400,"Vkey Service : rescure error");
         return 0;
     }
-    cJSON *password = cJSON_GetObjectItem(json, "password");
-    if(!password)
+    cJSON *jPassword = cJSON_GetObjectItem(json, "password");
+    if(!jPassword)
     {
         http_response_error(nc,400,"Vkey Service : password error");
         return 0;
     }
 
-    char* strSecure = rescureCode->valuestring;
-    char* strPassword = password->valuestring;
+    cJSON *jRandom = cJSON_GetObjectItem(json, "random");
+    if(!jRandom)
+    {
+        http_response_error(nc,400,"Vkey Service : random error");
+        return 0;
+    }
+    char ciperIUK[65];
+
+    if(0==key_create(jRescureCode->valuestring,jPassword->valuestring,jRandom->valuestring,ciperIUK))
+    {
+        cJSON* res = cJSON_CreateObject();
+        cJSON_AddStringToObject(res,"iuk",ciperIUK);
+
+        http_response_json(nc,200,res);
+
+        cJSON_Delete(res);
+
+    }
+    else
+    {
+        http_response_error(nc,400,"Vkey Service : create key error");
+    }
+    return 0;
+}
+
+int key_create(const char* s_rescure,const char* s_password,unsigned char* h_random, char* s_ciperIuk )
+{
+    if( key_exist()==1 )
+    {
+        return -1;
+    }
+
+
+    if(!s_rescure||!s_password||!h_random||!s_ciperIuk)
+    {
+        return -1;
+    }
+
 
     //1:generate keys
     unsigned char IUK[VKEY_KEY_SIZE];
@@ -97,58 +134,66 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     unsigned char AUTHTAG[VKEY_KEY_SIZE+1];
 
     //IUK,ILK,IMK
-    encrypt_random(IUK);
+
+    //IUK=hash(random+salt)
+    unsigned char RAND_SALT[VKEY_KEY_SIZE];
+
+    encrypt_random(RAND_SALT);
+    char strRandSalt[65];
+    sodium_bin2hex(strRandSalt,65,RAND_SALT,VKEY_KEY_SIZE);
+    char *strRandom=malloc(strlen(h_random)+64+1);
+    strcpy(strRandom,h_random);
+    strcat(strRandom,strRandSalt);
+
+    encrypt_hash(IUK,strRandom,strlen(strRandom));
+
+    //ILK
     encrypt_makeDHPublic(IUK,ILK);
+
+    //IMK
     encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);
 
+    //APK,ASK
     encrypt_hmac(IMK,g_config.mqtt_url,strlen(g_config.mqtt_url),ASK);
     encrypt_makeSignPublic(ASK,APK);
 
-    //APK,ASK
     char strAPK[65];
     char strASK[65];
     sodium_bin2hex(strAPK,65,APK,VKEY_KEY_SIZE);
     sodium_bin2hex(strASK,65,ASK,VKEY_KEY_SIZE);
 
 
-    //IUK使用救援码的HASH进行加密
+    //IUK使用救援码的enScrypt进行加密
     unsigned char hashRescure[VKEY_KEY_SIZE];
-    encrypt_hash(hashRescure,strSecure,strlen(strSecure));
+    encrypt_enScrypt(hashRescure,s_rescure,strlen(s_rescure),"salt1");
+
     unsigned char cipherIUK[VKEY_KEY_SIZE];
     encrypt_encrypt(cipherIUK,IUK,32,hashRescure,NULL,NULL,0,NULL);
     memset(IUK,0,VKEY_KEY_SIZE);
 
-    //IMK使用密码的HASH进行加密，并生成16位校验tag，解密时用于确认密码是否正确
+    //IMK使用密码的enCrypt进行加密，并生成16位校验tag，解密时用于确认密码是否正确
     unsigned char hashPassword[VKEY_KEY_SIZE];
-    encrypt_hash(hashPassword,strPassword,strlen(strPassword));
+    encrypt_enScrypt(hashPassword,s_password,strlen(s_password),"salt2");
     unsigned char cipherIMK[VKEY_KEY_SIZE];
     unsigned char authTag[16];
     encrypt_encrypt(cipherIMK,IMK,32,hashPassword,NULL,NULL,0,authTag);
     sodium_bin2hex(AUTHTAG,33,authTag,16);
 
-    cJSON_Delete(json);
+    //test{{
+    unsigned char testIMK[32];
+    int test = encrypt_decrypt(testIMK,cipherIMK,32,hashPassword,NULL,NULL,0,authTag);
 
+    //}}test
     //2:write to db
     time_t nTime = time(NULL);
-    int ret = write_key(strAPK,strASK,IMK,ILK,AUTHTAG,nTime);
+    int ret = write_key(strAPK,strASK,cipherIMK,ILK,AUTHTAG,nTime);
     if(ret!=0)
     {
-        http_response_text(nc,400,"Vkey Service : Write key error");
-        return 0;
+        return -1;
     }
 
+    sodium_bin2hex(s_ciperIuk,65,cipherIUK,VKEY_KEY_SIZE);
 
-    //4:send response
-    cJSON* res = cJSON_CreateObject();
-    char hexIUK[66];
-
-    sodium_bin2hex(hexIUK,66,cipherIUK,VKEY_KEY_SIZE);
-
-    cJSON_AddStringToObject(res,"iuk",hexIUK);
-
-    http_response_json(nc,200,res);
-
-    cJSON_Delete(res);
     return 0;
 }
 
@@ -183,6 +228,50 @@ int key_exist()
     sqlite3_finalize(pStmt);
 
     return 1;
+}
+
+int key_chechPassword(const char* s_password)
+{
+    sqlite3* db = db_get();
+
+    char strSql[256];
+
+    sprintf(strSql,"SELECT IMK,TAG FROM TB_KEY LIMIT 1;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        printf("No key!");
+        sqlite3_finalize(pStmt);
+        return 0;
+    }
+
+
+    ret = sqlite3_step(pStmt);
+    int result=-1;
+    if( ret == SQLITE_ROW )
+    {
+        int size = sqlite3_column_bytes(pStmt,0);
+        unsigned char* cipherIMK = sqlite3_column_text(pStmt,0);
+        char* strTag = sqlite3_column_text(pStmt,1);
+
+        unsigned char hashPassword[VKEY_KEY_SIZE];
+        encrypt_hash(hashPassword,s_password,strlen(s_password));
+
+        unsigned char authTag[16];
+        size_t len;
+        sodium_hex2bin(authTag,16,strTag,32,NULL,&len,NULL);
+        unsigned char IMK[VKEY_KEY_SIZE];
+        result = encrypt_decrypt(IMK,cipherIMK,32,hashPassword,NULL,NULL,0,authTag);
+        memset(IMK,0,32);
+    }
+
+    sqlite3_finalize(pStmt);
+
+    return result;
 }
 
 int key_route(struct mg_connection *nc, struct http_message *hm )

@@ -220,6 +220,7 @@ int post_attest(struct mg_connection *nc, struct http_message *hm)
     mqtt_send(strSourceTopic,"ATTEST_SRC",PK,SK,pData);
 
 
+    free(pData);
     free(strProof);
     free(strClaim);
 
@@ -463,6 +464,7 @@ static int attest_create(const char* s_cid,const char* s_tid, cJSON* j_proof,cJS
         {
             ret=-2;
         }
+        free(strClaim);
         cJSON_Delete(jLocalClaim);
     }
     else

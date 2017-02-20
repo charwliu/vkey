@@ -14,7 +14,7 @@ int network_start()
     struct mg_mgr mgr;
     mg_mgr_init(&mgr, NULL);
 
-    template_update(&mgr);
+    //template_update(&mgr);
 
     http_start(&mgr);
 

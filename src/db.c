@@ -4,6 +4,7 @@
 #include "db.h"
 #include "sqlite/sqlite3.h"
 #include "cjson/cJSON.h"
+#include "key.h"
 
 sqlite3* g_db;
 
@@ -24,7 +25,7 @@ sqlite3* db_get()
     return g_db;
 }
 
-static int db_exist(const char* s_table)
+static int db_tableExist(const char* s_table)
 {
     sqlite3* db = db_get();
     char strSql[256];
@@ -114,7 +115,7 @@ static int db_checkRegClientTable()
 
 static int db_checkTable(const char* s_table,const char* s_createSQL)
 {
-    if(1==db_exist(s_table))
+    if(1==db_tableExist(s_table))
     {
         fprintf(stdout, "Table %s is ready\n",s_table);
         return 0;
@@ -133,41 +134,71 @@ static int db_checkTable(const char* s_table,const char* s_createSQL)
     return 0;
 }
 
-
-int db_init(const char *s_path)
+int db_exist(const char* s_path)
 {
+    FILE* file = fopen(s_path,"r");
+    if(file)
+    {
+        fclose(file);
+        return 1;
+    }
+    return 0;
+}
+
+
+int db_init(const char *s_path,const char* s_password)
+{
+    if( db_exist(s_path) )
+    {
+        return -1;
+    }
     sqlite3_open_v2(s_path,&g_db,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,NULL);
 
     if(0!=db_checkKeyTable())
     {
+        db_close();
         return -1;
     }
     if(0!=db_checkClaimTable())
     {
+        db_close();
         return -1;
     }
 
     if(0!=db_checkAttestTable())
     {
+        db_close();
         return -1;
     }
 
     if(0!=db_checkMqttTable())
     {
+        db_close();
         return -1;
     }
 
     if(0!=db_checkRegSiteTable())
     {
+        db_close();
         return -1;
     }
 
     if(0!=db_checkRegClientTable())
     {
+        db_close();
         return -1;
     }
+
     return 0;
 }
+
+int db_open(const char *s_path,const char* s_password)
+{
+    sqlite3_open_v2(s_path,&g_db,SQLITE_OPEN_READWRITE ,NULL);
+
+    return 0;
+}
+
 
 int db_close()
 {

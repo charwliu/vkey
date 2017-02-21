@@ -66,6 +66,7 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
     if( jId )
     {//has id
         strcpy(strId,jId->valuestring);
+        cJSON_DeleteItemFromObject(json,"id");
     }
     else
     {
@@ -105,7 +106,7 @@ static int put_claim(struct mg_connection *nc, struct http_message *hm) {
         return 0;
     }
     //todo: varify json schema
-    cJSON *claimId = cJSON_GetObjectItem(json, "claimId");
+    cJSON *claimId = cJSON_GetObjectItem(json, "id");
     if(!claimId)
     {
         http_response_error(nc,400,"Vkey Service : claimId error");

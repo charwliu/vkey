@@ -18,7 +18,7 @@ int main(int arg,char* args[]) {
 
     create_key(db,"password123","rescure-code","random hex data",IUK);
 
-    start_vkey(db,"password123",port,notify,"localhost:3000/vkey");
+    start_vkey(db,"123",port,notify,"localhost:3000/vkey");
     return 0;
 }
 

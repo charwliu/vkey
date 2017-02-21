@@ -8,6 +8,15 @@ typedef int (*FN_Notify)(const char*,const char*) ;
 /// \return
 int init_key();
 
+/// create key
+/// \param s_dbPath  db file path,each file means a identity
+/// \param s_rescure    rescure code
+/// \param s_password   main password of key
+/// \param s_random     random to generate iuk
+/// \param s_ciperIUK   out,return encrypted IUK, client should store it offline
+/// \return 0:success,-1:failed
+int create_key(const char* s_dbPath, const char* s_rescure,const char* s_password,const char* s_random ,char* s_ciperIUK);
+
 ///
 /// \param s_dbPath  db file path,each file means a identity
 /// \param s_password  key main password, same as input param password in create_key
@@ -18,14 +27,6 @@ int init_key();
 //int start_vkey(FN_Notify fn_notify,const char* s_dbPath,const char* s_port);
 int start_vkey(const char *s_dbPath,const char* s_password, const char *s_port,  FN_Notify fn_notify, const char *s_callbackUrl);
 
-/// create key
-/// \param s_dbPath  db file path,each file means a identity
-/// \param s_rescure    rescure code
-/// \param s_password   main password of key
-/// \param s_random     random to generate iuk
-/// \param s_ciperIUK   out,return encrypted IUK, client should store it offline
-/// \return 0:success,-1:failed
-int create_key(const char* s_dbPath, const char* s_rescure,const char* s_password,const char* s_random ,char* s_ciperIUK);
 
 int g_notify(const char* s_topic,const char* s_msg);
 

@@ -171,6 +171,75 @@ static int post_password(struct mg_connection *nc, struct http_message *hm )
 
 }
 
+int key_descryptIUK(const char* s_ciperIUK,const char* s_rescure,unsigned char* u_iuk)
+{
+    //descrypt IUK
+    unsigned char CIPERIUK[VKEY_KEY_SIZE];
+    size_t len;
+    sodium_hex2bin(CIPERIUK,32,s_ciperIUK,64,NULL,&len,NULL);
+
+    unsigned char hashPassword[VKEY_KEY_SIZE];
+    encrypt_enScrypt(hashPassword,s_rescure,strlen(s_rescure),"salt");
+
+    unsigned char IUK[VKEY_KEY_SIZE];
+    int ret = encrypt_decrypt(IUK,CIPERIUK,32,hashPassword,NULL,NULL,0,NULL);
+    if( ret !=0 )
+    {
+        return -1;
+    }
+    if(u_iuk)
+    {
+        memcpy(u_iuk,IUK,VKEY_KEY_SIZE);
+    }
+    return 0;
+}
+
+
+int key_checkIUK(const char* s_ciperIUK,const char* s_rescure)
+{
+    unsigned char IUK[VKEY_KEY_SIZE];
+
+    if(0!=key_descryptIUK(s_ciperIUK,s_rescure,IUK))
+    {
+        return -1;
+    }
+
+
+    unsigned char ILK[VKEY_KEY_SIZE];
+    encrypt_makeDHPublic(IUK,ILK);
+
+    //read old ILK
+
+    sqlite3* db = db_get();
+    char strSql[256];
+
+    sprintf(strSql,"SELECT ILK FROM TB_KEY LIMIT 1;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+    unsigned char* ILKOLD=NULL;
+    ret = sqlite3_step(pStmt);
+
+    if( ret == SQLITE_ROW )
+    {
+        int size = sqlite3_column_bytes(pStmt,0);
+        ILKOLD = sqlite3_column_text(pStmt,0);
+    }
+
+    ret = (util_compareKey(ILK,ILKOLD,VKEY_KEY_SIZE)==1)?0:-1;
+    sqlite3_finalize(pStmt);
+
+    return ret;
+}
+
 /*
  {
     "rescure":"rescure code",
@@ -262,6 +331,7 @@ int key_create(const char* s_rescure,const char* s_password,unsigned char* h_ran
     strcat(strRandom,strRandSalt);
 
     encrypt_hash(IUK,strRandom,strlen(strRandom));
+    free(strRandom);
 
     //ILK
     encrypt_makeDHPublic(IUK,ILK);
@@ -305,6 +375,79 @@ int key_create(const char* s_rescure,const char* s_password,unsigned char* h_ran
     }
 
     sodium_bin2hex(s_ciperIuk,65,cipherIUK,VKEY_KEY_SIZE);
+
+    return 0;
+}
+
+static int key_remove()
+{
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"DELETE FROM TB_KEY WHERE 1=1");
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+    ret = sqlite3_step(pStmt);
+    if( ret != SQLITE_DONE )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_finalize(pStmt);
+
+    return 0;
+
+}
+
+static int key_read(unsigned char* u_imk, unsigned char* u_ilk)
+{
+    //TODO:
+    return 0;
+}
+
+int key_update(const char* s_ciperOldIUK,const char* s_oldRescure, const char* s_rescure,const char* s_password,const char* s_random ,char* s_ciperIUK)
+{
+    //checkIUK
+    if (0 != key_checkIUK(s_ciperOldIUK,s_oldRescure))
+    {
+        return -1;
+    }
+
+    //read old imk
+    unsigned char ILKOLD[VKEY_KEY_SIZE];
+    unsigned char IMKOLD[VKEY_KEY_SIZE];
+
+
+    if(0!=key_read(IMKOLD,ILKOLD))
+    {
+        return -1;
+    }
+
+    //remove old key data
+    if(0!=key_remove())
+    {
+        return -1;
+    }
+    //create new key data
+    key_create(s_rescure,s_password,s_random,s_ciperIUK);
+
+    unsigned char ILKNEW[VKEY_KEY_SIZE];
+    unsigned char IMKNEW[VKEY_KEY_SIZE];
+
+    if(0!=key_read(IMKNEW,ILKNEW))
+    {
+        return -1;
+    }
+
+    //todo: descrypt tables data with old imk and reencrypt them with new imk
+    db_reEncrypt(IMKOLD,IMKNEW);
 
     return 0;
 }

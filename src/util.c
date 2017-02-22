@@ -137,3 +137,16 @@ char** util_split(char* a_str, const char a_delim)
     return result;
 }
 
+
+int util_compareKey(const unsigned char* u_a,const unsigned char* u_b,int n_size)
+{
+    for(int i=0;i<n_size;i++)
+    {
+        if(u_a[i]!=u_b[i])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+

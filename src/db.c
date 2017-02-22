@@ -146,7 +146,7 @@ int db_exist(const char* s_path)
 }
 
 
-int db_init(const char *s_path,const char* s_password)
+int db_init(const char *s_path)
 {
     if( db_exist(s_path) )
     {
@@ -209,4 +209,10 @@ int db_close()
     }
     return 0;
 
+}
+
+
+int db_reEncrypt(const unsigned char* u_oldKey,const unsigned char* u_newKey)
+{
+    return 0;
 }

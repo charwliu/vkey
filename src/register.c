@@ -7,14 +7,57 @@
 #include "vkey.h"
 #include "encrypt.h"
 #include "eth.h"
+#include "mqtt.h"
+#include "key.h"
 
+static int post_verify(struct mg_connection *nc, struct http_message *hm);
 static int post_recover(struct mg_connection *nc, struct http_message *hm);
 static int register_write(const char* s_rid,const char* s_url,const char* s_rpk,int n_state);
-static int register_recover(const char* s_IUK,const char* s_IMK,const char* s_RID,const char* s_URL,const char* s_RPK);
+static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_RID,const char* s_URL,const char* s_RPK);
 
-static http_router routers[1]={
+static http_router routers[2]={
+        {post_verify,"POST","/api/v1/register/verify"},
         {post_recover,"POST","/api/v1/register/recover"}
 };
+
+
+/*
+{
+ "iuk:"as84s8f7a8dfagyerwrg",
+ "rescure":"11111"
+ }
+ */
+
+static int post_verify(struct mg_connection *nc, struct http_message *hm)
+{
+    cJSON *json = util_parseBody(&hm->body);
+
+    cJSON *rescureCode = cJSON_GetObjectItem(json, "rescure");
+    if (!rescureCode)
+    {
+        http_response_error(nc, 400, "Vkey Service : rescure error");
+        return 0;
+    }
+    cJSON *jCipherIUK = cJSON_GetObjectItem(json, "iuk");
+    if (!jCipherIUK)
+    {
+        http_response_error(nc, 400, "Vkey Service : iuk error");
+        return 0;
+    }
+
+    char *strSecure = rescureCode->valuestring;
+    char *strCipherIUK = jCipherIUK->valuestring;
+    if( key_checkIUK(strCipherIUK,strSecure)!=0 )
+    {
+        http_response_error(nc, 400, "Vkey Service : iuk or rescure wrong!");
+    }
+    else
+    {
+        http_response_text(nc, 200, "ok");
+    }
+    return 0;
+}
+
 
 //
 ///*
@@ -64,10 +107,8 @@ static http_router routers[1]={
 
 /*
 {
- "iukOld":"as84s8f7a8dfagyerwrg",
- "rescureOld":"11111",
- "rescureNew":"2222",
- "passwordNew":"33333"
+ "iuk":"as84s8f7a8dfagyerwrg",
+ "rescure":"11111",
 }
 */
 
@@ -81,22 +122,52 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
 
     cJSON *json = util_parseBody(&hm->body);
 
-    cJSON *rescureCode = cJSON_GetObjectItem(json, "rescure");
-    if(!rescureCode)
-    {
-        http_response_error(nc,400,"Vkey Service : rescure error");
-        return 0;
-    }
-    cJSON *jCipherIUK = cJSON_GetObjectItem(json, "iuk");
-    if(!jCipherIUK)
+    //check params
+    cJSON *jIUKOld = cJSON_GetObjectItem(json, "iuk");
+    if(!jIUKOld)
     {
         http_response_error(nc,400,"Vkey Service : iuk error");
         return 0;
     }
 
-    char* strSecure = rescureCode->valuestring;
-    char* strCipherIUK = jCipherIUK->valuestring;
+    cJSON *JRescureOld = cJSON_GetObjectItem(json, "rescure");
+    if(!JRescureOld)
+    {
+        http_response_error(nc,400,"Vkey Service : no rescureOld");
+        return 0;
+    }
 
+
+    char* strIUKOld = jIUKOld->valuestring;
+    char* strRescureOld = JRescureOld->valuestring;
+
+
+    //descrypt OLD iuk
+    unsigned char CIPEROLDIUK[VKEY_KEY_SIZE];
+    size_t len;
+    sodium_hex2bin(CIPEROLDIUK,32,strIUKOld,64,NULL,&len,NULL);
+
+    unsigned char hashPassword[VKEY_KEY_SIZE];
+    encrypt_enScrypt(hashPassword,strRescureOld,strlen(strRescureOld),"salt");
+
+    unsigned char IUKOLD[VKEY_KEY_SIZE];
+    int ret = encrypt_decrypt(IUKOLD,CIPEROLDIUK,32,hashPassword,NULL,NULL,0,NULL);
+    if( ret !=0 )
+    {
+        http_response_error(nc,400,"Vkey Service : WRONG OLD IUK");
+        return 0;
+    }
+
+    //compute OLD ilk,imk
+    unsigned char ILKOLD[VKEY_KEY_SIZE];
+    unsigned char IMKOLD[VKEY_KEY_SIZE];
+
+    encrypt_makeDHPublic(IUKOLD,ILKOLD);
+    encrypt_enHash((uint64_t *)IUKOLD,(uint64_t *)IMKOLD);
+
+    //todo 2: read new IMK&ILK
+
+    //todo 3: read register recordset, descrypt
 
     sqlite3* db = db_get();
     if(!db)
@@ -104,39 +175,12 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
         http_response_error(nc,400,"vkey:has not db file");
         return -1;
     }
-
-    //todo 2: descrypt iuk, compute old ilk,imk
-
-    //descrypt iuk by hash of rescure code
-    unsigned char hashRescure[VKEY_KEY_SIZE];
-    encrypt_hash(hashRescure,strSecure,strlen(strSecure));
-
-    char cipherIUK[VKEY_KEY_SIZE];
-    size_t len;
-    sodium_hex2bin(cipherIUK,VKEY_KEY_SIZE,strCipherIUK,64,NULL,&len,NULL);
-
-    unsigned char IUK[VKEY_KEY_SIZE];
-    encrypt_decrypt(IUK,cipherIUK,VKEY_KEY_SIZE,hashRescure,NULL,NULL,0,NULL);
-
-    //compute ilk,imk
-    //1:generate keys
-    unsigned char ILK[VKEY_KEY_SIZE];
-    unsigned char IMK[VKEY_KEY_SIZE];
-    unsigned char AUTHTAG[VKEY_KEY_SIZE+1];
-
-    //IUK,ILK,IMK
-    encrypt_makeDHPublic(IUK,ILK);
-    encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);
-
-
-    //todo 3: read register recordset, descrypt
-
     char strSql[256];
     sprintf(strSql,"SELECT RID,URL,RPK FROM TB_REG_CLIENT WHERE STATE=1;");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
-    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
     if( ret != SQLITE_OK )
     {
         sqlite3_finalize(pStmt);
@@ -151,7 +195,7 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
         char *strRPK = (char *) sqlite3_column_text(pStmt, 2);
         //todo: descrypt data
 
-        register_recover(IUK,IMK,strRID,strURL,strRPK);
+        register_recover(IUKOLD,ILKOLD,IMKOLD,strRID,strURL,strRPK);
     }
     sqlite3_finalize(pStmt);
 
@@ -163,7 +207,7 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
 
 }
 
-static int register_recover(const char* s_IUK,const char* s_IMK,const char* s_RID,const char* s_URL,const char* s_RPK)
+static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_RID,const char* s_URL,const char* s_RPK)
 {
     //todo 4.1: compute old ipk, rid
 
@@ -288,51 +332,55 @@ int register_start(const char* s_url, char* s_rpk)
     unsigned char RSK[VKEY_KEY_SIZE];
     if(0==register_getKeys(s_url,s_rpk,RSK))
     {
-        return 0;
+        //s_url has been a register record, nothing to do
     }
-
-    unsigned char RPK[VKEY_KEY_SIZE];
-    encrypt_random(RSK);
-    encrypt_makeSignPublic(RSK,RPK);
-
-    char strSK[65];
-    sodium_bin2hex(strSK,65,RSK,VKEY_KEY_SIZE);
-    char strPK[65];
-    sodium_bin2hex(strPK,65,RPK,VKEY_KEY_SIZE);
-
-
-    sqlite3* db = db_get();
-
-
-    char strSql[1024];
-    sprintf(strSql,"INSERT INTO TB_REG_SITE (URL,SK,PK,TIME) VALUES(?,?,?,?)");
-
-    sqlite3_stmt* pStmt;
-    const char* strTail=NULL;
-    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
-    if( ret != SQLITE_OK )
+    else
     {
+        unsigned char RPK[VKEY_KEY_SIZE];
+        encrypt_random(RSK);
+        encrypt_makeSignPublic(RSK, RPK);
+
+        char strSK[65];
+        sodium_bin2hex(strSK, 65, RSK, VKEY_KEY_SIZE);
+        char strPK[65];
+        sodium_bin2hex(strPK, 65, RPK, VKEY_KEY_SIZE);
+
+
+        sqlite3 *db = db_get();
+
+
+        char strSql[1024];
+        sprintf(strSql, "INSERT INTO TB_REG_SITE (URL,SK,PK,TIME) VALUES(?,?,?,?)");
+
+        sqlite3_stmt *pStmt;
+        const char *strTail = NULL;
+        int ret = sqlite3_prepare_v2(db, strSql, -1, &pStmt, &strTail);
+        if (ret != SQLITE_OK)
+        {
+            sqlite3_finalize(pStmt);
+            return -1;
+        }
+
+        //todo: encrypt data
+
+        time_t nTime = time(NULL);
+        sqlite3_bind_text(pStmt, 1, s_url, strlen(s_url), SQLITE_TRANSIENT);
+        sqlite3_bind_text(pStmt, 2, strSK, strlen(strSK), SQLITE_TRANSIENT);
+        sqlite3_bind_text(pStmt, 3, strPK, strlen(strPK), SQLITE_TRANSIENT);
+        sqlite3_bind_int(pStmt, 4, nTime);
+
+        ret = sqlite3_step(pStmt);
+        if (ret != SQLITE_DONE)
+        {
+            sqlite3_finalize(pStmt);
+            return -1;
+        }
         sqlite3_finalize(pStmt);
-        return -1;
+        strcpy(s_rpk, strPK);
+
+        mqtt_subscribe("RESTORE_DES",RPK,RSK,nTime,0,"");
     }
-
-    //todo: encrypt data
-
-    time_t nTime = time(NULL);
-    sqlite3_bind_text(pStmt,1,s_url,strlen(s_url),SQLITE_TRANSIENT);
-    sqlite3_bind_text(pStmt,2,strSK,strlen(strSK),SQLITE_TRANSIENT);
-    sqlite3_bind_text(pStmt,3,strPK,strlen(strPK),SQLITE_TRANSIENT);
-    sqlite3_bind_int(pStmt,4,nTime);
-
-    ret = sqlite3_step(pStmt);
-    if( ret != SQLITE_DONE )
-    {
-        sqlite3_finalize(pStmt);
-        return -1;
-    }
-    sqlite3_finalize(pStmt);
-    strcpy(s_rpk,strPK);
-
+    //
     return 0;
 }
 
@@ -371,5 +419,5 @@ int register_getKeys(const char* s_url,char* s_rpk,char* s_rsk)
 
 int register_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,1,nc,hm);
+    return http_routers_handle(routers,2,nc,hm);
 }

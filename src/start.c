@@ -104,13 +104,52 @@ int create_key(const char* s_dbPath,const char* s_password, const char* s_rescur
     {
         return -1;
     }
-    if (-1 == db_init(s_dbPath,s_password))
+    if (-1 == db_init(s_dbPath))
     {
         return -1;
     }
 
 
     int ret = key_create(s_rescure,s_password,s_random,s_ciperIUK);
+
+    db_close();
+
+    return ret;
+}
+
+int update_key(const char* s_dbPath, const char* s_ciperOldIUK,const char* s_oldRescure,const char* s_password, const char* s_rescure,const char* s_random ,char* s_ciperIUK)
+{
+    if(!vkey_init)
+    {
+        return -1;
+    }
+    if (-1 == db_init(s_dbPath))
+    {
+        return -1;
+    }
+
+    //todo:
+
+
+
+
+    db_close();
+
+}
+
+int verify_iuk(const char* s_dbPath, const char* s_ciperOldIUK,const char* s_oldRescure)
+{
+    if(!vkey_init)
+    {
+        return -1;
+    }
+    if (-1 == db_init(s_dbPath))
+    {
+        return -1;
+    }
+
+
+    int ret = key_checkIUK(s_ciperOldIUK,s_oldRescure);
 
     db_close();
 

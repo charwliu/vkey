@@ -15,7 +15,25 @@ int init_key();
 /// \param s_random     random to generate iuk
 /// \param s_ciperIUK   out,return encrypted IUK, client should store it offline
 /// \return 0:success,-1:failed
-int create_key(const char* s_dbPath, const char* s_rescure,const char* s_password,const char* s_random ,char* s_ciperIUK);
+int create_key(const char* s_dbPath,const char* s_password, const char* s_rescure,const char* s_random ,char* s_ciperIUK);
+
+///
+/// \param s_ciperOldIUK    iuk backuped offline
+/// \param s_oldRescure     rescure code backuped offline
+/// \param s_dbPath
+/// \param s_password
+/// \param s_rescure
+/// \param s_random
+/// \param s_ciperIUK
+/// \return
+int update_key(const char* s_dbPath,const char* s_ciperOldIUK,const char* s_oldRescure,const char* s_password, const char* s_rescure,const char* s_random ,char* s_ciperIUK);
+
+///
+/// \param s_dbPath
+/// \param s_ciperOldIUK
+/// \param s_oldRescure
+/// \return
+int verify_iuk(const char* s_dbPath,const char* s_ciperOldIUK,const char* s_oldRescure);
 
 ///
 /// \param s_dbPath  db file path,each file means a identity

@@ -290,7 +290,12 @@ int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,cons
 }
 
 
-int eth_register_client(const char* s_rid, const char* s_rpk, const char* s_vuk, const char* s_suk)
+int eth_register_client(const char* s_pid, const char* s_rpk, const char* s_vuk, const char* s_suk)
+{
+    return 0;
+}
+
+int eth_recover_client(const char* s_oldPid,const char* s_sigByURSK,const char* s_pid, const char* s_rpk, const char* s_vuk, const char* s_suk)
 {
     return 0;
 }

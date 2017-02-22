@@ -12,15 +12,13 @@
 
 static int post_key(struct mg_connection *nc, struct http_message *hm );
 static int post_password(struct mg_connection *nc, struct http_message *hm );
+static int post_update(struct mg_connection *nc, struct http_message *hm );
 
-static http_router routers[2]={
+static http_router routers[3]={
         {post_password,"POST","/api/v1/key/password"},
+        {post_update,"POST","/api/v1/key/update"},
         {post_key,"POST","/api/v1/key"}
 };
-
-
-//static char key_address[VKEY_KEY_SIZE*2+1]="";
-
 
 
 static int write_key(const char* s_apk,const char* s_ask, const char * s_imk,const char* s_ilk,const char* s_tag,int n_time)
@@ -87,52 +85,32 @@ static int post_password(struct mg_connection *nc, struct http_message *hm )
     }
 
 
+
     //read old and check
-    sqlite3* db = db_get();
-
-    char strSql[256];
-
-    sprintf(strSql,"SELECT IMK,TAG FROM TB_KEY LIMIT 1;");
-
-
-    sqlite3_stmt* pStmt;
-    const char* strTail=NULL;
-    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
-    if( ret != SQLITE_OK )
+    unsigned char cipherIMK[VKEY_KEY_SIZE];
+    char strTag[32];
+    if(0!=key_get(cipherIMK,NULL,NULL,NULL,strTag))
     {
-        printf("No key!");
-        sqlite3_finalize(pStmt);
+        cJSON_Delete(json);
+        http_response_error(nc,400,"Vkey Service : no key");
         return 0;
+
     }
 
+    unsigned char hashOldPassword[VKEY_KEY_SIZE];
+    encrypt_hash(hashOldPassword,jOld->valuestring,strlen(jOld->valuestring));
 
-    ret = sqlite3_step(pStmt);
-    int result=-1;
+    unsigned char authOldTag[16];
+    size_t len;
+    sodium_hex2bin(authOldTag,16,strTag,32,NULL,&len,NULL);
     unsigned char IMK[VKEY_KEY_SIZE];
-    unsigned char* cipherIMK ;
-    if( ret == SQLITE_ROW )
-    {
-        int size = sqlite3_column_bytes(pStmt,0);
-        cipherIMK = sqlite3_column_text(pStmt,0);
-        char* strTag = sqlite3_column_text(pStmt,1);
 
-        unsigned char hashPassword[VKEY_KEY_SIZE];
-        encrypt_hash(hashPassword,jOld->valuestring,strlen(jOld->valuestring));
-
-        unsigned char authTag[16];
-        size_t len;
-        sodium_hex2bin(authTag,16,strTag,32,NULL,&len,NULL);
-        result = encrypt_decrypt(IMK,cipherIMK,32,hashPassword,NULL,NULL,0,authTag);
-    }
-
-    sqlite3_finalize(pStmt);
-    if( result!=0 )
+    if( 0!=encrypt_decrypt(IMK,cipherIMK,32,hashOldPassword,NULL,NULL,0,authOldTag) )
     {
         cJSON_Delete(json);
         http_response_error(nc,400,"Vkey Service : wrong old password");
         return 0;
     }
-
 
     //write new ciper imk and tag to db
     unsigned char hashPassword[VKEY_KEY_SIZE];
@@ -145,9 +123,12 @@ static int post_password(struct mg_connection *nc, struct http_message *hm )
 
     cJSON_Delete(json);
 
+    sqlite3* db = db_get();
+    char strSql[256];
     sprintf(strSql,"UPDATE TB_KEY SET IMK=?,TAG=? WHERE 1=1");
-
-    ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
     if( ret != SQLITE_OK )
     {
         sqlite3_finalize(pStmt);
@@ -209,35 +190,13 @@ int key_checkIUK(const char* s_ciperIUK,const char* s_rescure)
     encrypt_makeDHPublic(IUK,ILK);
 
     //read old ILK
-
-    sqlite3* db = db_get();
-    char strSql[256];
-
-    sprintf(strSql,"SELECT ILK FROM TB_KEY LIMIT 1;");
-
-
-    sqlite3_stmt* pStmt;
-    const char* strTail=NULL;
-    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
-    if( ret != SQLITE_OK )
+    unsigned char ILKOLD[32];
+    if(0!=key_get(NULL,ILKOLD,NULL,NULL,NULL))
     {
-        sqlite3_finalize(pStmt);
         return -1;
     }
 
-    unsigned char* ILKOLD=NULL;
-    ret = sqlite3_step(pStmt);
-
-    if( ret == SQLITE_ROW )
-    {
-        int size = sqlite3_column_bytes(pStmt,0);
-        ILKOLD = sqlite3_column_text(pStmt,0);
-    }
-
-    ret = (util_compareKey(ILK,ILKOLD,VKEY_KEY_SIZE)==1)?0:-1;
-    sqlite3_finalize(pStmt);
-
-    return ret;
+    return (util_compareKey(ILK,ILKOLD,VKEY_KEY_SIZE)==1)?0:-1;
 }
 
 /*
@@ -406,9 +365,137 @@ static int key_remove()
 
 }
 
-static int key_read(unsigned char* u_imk, unsigned char* u_ilk)
+int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, char* s_ask, char* s_tag)
 {
-    //TODO:
+    sqlite3* db = db_get();
+    if(!db)
+    {
+        return -1;
+    }
+
+    char strSql[256];
+
+    sprintf(strSql,"SELECT IMK,ILK,APK,ASK,TAG FROM TB_KEY LIMIT 1;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+    ret = sqlite3_step(pStmt);
+
+    if( ret == SQLITE_ROW )
+    {
+        if(u_imk)
+        {
+            unsigned char* imk = sqlite3_column_text(pStmt, 0);
+            memcpy(u_imk,imk,VKEY_KEY_SIZE);
+        }
+        if(u_ilk)
+        {
+            unsigned char* ilk = sqlite3_column_text(pStmt, 1);
+            memcpy(u_ilk,ilk,VKEY_KEY_SIZE);
+        }
+
+        if(s_apk)
+        {
+            char* apk = sqlite3_column_text(pStmt,2);
+            memcpy(s_apk,apk,VKEY_KEY_SIZE);
+        }
+
+        if(s_ask)
+        {
+            char* ask = sqlite3_column_text(pStmt,3);
+            memcpy(s_ask,ask,VKEY_KEY_SIZE);
+        }
+        if(s_tag)
+        {
+            char* tag = sqlite3_column_text(pStmt,4);
+            memcpy(s_tag,tag,VKEY_KEY_SIZE);
+        }
+        sqlite3_finalize(pStmt);
+        return 0;
+    }
+    else
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+}
+
+
+/*
+{
+ "oldIUK":"",
+ "oldRescure":"",
+ "rescure":"rescure code",
+ "password":"123",
+ "random":"hexdata"
+}*/
+static int post_update(struct mg_connection *nc, struct http_message *hm )
+{
+    if( key_exist()==0 )
+    {
+        http_response_error(nc,400,"Vkey Service : veky not exist");
+        return 0;
+    }
+
+    cJSON *json = util_parseBody(&hm->body);
+
+    cJSON *jOldIUK = cJSON_GetObjectItem(json, "oldIUK");
+    if(!jOldIUK)
+    {
+        http_response_error(nc,400,"Vkey Service : old iuk error");
+        return 0;
+    }
+    cJSON *jOldRescure = cJSON_GetObjectItem(json, "oldRescure");
+    if(!jOldRescure)
+    {
+        http_response_error(nc,400,"Vkey Service : old rescure error");
+        return 0;
+    }
+
+    cJSON *jRescureCode = cJSON_GetObjectItem(json, "rescure");
+    if(!jRescureCode)
+    {
+        http_response_error(nc,400,"Vkey Service : rescure error");
+        return 0;
+    }
+    cJSON *jPassword = cJSON_GetObjectItem(json, "password");
+    if(!jPassword)
+    {
+        http_response_error(nc,400,"Vkey Service : password error");
+        return 0;
+    }
+
+    cJSON *jRandom = cJSON_GetObjectItem(json, "random");
+    if(!jRandom)
+    {
+        http_response_error(nc,400,"Vkey Service : random error");
+        return 0;
+    }
+
+
+    char ciperIUK[65];
+    if( 0==key_update(jOldIUK->valuestring,jOldRescure->valuestring,jRescureCode->valuestring,jPassword->valuestring,jRandom->valuestring,ciperIUK))
+    {
+        cJSON* res = cJSON_CreateObject();
+        cJSON_AddStringToObject(res,"iuk",ciperIUK);
+
+        http_response_json(nc,200,res);
+
+        cJSON_Delete(res);
+
+    }
+    else
+    {
+        http_response_error(nc,400,"Vkey Service : update key error");
+    }
     return 0;
 }
 
@@ -425,7 +512,7 @@ int key_update(const char* s_ciperOldIUK,const char* s_oldRescure, const char* s
     unsigned char IMKOLD[VKEY_KEY_SIZE];
 
 
-    if(0!=key_read(IMKOLD,ILKOLD))
+    if(0!=key_get(IMKOLD,ILKOLD,NULL,NULL,NULL))
     {
         return -1;
     }
@@ -438,10 +525,9 @@ int key_update(const char* s_ciperOldIUK,const char* s_oldRescure, const char* s
     //create new key data
     key_create(s_rescure,s_password,s_random,s_ciperIUK);
 
-    unsigned char ILKNEW[VKEY_KEY_SIZE];
     unsigned char IMKNEW[VKEY_KEY_SIZE];
 
-    if(0!=key_read(IMKNEW,ILKNEW))
+    if(0!=key_get(IMKNEW,NULL,NULL,NULL,NULL))
     {
         return -1;
     }
@@ -455,34 +541,8 @@ int key_update(const char* s_ciperOldIUK,const char* s_oldRescure, const char* s
 /// load address imk from table TB_KEY
 int key_exist()
 {
-    sqlite3* db = db_get();
-
-    char strSql[256];
-
-    sprintf(strSql,"SELECT APK FROM TB_KEY LIMIT 1;");
-
-
-    sqlite3_stmt* pStmt;
-    const char* strTail=NULL;
-    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
-    if( ret != SQLITE_OK )
-    {
-        printf("No key!");
-        sqlite3_finalize(pStmt);
-        return 0;
-    }
-
-
-    ret = sqlite3_step(pStmt);
-    if( ret != SQLITE_ROW )
-    {
-        sqlite3_finalize(pStmt);
-        return 0;
-    }
-
-    sqlite3_finalize(pStmt);
-
-    return 1;
+    unsigned char IMK[32];
+    return key_get(NULL,NULL,NULL,NULL,NULL)==0;
 }
 
 int key_chechPassword(const char* s_password)
@@ -531,5 +591,5 @@ int key_chechPassword(const char* s_password)
 
 int key_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,2,nc,hm);
+    return http_routers_handle(routers,3,nc,hm);
 }

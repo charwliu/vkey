@@ -111,7 +111,7 @@ int auth_start(cJSON* jReq,cJSON* jResult)
         "duration":60,
         "desc":"description about the share"
     },
-    "session":"33232"
+    "extra":"33232"
 
  }
  * */

@@ -9,11 +9,12 @@
 #include "eth.h"
 #include "mqtt.h"
 #include "key.h"
+#include "start.h"
 
 static int post_verify(struct mg_connection *nc, struct http_message *hm);
 static int post_recover(struct mg_connection *nc, struct http_message *hm);
 static int register_write(const char* s_rid,const char* s_url,const char* s_rpk,int n_state);
-static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_RID,const char* s_URL,const char* s_RPK);
+static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_IMKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_RID,const char* s_URL,const char* s_RPK);
 
 static http_router routers[2]={
         {post_verify,"POST","/api/v1/register/verify"},
@@ -141,22 +142,16 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
     char* strIUKOld = jIUKOld->valuestring;
     char* strRescureOld = JRescureOld->valuestring;
 
-
-    //descrypt OLD iuk
-    unsigned char CIPEROLDIUK[VKEY_KEY_SIZE];
-    size_t len;
-    sodium_hex2bin(CIPEROLDIUK,32,strIUKOld,64,NULL,&len,NULL);
-
-    unsigned char hashPassword[VKEY_KEY_SIZE];
-    encrypt_enScrypt(hashPassword,strRescureOld,strlen(strRescureOld),"salt");
-
     unsigned char IUKOLD[VKEY_KEY_SIZE];
-    int ret = encrypt_decrypt(IUKOLD,CIPEROLDIUK,32,hashPassword,NULL,NULL,0,NULL);
-    if( ret !=0 )
+    if(0!=key_descryptIUK(strIUKOld,strRescureOld,IUKOLD))
     {
-        http_response_error(nc,400,"Vkey Service : WRONG OLD IUK");
+        cJSON_Delete(json);
+
+        http_response_error(nc,400,"Vkey Service : WRONG IUK OR RESCURE CODE");
         return 0;
     }
+
+    cJSON_Delete(json);
 
     //compute OLD ilk,imk
     unsigned char ILKOLD[VKEY_KEY_SIZE];
@@ -166,6 +161,14 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
     encrypt_enHash((uint64_t *)IUKOLD,(uint64_t *)IMKOLD);
 
     //todo 2: read new IMK&ILK
+    unsigned char ILK[VKEY_KEY_SIZE];
+    unsigned char IMK[VKEY_KEY_SIZE];
+
+    if(0!=key_get(IMK,ILK,NULL,NULL,NULL))
+    {
+        http_response_error(nc,400,"Vkey Service : no key");
+        return 0;
+    }
 
     //todo 3: read register recordset, descrypt
 
@@ -180,7 +183,7 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
-    ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
     if( ret != SQLITE_OK )
     {
         sqlite3_finalize(pStmt);
@@ -195,7 +198,7 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
         char *strRPK = (char *) sqlite3_column_text(pStmt, 2);
         //todo: descrypt data
 
-        register_recover(IUKOLD,ILKOLD,IMKOLD,strRID,strURL,strRPK);
+        register_recover(IUKOLD,IMKOLD,ILK,IMK,strRID,strURL,strRPK);
     }
     sqlite3_finalize(pStmt);
 
@@ -205,23 +208,190 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
 
     //todo 7: finish
 
+    http_response_text(nc,200,"ok");
+    return 0;
+
 }
 
-static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_RID,const char* s_URL,const char* s_RPK)
+
+static int register_disable(const char* s_pid,int n_state)
 {
-    //todo 4.1: compute old ipk, rid
+    sqlite3* db = db_get();
+    char strSql[256];
+    sprintf(strSql,"UPDATE TB_REG_CLIENT SET STATE=? WHERE RID=?");
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    sqlite3_bind_int(pStmt,1,n_state);
+    sqlite3_bind_text(pStmt,2,s_pid,strlen(s_pid),SQLITE_TRANSIENT);
 
-    //todo 4.2: get suk from bc by rid
+    ret = sqlite3_step(pStmt);
+    if( ret != SQLITE_DONE )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
 
-    //todo 4.3: compute ursk by suk & iuk
+    sqlite3_finalize(pStmt);
+    return 0;
+}
 
-    //todo 4.4: compute new ipk,rid,vuk,suk
+static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_IMKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_PID,const char* s_URL,const char* s_RPK)
+{
+    //1: compute old ipk,isk,and old sig
+    char ISKOLD[VKEY_KEY_SIZE];
+    char IPKOLD[VKEY_KEY_SIZE];
+    encrypt_hmac(u_IMKOLD,s_URL,strlen(s_URL),ISKOLD);
+    encrypt_makeSignPublic(ISKOLD,IPKOLD);
+    char strIPKOld[65];
+    sodium_bin2hex(strIPKOld,65,IPKOLD,32);
 
-    //todo 4.5: send old rid,sign(rid,ursk),new rid,new vuk,new suk to recover smart contract
+    unsigned char OLDSIG[VKEY_SIG_SIZE];
+    encrypt_sign(strIPKOld,strlen(strIPKOld),ISKOLD,OLDSIG);
+    char hexOldSig[129];
+    sodium_bin2hex(hexOldSig,129,OLDSIG,64);
 
+    char strOldSUK[65];
+    unsigned char OldSUK[VKEY_KEY_SIZE];
+    //todo 4.1: get suk from bc by pid
+
+
+    //2: compute ursk by suk & iuk
+
+    unsigned char ILKOLD[VKEY_KEY_SIZE];
+    encrypt_makeDHPublic(u_IUKOLD,ILKOLD);
+
+    char URSK[VKEY_KEY_SIZE];
+    encrypt_makeDHShareKey(u_IUKOLD,OldSUK,ILKOLD,URSK);
+
+    unsigned char SIG[VKEY_SIG_SIZE];
+    encrypt_sign(s_PID,strlen(s_PID),URSK,SIG);
+    char hexSig[129];
+    sodium_bin2hex(hexSig,129,SIG,64);
+
+
+
+    //4: compute new ipk,Pid,vuk,suk
+
+    char ISK[VKEY_KEY_SIZE];
+    char strIPK[65];
+    char strPID[65];
+    char strSUK[65];
+    char strVUK[65];
+    if(0!=register_build(u_ILKNEW,u_IMKNEW,s_URL,s_RPK,strIPK,ISK,strPID,strSUK,strVUK))
+    {
+        return -1;
+    }
+
+    //4: send old rid,sign(rid,ursk),new rid,new vuk,new suk to recover smart contract
+    eth_recover_client(s_PID,hexSig,strPID,s_RPK,strVUK,strSUK);
+
+    //3 save reg info to db with sent state, when confirm info from site arrived, the reg info set to be confirmed
+    register_disable(s_PID,1);
+    register_write(strPID,s_URL,s_RPK,0);
     //todo 4.6: send old ipk,new ipk, signature of ipk by new isk to site
 
+
+    unsigned char PK[VKEY_KEY_SIZE];
+    unsigned char SK[VKEY_KEY_SIZE];
+
+    encrypt_random(SK);
+    encrypt_makeDHPublic(SK,PK);
+
+    cJSON* jToSite = cJSON_CreateObject();
+    cJSON_AddStringToObject(jToSite,"ipkNew",strIPK);
+    cJSON_AddStringToObject(jToSite,"sigNew",hexSig);
+    cJSON_AddStringToObject(jToSite,"ipkOld",strIPKOld);
+    cJSON_AddStringToObject(jToSite,"sigOld",hexOldSig);
+    char* pData = cJSON_PrintUnformatted(jToSite);
+
+    mqtt_send(s_RPK,"RESTORE_DES",PK,SK,pData);
+
+    free(pData);
+    cJSON_Delete(jToSite);
+
     //todo 4.7: finish one site recover
+    return 0;
+}
+
+
+int register_recover_got( const char* s_peerTopic, const char* s_data )
+{
+
+    printf("Auth From:%s\n",s_peerTopic);
+    printf("Auth Message:%s\n",s_data);
+
+    //handle register message
+    cJSON* jData = cJSON_Parse(s_data);
+    cJSON* jURL = cJSON_GetObjectItem(jData,"url");
+    cJSON* jIpkNew = cJSON_GetObjectItem(jData,"ipkNew");
+    cJSON* jSigNew = cJSON_GetObjectItem(jData,"sigNew");
+    cJSON* jIpkOld = cJSON_GetObjectItem(jData,"ipkOld");
+    cJSON* jSigOld = cJSON_GetObjectItem(jData,"sigOld");
+
+    char strRPK[65];
+    char strRSK[65];
+    if(jURL && 0==register_getKeys(jURL->valuestring,strRPK,strRSK))
+    {
+        //todo: verify signature by isk
+
+        char PIDOLD[VKEY_KEY_SIZE];
+        char strSigRID[VKEY_SIG_SIZE];
+        encrypt_hash(PIDOLD,jIpkOld->valuestring,strlen(jIpkOld->valuestring));
+        char strPIDOLD[65];
+        sodium_bin2hex(strPIDOLD,65,PIDOLD,VKEY_KEY_SIZE);
+
+        //todo: compute RID and sig
+    }
+
+    char *pData = cJSON_PrintUnformatted(jData);
+
+    g_notify(s_peerTopic,pData);
+
+    free(pData);
+    cJSON_Delete(jData);
+    return 0;
+}
+
+int register_build(const unsigned char* u_ILK,const unsigned char* u_IMK,const char* s_url,const char* s_rpk, char* s_ipk,unsigned char* u_isk,char* s_pid,char* s_suk,char* s_vuk)
+{
+    if(!u_ILK||!u_IMK||!s_url||!s_rpk||!s_ipk||!u_isk||!s_pid||!s_suk||!s_vuk)
+    {
+        return -1;
+    }
+
+    //ISK,IPK
+    char IPK[VKEY_KEY_SIZE];
+    encrypt_hmac(u_IMK,s_url,strlen(s_url),u_isk);
+    encrypt_makeSignPublic(u_isk,IPK);
+    sodium_bin2hex(s_ipk,65,IPK,VKEY_KEY_SIZE);
+
+    //PID
+    char PID[VKEY_KEY_SIZE];
+    encrypt_hash(PID,IPK,VKEY_KEY_SIZE);
+    sodium_bin2hex(s_pid,65,PID,VKEY_KEY_SIZE);
+
+    //SUK
+    char RLK[VKEY_KEY_SIZE];
+    char SUK[VKEY_KEY_SIZE];
+    encrypt_random(RLK);
+    encrypt_makeDHPublic(RLK,SUK);
+    sodium_bin2hex(s_suk,65,SUK,VKEY_KEY_SIZE);
+
+    //VUK
+    // signature by dhkey, can be verified by VUK, when recover identity, dh(iuk,suk),can be used as secret sign key,and vuk will be used as public sign key to verify signature.
+    char DHKEY[VKEY_KEY_SIZE];
+    char VUK[VKEY_KEY_SIZE];
+    encrypt_makeDHShareKey(RLK,u_ILK,s_suk,DHKEY);
+    encrypt_makeSignPublic(DHKEY,s_vuk);
+
+    sodium_bin2hex(s_vuk,65,VUK,VKEY_KEY_SIZE);
+
     return 0;
 }
 
@@ -234,49 +404,54 @@ int register_create(const char* s_url,const char* s_rpk, char* s_ipk)
     char IMK[VKEY_KEY_SIZE];
     char ILK[VKEY_KEY_SIZE];
     //todo: read IMK & ILK
+    if(0!=key_get(IMK,ILK,NULL,NULL,NULL))
+    {
+        return -1;
+    }
+    char ISK[VKEY_KEY_SIZE];
+    char strPID[65];
+    char strSUK[65];
+    char strVUK[65];
+    if(0!=register_build(ILK,IMK,s_url,s_rpk,s_ipk,ISK,strPID,strSUK,strVUK))
+    {
+        return -1;
+    }
+
 
     //IPK
-    char ISK[VKEY_KEY_SIZE];
-    char IPK[VKEY_KEY_SIZE];
-    encrypt_hmac(IMK,s_url,strlen(s_url),ISK);
-    encrypt_makeSignPublic(ISK,IPK);
-    memset(ISK,0,VKEY_KEY_SIZE);
-    memset(IMK,0,VKEY_KEY_SIZE);
-
-    //RID
-    char RID[VKEY_KEY_SIZE];
-    encrypt_hash(RID,IPK,VKEY_KEY_SIZE);
-
-    //SUK
-    char RLK[VKEY_KEY_SIZE];
-    char SUK[VKEY_KEY_SIZE];
-    encrypt_random(RLK);
-    encrypt_makeDHPublic(RLK,SUK);
-
-    //VUK
-    // signature by dhkey, can be verified by VUK, when recover identity, dh(iuk,suk),can be used as secret sign key,and vuk will be used as public sign key to verify signature.
-    char VUK[VKEY_KEY_SIZE];
-    char DHKEY[VKEY_KEY_SIZE];
-    encrypt_makeDHShareKey(RLK,ILK,SUK,DHKEY);
-    encrypt_makeSignPublic(DHKEY,VUK);
+//    char ISK[VKEY_KEY_SIZE];
+//    char IPK[VKEY_KEY_SIZE];
+//    encrypt_hmac(IMK,s_url,strlen(s_url),ISK);
+//    encrypt_makeSignPublic(ISK,IPK);
+//    memset(ISK,0,VKEY_KEY_SIZE);
+//    memset(IMK,0,VKEY_KEY_SIZE);
+//
+//    //RID
+//    char RID[VKEY_KEY_SIZE];
+//    encrypt_hash(RID,IPK,VKEY_KEY_SIZE);
+//
+//    //SUK
+//    char RLK[VKEY_KEY_SIZE];
+//    char SUK[VKEY_KEY_SIZE];
+//    encrypt_random(RLK);
+//    encrypt_makeDHPublic(RLK,SUK);
+//
+//    //VUK
+//    // signature by dhkey, can be verified by VUK, when recover identity, dh(iuk,suk),can be used as secret sign key,and vuk will be used as public sign key to verify signature.
+//    char VUK[VKEY_KEY_SIZE];
+//    char DHKEY[VKEY_KEY_SIZE];
+//    encrypt_makeDHShareKey(RLK,ILK,SUK,DHKEY);
+//    encrypt_makeSignPublic(DHKEY,VUK);
 
     //todo:2 SIGN(Nonce，RPK)
 
     //3 save reg info to db with sent state, when confirm info from site arrived, the reg info set to be confirmed
-    char strRID[65];
-    sodium_bin2hex(strRID,65,RID,VKEY_KEY_SIZE);
-    register_write(strRID,s_url,s_rpk,0);
+    register_write(strPID,s_url,s_rpk,0);
 
 
     //4 send to BC
-    char strVUK[65];
-    sodium_bin2hex(strVUK,65,VUK,VKEY_KEY_SIZE);
-    char strSUK[65];
-    sodium_bin2hex(strSUK,65,SUK,VKEY_KEY_SIZE);
-    eth_register_client(strRID,s_rpk,strVUK,strSUK);
+    eth_register_client(strPID,s_rpk,strVUK,strSUK);
 
-    //6 return ipk
-    sodium_bin2hex(s_ipk,65,IPK,VKEY_KEY_SIZE);
 
     return 0;
 }

@@ -110,8 +110,7 @@ int auth_start(cJSON* jReq,cJSON* jResult)
         "templateIds":["CLMT_IDNUMBER","CLMT_NAME"],
         "duration":60,
         "desc":"description about the share"
-    },
-    "extra":"33232"
+    }
 
  }
  * */
@@ -139,7 +138,6 @@ static int req_auth(struct mg_connection *nc, struct http_message *hm)
     cJSON_AddItemToObject(jRes,"share",jShareRes);
     cJSON_AddItemToObject(jRes,"req",jReqRes);
 
-
     http_response_json(nc,200,jRes);
     cJSON_Delete(json);
     cJSON_Delete(jRes);
@@ -153,7 +151,8 @@ POST
   "topic":"as84s8f7a8dfagyerwrg",
   "reg":"www.xxxx.com",
   "rpk":"12334",
-  "claims":["123","456"]
+  "claims":["123","456"],
+  "extra":"aa"
 }
  * */
 /// reg and rpk are optional attributes,if they exist, client execute register process
@@ -167,6 +166,7 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     cJSON *jReg = cJSON_GetObjectItem(json, "reg");
     cJSON *jRPK = cJSON_GetObjectItem(json, "rpk");
     cJSON *jClaimIds = cJSON_GetObjectItem(json, "claims");
+    cJSON *jExtra = cJSON_GetObjectItem(json, "extra");
     if(!jTopic)
     {
         http_response_error(nc,400,"Vkey Service : peer error");
@@ -174,14 +174,22 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     }
 
     cJSON* jSend = cJSON_CreateObject();
+    char strExtraSig[129];
 
     if( jReg )
     {
         char strIPK[65];
-        register_create(jReg->valuestring, jRPK->valuestring, strIPK);
+        unsigned  char ISK[VKEY_KEY_SIZE];
+        register_create(jReg->valuestring, jRPK->valuestring, strIPK,ISK);
 
         cJSON_AddStringToObject(jSend,"ipk",strIPK);
         cJSON_AddStringToObject(jSend,"reg",jReg->valuestring);
+        if( jExtra )
+        {
+            unsigned char SIG[VKEY_SIG_SIZE];
+            encrypt_sign(jExtra->valuestring,strlen(jExtra->valuestring),ISK,SIG);
+            sodium_bin2hex(strExtraSig,129,SIG,VKEY_SIG_SIZE);
+        }
     }
 
     unsigned char PK[VKEY_KEY_SIZE];
@@ -198,6 +206,16 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 
         cJSON_AddItemToObject(jSend, "claims", jClaims);
     }
+
+    if( jExtra )
+    {
+        cJSON_AddStringToObject(jSend, "extra", jExtra->valuestring);
+        if(jReg)
+        {
+            cJSON_AddStringToObject(jSend, "extraSig", strExtraSig);
+        }
+    }
+
     //send data to des
     char* pData=cJSON_PrintUnformatted(jSend);
     char strTopic[128];

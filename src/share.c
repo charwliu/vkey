@@ -49,6 +49,7 @@ int share_start(cJSON* j_share,cJSON* j_result)
     cJSON *confirm =  cJSON_GetObjectItem(j_share, "confirm");
     cJSON *desc =  cJSON_GetObjectItem(j_share, "desc");
 
+
     if(!claimIds )
     {
         cJSON_AddStringToObject(j_result,"error","Vkey Service : claimIds needed!");
@@ -101,6 +102,7 @@ int share_start(cJSON* j_share,cJSON* j_result)
     cJSON_AddStringToObject(j_result,"topic",strTopic);
     cJSON_AddStringToObject(j_result,"names",names);
     cJSON_AddStringToObject(j_result,"desc",desc->valuestring);
+
 
     return 0;
 }

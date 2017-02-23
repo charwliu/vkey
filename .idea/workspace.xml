@@ -14,6 +14,10 @@
   <component name="ChangeListManager">
     <list default="true" id="cd422a73-f682-4280-8ebf-09854eb96d1b" name="Default" comment="router array count">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/auth.c" afterPath="$PROJECT_DIR$/src/auth.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/register.c" afterPath="$PROJECT_DIR$/src/register.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/register.h" afterPath="$PROJECT_DIR$/src/register.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/share.c" afterPath="$PROJECT_DIR$/src/share.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/main.c" afterPath="$PROJECT_DIR$/test/main.c" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,34 +36,52 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="key.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/key.c">
+      <file leaf-file-name="config.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/config.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="148" column="28" lean-forward="true" selection-start-line="124" selection-start-column="0" selection-end-line="148" selection-end-column="28" />
+            <state relative-caret-position="170">
+              <caret line="10" column="47" lean-forward="false" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="claim.c" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/claim.c">
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="363" column="4" lean-forward="false" selection-start-line="363" selection-start-column="4" selection-end-line="363" selection-end-column="4" />
+            <state relative-caret-position="156">
+              <caret line="60" column="14" lean-forward="false" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/db.c">
+      <file leaf-file-name="start.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/start.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="111" column="49" lean-forward="false" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="49" />
-              <folding>
-                <element signature="e#1#19#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="17">
+              <caret line="45" column="4" lean-forward="false" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="network.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/network.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="start.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/start.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="3" lean-forward="false" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -67,8 +89,8 @@
       <file leaf-file-name="register.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/register.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="204" column="25" lean-forward="true" selection-start-line="204" selection-start-column="25" selection-end-line="204" selection-end-column="25" />
+            <state relative-caret-position="581">
+              <caret line="402" column="19" lean-forward="false" selection-start-line="402" selection-start-column="4" selection-end-line="402" selection-end-column="19" />
               <folding>
                 <element signature="e#1#20#0" expanded="true" />
               </folding>
@@ -76,11 +98,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="register.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/register.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="auth.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/auth.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state relative-caret-position="578">
+              <caret line="175" column="40" lean-forward="false" selection-start-line="175" selection-start-column="40" selection-end-line="175" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="encrypt.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/encrypt.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="589">
+              <caret line="180" column="4" lean-forward="false" selection-start-line="180" selection-start-column="4" selection-end-line="180" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -89,48 +131,8 @@
       <file leaf-file-name="share.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/share.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="237" column="22" lean-forward="false" selection-start-line="237" selection-start-column="22" selection-end-line="237" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="attest.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/attest.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="213" column="32" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="213" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vkey.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/vkey.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eth.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/eth.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="292" column="4" lean-forward="false" selection-start-line="292" selection-start-column="4" selection-end-line="292" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eth.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/eth.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="83" lean-forward="false" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="83" />
+            <state relative-caret-position="544">
+              <caret line="99" column="51" lean-forward="false" selection-start-line="99" selection-start-column="51" selection-end-line="99" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -140,7 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mqtt_readTopic</find>
       <find>attest_got</find>
       <find>printf</find>
       <find>mqtt_log</find>
@@ -170,6 +171,7 @@
       <find>TB_KEY</find>
       <find>update</find>
       <find>strOldSUK</find>
+      <find>register_create</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -191,12 +193,10 @@
         <option value="$PROJECT_DIR$/src/claim.h" />
         <option value="$PROJECT_DIR$/src/share.h" />
         <option value="$PROJECT_DIR$/src/auth.h" />
-        <option value="$PROJECT_DIR$/src/register.h" />
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/src/http.h" />
         <option value="$PROJECT_DIR$/src/sqlite/sqlite3.h" />
         <option value="$PROJECT_DIR$/src/mongoose/mongoose.c" />
-        <option value="$PROJECT_DIR$/src/share.c" />
         <option value="$PROJECT_DIR$/src/attest.h" />
         <option value="$PROJECT_DIR$/src/collect.c" />
         <option value="$PROJECT_DIR$/src/template.h" />
@@ -205,14 +205,12 @@
         <option value="$PROJECT_DIR$/src/http.c" />
         <option value="$PROJECT_DIR$/src/mqtt.h" />
         <option value="$PROJECT_DIR$/src/network.h" />
-        <option value="$PROJECT_DIR$/src/config.c" />
         <option value="$PROJECT_DIR$/src/mqtt.c" />
         <option value="$PROJECT_DIR$/src/attest.c" />
         <option value="$PROJECT_DIR$/src/encrypt.h" />
         <option value="$PROJECT_DIR$/src/network.c" />
         <option value="$PROJECT_DIR$/src/encrypt.c" />
         <option value="$PROJECT_DIR$/src/claim.c" />
-        <option value="$PROJECT_DIR$/test/main.c" />
         <option value="$PROJECT_DIR$/src/util.c" />
         <option value="$PROJECT_DIR$/src/util.h" />
         <option value="$PROJECT_DIR$/src/start.h" />
@@ -223,8 +221,12 @@
         <option value="$PROJECT_DIR$/src/key.c" />
         <option value="$PROJECT_DIR$/src/eth.c" />
         <option value="$PROJECT_DIR$/src/eth.h" />
+        <option value="$PROJECT_DIR$/src/config.c" />
+        <option value="$PROJECT_DIR$/src/share.c" />
         <option value="$PROJECT_DIR$/src/register.c" />
+        <option value="$PROJECT_DIR$/src/register.h" />
         <option value="$PROJECT_DIR$/src/auth.c" />
+        <option value="$PROJECT_DIR$/test/main.c" />
       </list>
     </option>
   </component>
@@ -282,20 +284,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -313,7 +301,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.vkeytest1">
+  <component name="RunManager">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
@@ -505,11 +493,19 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="vkeytest1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$USER_HOME$/vkey/db1.vkey 10001" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="vkeytest" RUN_TARGET_NAME="vkeytest">
+    <configuration default="false" name="vkeytest-create" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="create /home/gqc/vkey/db1.vkey  sc123 pwd123 r123456" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="vkeytest" RUN_TARGET_NAME="vkeytest">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="vkeytest2" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$USER_HOME$/vkey/db2.vkey 10002" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="vkeytest" RUN_TARGET_NAME="vkeytest">
+    <configuration default="false" name="vkeytest-start1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="start /home/gqc/vkey/db1.vkey 10001 pwd123 localhost:3000/vkey" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="vkeytest" RUN_TARGET_NAME="vkeytest">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="vkeytest-start2" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="start /home/gqc/vkey/db2.vkey 10002 pwd123  localhost:3000/vkey" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="vkeytest" RUN_TARGET_NAME="vkeytest">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="vkeytest-wrong" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="start /home/gqc/vkey/db2.vkey" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="vkeytest" TARGET_NAME="vkeytest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="vkeytest" RUN_TARGET_NAME="vkeytest">
       <envs />
       <method />
     </configuration>
@@ -517,11 +513,13 @@
       <envs />
       <method />
     </configuration>
-    <list size="4">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
-      <item index="1" class="java.lang.String" itemvalue="Application.vkeytest1" />
-      <item index="2" class="java.lang.String" itemvalue="Application.vkeytest2" />
-      <item index="3" class="java.lang.String" itemvalue="Application.vkey" />
+      <item index="1" class="java.lang.String" itemvalue="Application.vkeytest-create" />
+      <item index="2" class="java.lang.String" itemvalue="Application.vkeytest-start1" />
+      <item index="3" class="java.lang.String" itemvalue="Application.vkeytest-start2" />
+      <item index="4" class="java.lang.String" itemvalue="Application.vkeytest-wrong" />
+      <item index="5" class="java.lang.String" itemvalue="Application.vkey" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -570,6 +568,8 @@
       <workItem from="1487558632565" duration="15470000" />
       <workItem from="1487638509591" duration="13588000" />
       <workItem from="1487725525195" duration="22034000" />
+      <workItem from="1487819482609" duration="1893000" />
+      <workItem from="1487821399675" duration="3697000" />
     </task>
     <task id="LOCAL-00001" summary="router array count">
       <created>1483666884834</created>
@@ -589,7 +589,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="343244000" />
+    <option name="totallyTimeSpent" value="348834000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -604,16 +604,15 @@
     <frame x="37" y="24" width="1879" height="955" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1557112" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1557112" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12835473" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23570596" sideWeight="0.49137932" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30688447" sideWeight="0.49137932" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48891482" sideWeight="0.51293105" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20536757" sideWeight="0.49784482" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4714119" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37922987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15193966" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5659277" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15193966" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43173862" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4865811" sideWeight="0.48706895" order="3" side_tool="false" content_ui="tabs" x="330" y="555" width="1408" height="262" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -621,6 +620,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20536757" sideWeight="0.49784482" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -717,7 +717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="11" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -853,13 +852,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="5" lean-forward="false" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sqlite/sqlite3.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72998">
@@ -878,15 +870,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2941">
           <caret line="173" column="4" lean-forward="false" selection-start-line="173" selection-start-column="4" selection-end-line="173" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/register.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -894,6 +877,161 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="272" column="4" lean-forward="false" selection-start-line="272" selection-start-column="4" selection-end-line="272" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="19" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/db.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/key.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/libsodium/crypto_sign/ed25519/ref10/sign.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/libsodium/crypto_sign/crypto_sign.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/vkey.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eth.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="83" lean-forward="false" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/key.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2516">
+          <caret line="148" column="28" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="148" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/attest.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3621">
+          <caret line="213" column="32" lean-forward="false" selection-start-line="208" selection-start-column="0" selection-end-line="213" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/db.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1887">
+          <caret line="111" column="49" lean-forward="false" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="49" />
+          <folding>
+            <element signature="e#1#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eth.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4964">
+          <caret line="292" column="4" lean-forward="false" selection-start-line="292" selection-start-column="4" selection-end-line="292" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/claim.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6171">
+          <caret line="363" column="4" lean-forward="false" selection-start-line="363" selection-start-column="4" selection-end-line="363" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="47" lean-forward="false" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/start.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="3" lean-forward="false" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/register.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/encrypt.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="180" column="4" lean-forward="false" selection-start-line="180" selection-start-column="4" selection-end-line="180" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/share.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="99" column="51" lean-forward="false" selection-start-line="99" selection-start-column="51" selection-end-line="99" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/register.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="402" column="19" lean-forward="false" selection-start-line="402" selection-start-column="4" selection-end-line="402" selection-end-column="19" />
+          <folding>
+            <element signature="e#1#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/auth.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="175" column="40" lean-forward="false" selection-start-line="175" selection-start-column="40" selection-end-line="175" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -906,166 +1044,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="19" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/db.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/key.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/start.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="28" column="12" lean-forward="false" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/start.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+        <state relative-caret-position="17">
+          <caret line="45" column="4" lean-forward="false" selection-start-line="45" selection-start-column="4" selection-end-line="45" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/util.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/libsodium/crypto_sign/ed25519/ref10/sign.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/libsodium/crypto_sign/crypto_sign.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/encrypt.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="182" column="22" lean-forward="true" selection-start-line="182" selection-start-column="22" selection-end-line="182" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/vkey.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="9" lean-forward="false" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eth.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="83" lean-forward="false" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/key.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="148" column="28" lean-forward="true" selection-start-line="124" selection-start-column="0" selection-end-line="148" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/attest.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="213" column="32" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="213" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/db.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="111" column="49" lean-forward="false" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="49" />
-          <folding>
-            <element signature="e#1#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eth.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="292" column="4" lean-forward="false" selection-start-line="292" selection-start-column="4" selection-end-line="292" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/register.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="204" column="25" lean-forward="true" selection-start-line="204" selection-start-column="25" selection-end-line="204" selection-end-column="25" />
-          <folding>
-            <element signature="e#1#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/auth.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/share.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="237" column="22" lean-forward="false" selection-start-line="237" selection-start-column="22" selection-end-line="237" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/claim.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="363" column="4" lean-forward="false" selection-start-line="363" selection-start-column="4" selection-end-line="363" selection-end-column="4" />
+        <state relative-caret-position="156">
+          <caret line="60" column="14" lean-forward="false" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="14" />
           <folding />
         </state>
       </provider>

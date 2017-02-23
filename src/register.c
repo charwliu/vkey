@@ -400,7 +400,7 @@ static int register_build(const unsigned char* u_ILK,const unsigned char* u_IMK,
 /// register to a site, compute keys and store register record to db, return ipk
 /// \param j_reg
 /// \return json to send to site
-int register_create(const char* s_url,const char* s_rpk, char* s_ipk)
+int register_create(const char* s_url,const char* s_rpk, char* s_ipk, unsigned char* u_isk)
 {
     //1 compute ipk,rid,vuk,suk
     char IMK[VKEY_KEY_SIZE];
@@ -410,11 +410,10 @@ int register_create(const char* s_url,const char* s_rpk, char* s_ipk)
     {
         return -1;
     }
-    char ISK[VKEY_KEY_SIZE];
     char strPID[65];
     char strSUK[65];
     char strVUK[65];
-    if(0!=register_build(ILK,IMK,s_url,s_rpk,s_ipk,ISK,strPID,strSUK,strVUK))
+    if(0!=register_build(ILK,IMK,s_url,s_rpk,s_ipk,u_isk,strPID,strSUK,strVUK))
     {
         return -1;
     }

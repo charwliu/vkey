@@ -5,7 +5,8 @@
 #include "mongoose/mongoose.h"
 
 int register_route(struct mg_connection *nc, struct http_message *hm );
-int register_create(const char* s_url,const char* s_rpk, char* s_ipk);
+
+int register_create(const char* s_url,const char* s_rpk, char* s_ipk, unsigned char* u_isk);
 
 
 int register_start(const char* s_url, char* s_rpk);

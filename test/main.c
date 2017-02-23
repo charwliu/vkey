@@ -16,7 +16,9 @@ int main(int arg,char* args[]) {
 
     init_key();
 
-    create_key(db,"password123","rescure-code","random hex data",IUK);
+    create_key(db,"123","rescure-code","random hex data",IUK);
+
+    printf("Encrypted IUK:%s\n",IUK);
 
     start_vkey(db,"123",port,notify,"localhost:3000/vkey");
     return 0;

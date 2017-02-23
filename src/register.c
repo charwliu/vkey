@@ -16,6 +16,8 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm);
 static int register_write(const char* s_rid,const char* s_url,const char* s_rpk,int n_state);
 static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u_IMKOLD,const unsigned char* u_ILKNEW,const unsigned char* u_IMKNEW, const char* s_RID,const char* s_URL,const char* s_RPK);
 
+static int register_build(const unsigned char* u_ILK,const unsigned char* u_IMK,const char* s_url,const char* s_rpk, char* s_ipk,unsigned char* u_isk,char* s_pid,char* s_suk,char* s_vuk);
+
 static http_router routers[2]={
         {post_verify,"POST","/api/v1/register/verify"},
         {post_recover,"POST","/api/v1/register/recover"}
@@ -358,7 +360,7 @@ int register_recover_got( const char* s_peerTopic, const char* s_data )
     return 0;
 }
 
-int register_build(const unsigned char* u_ILK,const unsigned char* u_IMK,const char* s_url,const char* s_rpk, char* s_ipk,unsigned char* u_isk,char* s_pid,char* s_suk,char* s_vuk)
+static int register_build(const unsigned char* u_ILK,const unsigned char* u_IMK,const char* s_url,const char* s_rpk, char* s_ipk,unsigned char* u_isk,char* s_pid,char* s_suk,char* s_vuk)
 {
     if(!u_ILK||!u_IMK||!s_url||!s_rpk||!s_ipk||!u_isk||!s_pid||!s_suk||!s_vuk)
     {

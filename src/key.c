@@ -21,7 +21,7 @@ static http_router routers[3]={
 };
 
 
-static int write_key(const char* s_apk,const char* s_ask, const char * s_imk,const char* s_ilk,const char* s_tag,int n_time)
+static int write_key(const char* s_apk,const unsigned char* u_ask, const char * s_imk,const char* s_ilk,const char* s_tag,int n_time)
 {
     sqlite3* db = db_get();
     char strSql[1024];
@@ -36,7 +36,7 @@ static int write_key(const char* s_apk,const char* s_ask, const char * s_imk,con
         return -1;
     }
     sqlite3_bind_text(pStmt,1,s_apk,-1,SQLITE_TRANSIENT);
-    sqlite3_bind_text(pStmt,2,s_ask,-1,SQLITE_TRANSIENT);
+    sqlite3_bind_blob(pStmt,2,u_ask,64,SQLITE_TRANSIENT);
     sqlite3_bind_blob(pStmt,3,s_imk,32,SQLITE_TRANSIENT);
     sqlite3_bind_blob(pStmt,4,s_ilk,32,SQLITE_TRANSIENT);
     sqlite3_bind_text(pStmt,5,s_tag,-1,SQLITE_TRANSIENT);
@@ -299,13 +299,12 @@ int key_create(const char* s_rescure,const char* s_password,unsigned char* h_ran
     encrypt_enHash((uint64_t *)IUK,(uint64_t *)IMK);
 
     //APK,ASK
-    encrypt_hmac(IMK,g_config.mqtt_url,strlen(g_config.mqtt_url),ASK);
-    encrypt_makeSignPublic(ASK,APK);
+    unsigned char seedASK[32];
+    encrypt_hmac(IMK,g_config.mqtt_url,strlen(g_config.mqtt_url),seedASK);
+    encrypt_makeSignPublic(seedASK,ASK,APK);
 
     char strAPK[65];
-    char strASK[65];
     sodium_bin2hex(strAPK,65,APK,VKEY_KEY_SIZE);
-    sodium_bin2hex(strASK,65,ASK,VKEY_KEY_SIZE);
 
 
     //IUK使用救援码的enScrypt进行加密
@@ -327,7 +326,7 @@ int key_create(const char* s_rescure,const char* s_password,unsigned char* h_ran
 
     //2:write to db
     time_t nTime = time(NULL);
-    int ret = write_key(strAPK,strASK,cipherIMK,ILK,AUTHTAG,nTime);
+    int ret = write_key(strAPK,ASK,cipherIMK,ILK,AUTHTAG,nTime);
     if(ret!=0)
     {
         return -1;

@@ -280,20 +280,43 @@ int auth_got( const char* s_peerTopic, const char* s_data )
     cJSON* jData = cJSON_Parse(s_data);
     cJSON* jReg = cJSON_GetObjectItem(jData,"reg");
     cJSON* jIPK = cJSON_GetObjectItem(jData,"ipk");
-    char strRPK[65];
-    char strRSK[65];
-    if(jReg && 0==register_getKeys(jReg->valuestring,strRPK,strRSK))
+    unsigned char RPK[VKEY_KEY_SIZE];
+    unsigned char RSK[VKEY_SIG_SK_SIZE];
+    if(jReg && 0==register_getKeys(jReg->valuestring,RPK,RSK))
     {
         //todo: verify signature by isk
 
-        char RID[VKEY_KEY_SIZE];
-        char strSigRID[VKEY_SIG_SIZE];
+        unsigned char RID[VKEY_KEY_SIZE];
         encrypt_hash(RID,jIPK->valuestring,strlen(jIPK->valuestring));
         char strRID[65];
         sodium_bin2hex(strRID,65,RID,VKEY_KEY_SIZE);
 
+
         //todo: compute RID and sig
-        eth_register_site(strRID,strSigRID);
+        unsigned char SIG[VKEY_SIG_SIZE];
+        encrypt_sign(RID,VKEY_KEY_SIZE,RSK,SIG);
+
+        char strSigRID[129];
+        sodium_bin2hex(strSigRID,129,SIG,VKEY_SIG_SIZE);
+
+        ///test
+//
+//        unsigned char RPXK[32];
+//        encrypt_makeSignPublic(RSK,RPXK);
+        int x=encrypt_recover(RID,VKEY_KEY_SIZE,RPK,SIG);
+//
+//
+//        unsigned char RSKK[32];
+//        unsigned char RPKK[32];
+//        encrypt_random(RSKK);
+//        encrypt_makeSignPublic(RSKK,RPKK);
+//        encrypt_sign(RID,VKEY_KEY_SIZE,RSKK,SIG);
+//        x=encrypt_recover(RID,VKEY_KEY_SIZE,RPKK,SIG);
+        ///test
+
+        char strRPK[65];
+        sodium_bin2hex(strRPK,65,RPK,VKEY_KEY_SIZE);
+        eth_register_site(strRID,strSigRID,strRPK);
         cJSON_AddStringToObject(jData,"rid",strRID);
     }
 

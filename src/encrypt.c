@@ -63,7 +63,7 @@ int encrypt_makeDHShareKey(const uint8_t *secret,const uint8_t *public,const uin
     return 0;
 }
 
-int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public)
+int encrypt_makeSignPublic2(const uint8_t *secret, uint8_t *public)
 {
     uint8_t sk[crypto_sign_SECRETKEYBYTES];
     sodium_mlock( sk, crypto_sign_SECRETKEYBYTES );
@@ -71,6 +71,17 @@ int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public)
     sodium_munlock( sk, crypto_sign_SECRETKEYBYTES );
 
     return 0;
+}
+
+
+int encrypt_makeSignPublic(const uint8_t *seed, uint8_t *secret, uint8_t *public)
+{
+    //uint8_t sk[crypto_sign_SECRETKEYBYTES];
+    //sodium_mlock( sk, crypto_sign_SECRETKEYBYTES );
+    return crypto_sign_seed_keypair( public, secret, seed );
+    //sodium_munlock( sk, crypto_sign_SECRETKEYBYTES );
+
+    //return 0;
 }
 
 

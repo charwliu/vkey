@@ -53,6 +53,23 @@ int main(int arg,char* args[]) {
     }
     else if(strcmp(cmd,"update")==0)
     {
+        char *db=args[2];
+        char *oldIUK=args[3];
+        char *oldRescure=args[4];
+        char *resecure=args[5];
+        char *pwd=args[6];
+        char *random=args[7];
+
+        init_key();
+        char IUK[65];
+        if(0==update_key(db,oldIUK,oldRescure,pwd,resecure,random,IUK))
+        {
+            printf("Identidy updated! The New Encrypted IUK:%s\nPlease store IUK OFFLINE!",IUK);
+        }
+        else
+        {
+            printf("Identidy update failed.\n");
+        }
 
     }
 
@@ -67,7 +84,7 @@ int main(int arg,char* args[]) {
 
 
     printf("Command 3: update identity \n");
-    printf("not ready!\n");
+    printf("./vkeytest update dbfile oldiuk oldrescure securecode password randomdata\n");
 
     return 0;
 }

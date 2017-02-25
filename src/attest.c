@@ -393,7 +393,7 @@ int attest_replace_rask_with_verify(cJSON* jAttest,const char* s_msg)
 }
 
 ///write proof to db
-static int attest_write(const char* s_cid,const char* s_proof,const char* s_sig,const char* s_rask)
+static int attest_write(const char* s_cid,const char* s_proof,const char* s_sig,const unsigned char* u_rask)
 {
     sqlite3* db = db_get();
     char strSql[1024];
@@ -411,7 +411,8 @@ static int attest_write(const char* s_cid,const char* s_proof,const char* s_sig,
     sqlite3_bind_text(pStmt,1,s_cid,strlen(s_cid),SQLITE_TRANSIENT);
     sqlite3_bind_text(pStmt,2,s_proof,strlen(s_proof),SQLITE_TRANSIENT);
     sqlite3_bind_text(pStmt,3,s_sig,strlen(s_sig),SQLITE_TRANSIENT);
-    sqlite3_bind_int(pStmt,4,nTime);
+    sqlite3_bind_blob(pStmt,4,u_rask,VKEY_SIG_SK_SIZE,SQLITE_TRANSIENT);
+    sqlite3_bind_int(pStmt,5,nTime);
 
     ret = sqlite3_step(pStmt);
     if( ret != SQLITE_DONE )
@@ -432,12 +433,12 @@ static int attest_create(const char* s_cid,const char* s_tid, cJSON* j_proof,cJS
     char* strProof = cJSON_PrintUnformatted(j_proof);
 
 
-    char RASK[32],RAPK[32];
+    unsigned char RASK[VKEY_SIG_SK_SIZE],RAPK[VKEY_KEY_SIZE];
 
-    encrypt_random(RASK);
-    encrypt_makeSignPublic(RASK,RAPK);
-    char strRASK[65],strRAPK[65];
-    sodium_bin2hex(strRASK,65,RASK,32);
+    unsigned char RANDOM[32];
+    encrypt_random(RANDOM);
+    encrypt_makeSignPublic(RANDOM,RASK,RAPK);
+    char strRAPK[65];
     sodium_bin2hex(strRAPK,65,RAPK,32);
 
 
@@ -455,7 +456,7 @@ static int attest_create(const char* s_cid,const char* s_tid, cJSON* j_proof,cJS
         cJSON* jMD = cJSON_GetObjectItem(j_proof,"md");
         if( 1||strcmp(hexClaimHash,jMD->valuestring)==0)
         {
-            attest_write(s_cid,strProof,j_signature->valuestring,strRASK);
+            attest_write(s_cid,strProof,j_signature->valuestring,RASK);
 
             eth_attest_write(j_signature->valuestring,jAPK->valuestring,strRAPK,s_tid);
             ret=0;

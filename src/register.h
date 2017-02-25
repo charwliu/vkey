@@ -10,6 +10,6 @@ int register_create(const char* s_url,const char* s_rpk, char* s_ipk, unsigned c
 
 
 int register_start(const char* s_url, char* s_rpk);
-int register_getKeys(const char* s_url,char* s_rpk,char* s_rsk);
+int register_getKeys(const char* s_url,unsigned char* u_rpk,unsigned char* u_rsk);
 
 #endif

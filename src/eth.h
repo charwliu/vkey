@@ -16,9 +16,10 @@ int eth_register_client(const char* s_pid, const char* s_rpk, const char* s_vuk,
 int eth_recover_client(const char* s_oldPid,const char* s_sigByURSK,const char* s_pid, const char* s_rpk, const char* s_vuk, const char* s_suk);
 
 /// site submit register
-/// \param RID
-/// \param sigRID
+/// \param s_pid
+/// \param s_sigPid
+/// \param s_rpk
 /// \return
-int eth_register_site(char* RID,char* sigRID);
+int eth_register_site(char* s_pid,char* s_sigPid,char* s_rpk);
 
 #endif

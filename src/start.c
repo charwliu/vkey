@@ -128,12 +128,9 @@ int update_key(const char* s_dbPath, const char* s_ciperOldIUK,const char* s_old
         return -1;
     }
 
-    //todo:
-
-
-
-
+    int ret=key_update(s_ciperOldIUK,s_oldRescure,s_rescure,s_password,s_random,s_ciperIUK);
     db_close();
+    return ret;
 
 }
 

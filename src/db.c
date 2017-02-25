@@ -75,7 +75,7 @@ static int db_checkKeyTable()
 //        fprintf(stdout, "Table created successfully\n");
 //    }
 //    return 0;
-    const char* sql = "CREATE TABLE TB_KEY( APK TEXT PRIMARY KEY NOT NULL, ASK TEXT NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
+    const char* sql = "CREATE TABLE TB_KEY( APK TEXT PRIMARY KEY NOT NULL, ASK BLOB NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
     return db_checkTable("TB_KEY",sql);
 }
 
@@ -89,7 +89,7 @@ static int db_checkClaimTable()
 
 static int db_checkAttestTable()
 {
-    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, PROOF TEXT NOT NULL, SIGNATURE TEXT NOT NULL, RASK TEXT NOT NULL, TIME INT );";
+    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, PROOF TEXT NOT NULL, SIGNATURE TEXT NOT NULL, RASK BLOB NOT NULL, TIME INT );";
     return db_checkTable("TB_ATTEST",sql);
 }
 
@@ -103,7 +103,7 @@ static int db_checkMqttTable()
 
 static int db_checkRegSiteTable()
 {
-    const char* sql = "CREATE TABLE TB_REG_SITE( URL TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, PK TEXT NOT NULL, TIME INT NOT NULL );";
+    const char* sql = "CREATE TABLE TB_REG_SITE( URL TEXT PRIMARY KEY NOT NULL, SK BLOB NOT NULL, PK BLOB NOT NULL, TIME INT NOT NULL );";
     return db_checkTable("TB_REG_SITE",sql);
 }
 

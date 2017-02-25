@@ -18,9 +18,9 @@ int init_key();
 int create_key(const char* s_dbPath,const char* s_password, const char* s_rescure,const char* s_random ,char* s_ciperIUK);
 
 ///
+/// \param s_dbPath
 /// \param s_ciperOldIUK    iuk backuped offline
 /// \param s_oldRescure     rescure code backuped offline
-/// \param s_dbPath
 /// \param s_password
 /// \param s_rescure
 /// \param s_random

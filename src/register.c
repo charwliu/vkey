@@ -375,7 +375,7 @@ static int register_buildKeys(const unsigned char* u_ILK,const unsigned char* u_
 
     //PID
     char PID[VKEY_KEY_SIZE];
-    encrypt_hash(PID,IPK,VKEY_KEY_SIZE);
+    encrypt_hash(PID,s_ipk,strlen(s_ipk));
     sodium_bin2hex(s_pid,65,PID,VKEY_KEY_SIZE);
 
     //SUK

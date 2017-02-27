@@ -15,10 +15,12 @@
 
 static int post_auth(struct mg_connection *nc, struct http_message *hm);
 static int req_auth(struct mg_connection *nc, struct http_message *hm);
+static int del_auth(struct mg_connection *nc, struct http_message *hm);
 static int test_auth(struct mg_connection *nc, struct http_message *hm);
 
-static http_router routers[2]={
+static http_router routers[3]={
         {req_auth,"POST","/api/v1/auth/req"},
+        {del_auth,"DELETE","/api/v1/auth/req"},
         {post_auth,"POST","/api/v1/auth"}
 };
 
@@ -40,7 +42,7 @@ int auth_start(cJSON* jReq,cJSON* jResult)
     cJSON *reg =  cJSON_GetObjectItem(jReq, "reg");
     cJSON *templateIds =  cJSON_GetObjectItem(jReq, "templateIds");
     cJSON *duration =  cJSON_GetObjectItem(jReq, "duration");
-    cJSON *desc =  cJSON_GetObjectItem(jReq, "desc");
+    //cJSON *desc =  cJSON_GetObjectItem(jReq, "desc");
 
 
     //subscribe topic
@@ -79,17 +81,17 @@ int auth_start(cJSON* jReq,cJSON* jResult)
     }
 
 
-    char names[128]="";
+    //char names[128]="";
     if(templateIds)
     {
         //todo 2: get claim template names by templateIds
 
-        cJSON_AddStringToObject(jResult, "names", names);
+        //cJSON_AddStringToObject(jResult, "names", names);
 
         cJSON *jTids = cJSON_Duplicate(templateIds, 1);
         cJSON_AddItemToObject(jResult, "claimTemplates", jTids);
     }
-    cJSON_AddStringToObject(jResult,"desc",desc->valuestring);
+    //cJSON_AddStringToObject(jResult,"desc",desc->valuestring);
 
     return 0;
 
@@ -141,6 +143,27 @@ static int req_auth(struct mg_connection *nc, struct http_message *hm)
     http_response_json(nc,200,jRes);
     cJSON_Delete(json);
     cJSON_Delete(jRes);
+    return 0;
+}
+
+
+/// DEL HOST/api/v1/auth/req?topic=4a321212123134
+static int del_auth(struct mg_connection *nc, struct http_message *hm)
+{
+    char strPK[65]="";
+    mg_get_http_var(&hm->query_string, "topic", strPK, 65);
+    if( strlen(strPK)==0)
+    {
+        http_response_error(nc,400,"Vkey Service : no valid topic");
+        return 0;
+    }
+    char strTopic[100];
+    sprintf(strTopic,"%s/%s","AUTH_DES",strPK);
+
+    mqtt_unsubscribe(strTopic);
+
+    http_response_text(nc,200,"auth request has been removed");
+
     return 0;
 }
 
@@ -316,6 +339,7 @@ int auth_got( const char* s_peerTopic, const char* s_data )
 
         char strRPK[65];
         sodium_bin2hex(strRPK,65,RPK,VKEY_KEY_SIZE);
+        printf("PID:%s\n",strRID);
         eth_register_site(strRID,strSigRID,strRPK);
         cJSON_AddStringToObject(jData,"rid",strRID);
     }
@@ -332,5 +356,5 @@ int auth_got( const char* s_peerTopic, const char* s_data )
 
 int auth_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,2,nc,hm);
+    return http_routers_handle(routers,3,nc,hm);
 }

@@ -150,3 +150,23 @@ int util_compareKey(const unsigned char* u_a,const unsigned char* u_b,int n_size
     return 1;
 }
 
+
+int util_addStringToSet(char** set,int n_size,char* item)
+{
+    for(int i=0;i<n_size;i++)
+    {
+        if(set[i]==NULL)
+        {
+            set[i]=item;
+            return 0;
+        }
+        else
+        {
+            if(strcmp(set[i],item)==0)
+            {
+                return -1;
+            }
+        }
+    }
+    return -1;
+}

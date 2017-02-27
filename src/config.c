@@ -14,6 +14,6 @@ void config_load()
 
     g_config.http_port="10001";
 
-    g_config.template_server="localhost:3000/templates";
+    g_config.template_server="http://124.251.62.218:1027/v1/claimTemplates";
 
 }

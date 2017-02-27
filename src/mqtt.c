@@ -48,6 +48,11 @@ static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t
 static void ev_handler(struct mg_connection *nc, int ev, void *p) {
     struct mg_mqtt_message *msg = (struct mg_mqtt_message *) p;
     (void) nc;
+    if(ev!=MG_EV_POLL)
+    {
+        printf("event:%d\n",ev);
+
+    }
 
     switch (ev)
     {
@@ -86,6 +91,32 @@ static void ev_handler(struct mg_connection *nc, int ev, void *p) {
             free(strTopic);
             break;
         }
+
+        case MG_EV_MQTT_PUBREC :
+        {
+            char* strTopic = util_getStr(&msg->topic);
+            printf("MG_EV_MQTT_PUBREC . %s\n\n", strTopic);
+            free(strTopic);
+            break;
+
+        }
+        case MG_EV_MQTT_PUBREL:
+        {
+            char* strTopic = util_getStr(&msg->topic);
+            printf("MG_EV_MQTT_PUBREL. %s\n\n", strTopic);
+            free(strTopic);
+            break;
+
+        }
+        case MG_EV_MQTT_PUBCOMP :
+        {
+            char* strTopic = util_getStr(&msg->topic);
+            printf("MG_EV_MQTT_PUBCOMP. %s\n\n", strTopic);
+            free(strTopic);
+            break;
+
+        }
+
         case MG_EV_MQTT_SUBACK:
         {
             char* strTopic = util_getStr(&msg->topic);
@@ -174,7 +205,7 @@ int mqtt_send(const char* s_to,const char* s_event,const char* s_pk,const char* 
     char* sPayload = cJSON_PrintUnformatted(jPayload);
 
 
-    printf("Publish msg to:%s \nMessage:%s\n",s_to,sPayload);
+    printf("Publish msg to:%s .  Message:%s\n",s_to,sPayload);
 
     mg_mqtt_publish(mqtt_conn, s_to, 42, MG_MQTT_QOS(1), sPayload, strlen(sPayload));
 
@@ -322,7 +353,7 @@ static int mqtt_doForAllTopics(int n_action)
     }
     sqlite3_finalize(pStmt);
 
-    sprintf(strSql,"SELECT TOPIC,PK,SK,TIME,DURATION,DATA FROM TB_MQTT;");
+    sprintf(strSql,"SELECT TOPIC,PK DATA FROM TB_MQTT;");
 
     ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
     if( ret != SQLITE_OK )
@@ -340,9 +371,6 @@ static int mqtt_doForAllTopics(int n_action)
     {
         char *strEvent = (char *) sqlite3_column_text(pStmt, 0);
         char *strPK = (char *) sqlite3_column_text(pStmt, 1);
-
-        time_t time = (time_t)sqlite3_column_int(pStmt,3);
-        int duration = sqlite3_column_int(pStmt,2);
 
         char *strTopic=malloc(256);
 
@@ -379,6 +407,49 @@ static int mqtt_doForAllTopics(int n_action)
 }
 
 
+/// do sth for all topics stored in db
+/// \param n_action 1:subscribe,0:unsubscribe
+/// \return
+int mqtt_timer(time_t t_now)
+{
+    sqlite3* db = db_get();
+
+    char strSql[256];
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+
+    sprintf(strSql,"SELECT TOPIC,PK,TIME,DURATION,DATA FROM TB_MQTT WHERE DURATION>0;");
+
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+    ///
+
+    while( sqlite3_step(pStmt) == SQLITE_ROW )
+    {
+        char *strEvent = (char *) sqlite3_column_text(pStmt, 0);
+        char *strPK = (char *) sqlite3_column_text(pStmt, 1);
+
+        time_t time = (time_t)sqlite3_column_int(pStmt,2);
+        int duration = sqlite3_column_int(pStmt,3);
+
+        if(t_now-time>duration)
+        {
+            char strTopic[256];
+            sprintf(strTopic,"%s/%s",strEvent,strPK);
+            mg_mqtt_unsubscribe(mqtt_conn, strTopic, 1, 42);
+        }
+    }
+    sqlite3_finalize(pStmt);
+
+    return 0;
+}
+
+
 
 int mqtt_close()
 {
@@ -387,7 +458,7 @@ int mqtt_close()
 }
 
 /// subscribe topic to mqtt
-/// \param s_topic
+/// \param s_topic   SHARE_SRC/12314312
 /// \return
 int mqtt_unsubscribe(const char* s_topic)
 {
@@ -405,9 +476,9 @@ int mqtt_unsubscribe(const char* s_topic)
     sqlite3* db = db_get();
     char strSql[1024];
     sprintf(strSql,"DELETE FROM TB_MQTT WHERE PK='%s'",strPK);
-    sqlite3_exec(db,strSql,NULL,NULL,NULL);
-
-    return 0;
+    int ret = sqlite3_exec(db,strSql,NULL,NULL,NULL);
+    printf(strSql);
+    return ret;
 }
 
 /// save the subscribe data

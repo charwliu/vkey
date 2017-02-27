@@ -11,13 +11,15 @@
 #include "vkey.h"
 
 static int post_key(struct mg_connection *nc, struct http_message *hm );
+static int get_key(struct mg_connection *nc, struct http_message *hm );
 static int post_password(struct mg_connection *nc, struct http_message *hm );
 static int post_update(struct mg_connection *nc, struct http_message *hm );
 
-static http_router routers[3]={
+static http_router routers[4]={
         {post_password,"POST","/api/v1/key/password"},
         {post_update,"POST","/api/v1/key/update"},
-        {post_key,"POST","/api/v1/key"}
+        {post_key,"POST","/api/v1/key"},
+        {get_key,"GET","/api/v1/key"}
 };
 
 
@@ -255,6 +257,31 @@ static int post_key(struct mg_connection *nc, struct http_message *hm )
     return 0;
 }
 
+
+static int get_key(struct mg_connection *nc, struct http_message *hm )
+{
+    char ILK[32];
+    char APK[65];
+    if(0==key_get(NULL,ILK,APK,NULL,NULL))
+    {
+        char strILK[65];
+        sodium_bin2hex(strILK,65,ILK,32);
+
+        cJSON* res = cJSON_CreateObject();
+        cJSON_AddStringToObject(res,"ilk",strILK);
+        cJSON_AddStringToObject(res,"apk",APK);
+
+        http_response_json(nc,200,res);
+
+        cJSON_Delete(res);
+    }
+    else
+    {
+        http_response_error(nc,400,"Vkey Service : read key failed");
+    }
+    return 0;
+}
+
 int key_create(const char* s_rescure,const char* s_password,unsigned char* h_random, char* s_ciperIuk )
 {
     if( key_exist()==1 )
@@ -404,7 +431,7 @@ int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, char* s_ask
         if(s_apk)
         {
             char* apk = sqlite3_column_text(pStmt,2);
-            memcpy(s_apk,apk,VKEY_KEY_SIZE);
+            strncpy(s_apk,apk,VKEY_KEY_SIZE*2);
         }
 
         if(s_ask)
@@ -590,5 +617,5 @@ int key_chechPassword(const char* s_password)
 
 int key_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,3,nc,hm);
+    return http_routers_handle(routers,4,nc,hm);
 }

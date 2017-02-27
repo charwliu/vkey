@@ -14,7 +14,7 @@ int network_start()
     struct mg_mgr mgr;
     mg_mgr_init(&mgr, NULL);
 
-    //template_update(&mgr);
+    template_load(&mgr);
 
     http_start(&mgr);
 
@@ -25,6 +25,9 @@ int network_start()
     while (!network_finish)
     {
         mg_mgr_poll(&mgr, 1000);
+        time_t now=time(NULL);
+        //if(now%5==0)
+        //printf("time:%d\n",now);
     }
 
     mg_mgr_free(&mgr);

@@ -105,6 +105,14 @@ static int put_claim(struct mg_connection *nc, struct http_message *hm) {
         http_response_error(nc,400,"Vkey Service : invalid json data");
         return 0;
     }
+
+    cJSON *templateId = cJSON_GetObjectItem(json, "templateId");
+    if(!templateId)
+    {
+        http_response_error(nc,400,"Vkey Service : templateId error");
+        return 0;
+    }
+
     //todo: varify json schema
     cJSON *claimId = cJSON_GetObjectItem(json, "id");
     if(!claimId)

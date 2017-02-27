@@ -9,6 +9,7 @@
 #include "network.h"
 #include "key.h"
 #include "start.h"
+#include "template.h"
 
 
 FN_Notify g_fn_notity;
@@ -155,15 +156,16 @@ int verify_iuk(const char* s_dbPath, const char* s_ciperOldIUK,const char* s_old
 
 static int post_stop(struct mg_connection *nc, struct http_message *hm )
 {
-    //todo:1 unsubsribe topic from mqtt
+    //1 unsubsribe topic from mqtt
     mqtt_close();
 
-    //todo:2 close db file
+    //2 close db file
     db_close();
 
-    //todo:3 stop network
+    //3 stop network
     network_stop();
 
+    template_clear();
 
     http_response_text(nc,200,"stoped!");
     return 0;

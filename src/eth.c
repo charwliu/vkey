@@ -261,8 +261,8 @@ int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,cons
     char* trEthFunctionCodeRegister="0x87a9792a";
 
     char *strEthPayload= "{\"jsonrpc\":\"2.0\",\"method\":\"personal_sendTransaction\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\", \"gas\": 4712388},\"%s\"],\"id\":1}";
-    char *strEthPubAddress="0xb024c35ea8fd7ec8a18d8db637940156dee8f6cb";
-    char* strEthContractAddress="0xa2a7747355218dc9feed2e6816208ad3c190d507";
+    char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
+    char* strEthContractAddress="0x02a42ce070accce12f4f7e243b65cbcb7867cd38";
     char* strEthPassword="mm1234";
 
     //build params data
@@ -275,12 +275,17 @@ int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,cons
     sprintf(strRAPK,"0x%s",s_rapk);
     sprintf(strAPK,"0x%s",s_apk);
     char* values[4];
-    values[0]=s_sig;
-    values[1]=s_tid;
+    values[0]="0000000000000000000000000000000000000000000000000000000000000080";
+    values[1]="00000000000000000000000000000000000000000000000000000000000000a0";
     values[2]=strRAPK;
     values[3]=strAPK;
+    values[4]="0000000000000000000000000000000000000000000000000000000000000040";
+    values[5]=s_sig;
 
-    eth_buildPayload(data,values,4);
+
+    eth_buildBytesPayload(data,values,6);
+
+    strEncodingSliceInData(data,s_tid);
 
     //construct json data to post to block chain
     char payload[2048];

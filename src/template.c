@@ -33,6 +33,7 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             free(strBody);
 
             nc->flags |= MG_F_SEND_AND_CLOSE;
+            printf("Claim templates loaded\n");
             break;
         }
         case MG_EV_CLOSE:
@@ -43,13 +44,15 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     }
 }
 
-int template_load()
+int template_clear()
 {
-
-    return 0;
+    if (j_tempates)
+    {
+        cJSON_Delete(j_tempates);
+    }
 }
 
-int template_update(struct mg_mgr *mgr)
+int template_load(struct mg_mgr *mgr)
 {
     struct mg_connection *nc;
     nc = mg_connect_http(mgr, ev_handler, g_config.template_server, NULL, NULL);

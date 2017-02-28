@@ -4,8 +4,8 @@
 #include <sodium.h>
 #include "mongoose/mongoose.h"
 
-#define TEMPLATE_PAYLOAD_ETH_CALL "{\"jsonrpc\":\"2.0\",\"method\":\"eth_call\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\", \"gas\": 4712388},\"latest\"],\"id\":1}"
-#define ETH_TEMPLATE_PAYLOAD "{\"jsonrpc\":\"2.0\",\"method\":\"personal_sendTransaction\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\", \"gas\": \"0x47E7C4\"},\"%s\"],\"id\":1}"
+#define ETH_TEMPLATE_CALL_PAYLOAD "{\"jsonrpc\":\"2.0\",\"method\":\"eth_call\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\"},\"latest\"],\"id\":1}"
+#define ETH_TEMPLATE_TRANS_PAYLOAD "{\"jsonrpc\":\"2.0\",\"method\":\"personal_sendTransaction\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\", \"gas\": \"0x47E7C4\"},\"%s\"],\"id\":1}"
 #define TEMPLATE_PAYLOAD_ETH_GETTRANSACTIONRECEIPT "{\"jsonrpc\":\"2.0\",\"method\": \"eth_getTransactionReceipt\", \"params\": [\"%s\"], \"id\": 1}"
 #define CONTRACT_ADDRESS "0x5c706f505b4405f80ea4bd25dde5f27458abca8d"
 #define PUB_ADDRESS "0xf0bdee862720d62ca659e47819e8e2bcff1eb7d8"
@@ -81,15 +81,15 @@ static char* genStringEncodedValue(char* result, char* str)
     int segments=len/32;
     if(len%32>0) segments++;
 
-    //stringHex(result, str);
+    stringHex(result, str);
 
     memset(result+strlen(result),'0',segments*64-strlen(result));
     result[segments*64]=0;
 //
-//    char result_tmp[64*segments-strlen(result)+1];
-//    memset(result_tmp,0x30,64*segments-strlen(result));
-//    result_tmp[64*segments-strlen(result)]='\0';
-//    strncat(result,result_tmp,strlen(result_tmp));
+    char result_tmp[64*segments-strlen(result)+1];
+    memset(result_tmp,0x30,64*segments-strlen(result));
+    result_tmp[64*segments-strlen(result)]='\0';
+    strncat(result,result_tmp,strlen(result_tmp));
     return result;
 }
 
@@ -208,61 +208,64 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
     }
 }
 
-/// post rpc request to ethereum smart contract
-/// \param global_name
-/// \param vid
-/// \param pid
-/// \param suk
-/// \param vuk
+
+
+///
+/// \param s_psig
+/// \param s_apk
+/// \param s_msg hex hash of nonce
+/// \param s_msig hex sig 128
 /// \return
-int eth_register(char* global_name, char* vid, char* pid, char* suk, char* vuk)
+int eth_attest_read(const char* s_psig, const char* s_apk, const char* s_msg, const char* s_msig )
 {
+
+    char* trEthFunctionCodeRegister="0xa75caa05";
+
+    char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
+    char* strEthContractAddress="0xca3a9cf4c10eb74589ffe420c49b7bdd28848a7f";
+    char* strEthPassword="mm1234";
+
+
+
     //build params data
     char data[1024];
     memset(data,0,1024);
-    strncpy(data,FUNCTION_CODE_REGISTER,strlen(FUNCTION_CODE_REGISTER));
-    char* values[5];
-    values[0]=global_name;
-    values[1]=vid;
-    values[2]=pid;
-    values[3]=suk;
-    values[4]=vuk;
-    eth_buildPayload(data,values,5);
+    strncpy(data,trEthFunctionCodeRegister,strlen(trEthFunctionCodeRegister));
+
+    char* values[7];
+    values[0]="0000000000000000000000000000000000000000000000000000000000000060";
+    values[1]="00000000000000000000000000000000000000000000000000000000000000c0";
+    values[2]=s_msg;
+    values[3]="0000000000000000000000000000000000000000000000000000000000000040";
+    values[4]=s_psig;
+    values[5]="0000000000000000000000000000000000000000000000000000000000000040";
+    values[6]=s_msig;
+
+
+    eth_buildBytesPayload(data,values,7);
+
 
     //construct json data to post to block chain
     char payload[2048];
     memset(payload,0,2048);
-    sprintf(payload,ETH_TEMPLATE_PAYLOAD,PUB_ADDRESS,CONTRACT_ADDRESS,data,ETH_ACCOUNT_PASSWORD);
+    sprintf(payload,ETH_TEMPLATE_CALL_PAYLOAD,strEthPubAddress,strEthContractAddress,data,strEthPassword);
 
     struct mg_connection *nc;
 
     nc = mg_connect_http(eth_mgr, ev_handler, eth_getUrl(), eth_header, payload);
     mg_set_protocol_http_websocket(nc);
 
-    printf("Starting RESTful client against %s\n", eth_getUrl());
-}
-
-
-///
-/// \param from
-/// \param to
-/// \param pid
-/// \param claimId
-/// \param signature
-/// \return
-int eth_attest(char* from, char* to, char* pid, char* claimId, char* signature)
-{
-    return -1;
+    printf("Eth sent to: %s\n", payload);
+    return 0;
 }
 
 
 int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,const char* s_tid)
 {
-    char* trEthFunctionCodeRegister="0x87a9792a";
+    char* trEthFunctionCodeRegister="0x08dfbf77";
 
-    char *strEthPayload= "{\"jsonrpc\":\"2.0\",\"method\":\"personal_sendTransaction\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\", \"gas\": 4712388},\"%s\"],\"id\":1}";
     char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
-    char* strEthContractAddress="0x02a42ce070accce12f4f7e243b65cbcb7867cd38";
+    char* strEthContractAddress="0xca3a9cf4c10eb74589ffe420c49b7bdd28848a7f";
     char* strEthPassword="mm1234";
 
     //build params data
@@ -270,15 +273,11 @@ int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,cons
     memset(data,0,1024);
     strncpy(data,trEthFunctionCodeRegister,strlen(trEthFunctionCodeRegister));
 
-    char strRAPK[67];
-    char strAPK[67];
-    sprintf(strRAPK,"0x%s",s_rapk);
-    sprintf(strAPK,"0x%s",s_apk);
-    char* values[4];
+    char* values[6];
     values[0]="0000000000000000000000000000000000000000000000000000000000000080";
-    values[1]="00000000000000000000000000000000000000000000000000000000000000a0";
-    values[2]=strRAPK;
-    values[3]=strAPK;
+    values[1]="00000000000000000000000000000000000000000000000000000000000000e0";
+    values[2]=s_rapk;
+    values[3]=s_apk;
     values[4]="0000000000000000000000000000000000000000000000000000000000000040";
     values[5]=s_sig;
 
@@ -290,14 +289,14 @@ int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,cons
     //construct json data to post to block chain
     char payload[2048];
     memset(payload,0,2048);
-    sprintf(payload,strEthPayload,strEthPubAddress,strEthContractAddress,data,strEthPassword);
+    sprintf(payload,ETH_TEMPLATE_TRANS_PAYLOAD,strEthPubAddress,strEthContractAddress,data,strEthPassword);
 
     struct mg_connection *nc;
 
     nc = mg_connect_http(eth_mgr, ev_handler, eth_getUrl(), eth_header, payload);
     mg_set_protocol_http_websocket(nc);
 
-    printf("Eth sent to: %s\n", eth_getUrl());
+    printf("Eth sent to: %s\n", payload);
     return 0;
 }
 
@@ -309,8 +308,8 @@ int eth_register_client(const char* s_pid, const char* s_rpk, const char* s_vuk,
     char* strEthContractAddress="0x0c386ce9eb6316a60be7d002ca8913a5e5b5e4f9";
     char* strEthPassword="mm1234";
 
-    char data[2024];
-    memset(data,0,2024);
+    char data[1024];
+    memset(data,0,1024);
     strncpy(data,strEthFunctionCodeRegister,strlen(strEthFunctionCodeRegister));
     char* values[4];
     values[0]=s_pid;
@@ -321,9 +320,9 @@ int eth_register_client(const char* s_pid, const char* s_rpk, const char* s_vuk,
     eth_buildBytesPayload(data,values,4);
 
     //construct json data to post to block chain
-    char payload[3048];
-    memset(payload,0,3048);
-    int ret=sprintf(payload,ETH_TEMPLATE_PAYLOAD, strEthPubAddress,strEthContractAddress,data,strEthPassword);
+    char payload[2048];
+    memset(payload,0,2048);
+    int ret=sprintf(payload,ETH_TEMPLATE_TRANS_PAYLOAD, strEthPubAddress,strEthContractAddress,data,strEthPassword);
 
     struct mg_connection *nc;
 
@@ -367,7 +366,7 @@ int eth_register_site(char* s_pid,char* s_sigPid,char* s_rpk)
     //construct json data to post to block chain
     char payload[3048];
     memset(payload,0,3048);
-    int ret=sprintf(payload,ETH_TEMPLATE_PAYLOAD, strEthPubAddress,strEthContractAddress,data,strEthPassword);
+    int ret=sprintf(payload,ETH_TEMPLATE_TRANS_PAYLOAD, strEthPubAddress,strEthContractAddress,data,strEthPassword);
 
     struct mg_connection *nc;
 

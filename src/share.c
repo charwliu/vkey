@@ -232,14 +232,17 @@ static int post_share(struct mg_connection *nc, struct http_message *hm)
 }
 
 /*
- * GET /api/v1/share?topic=123456787
+ * GET /api/v1/share?topic=123456787&nonce=123
  */
 static int get_share(struct mg_connection *nc, struct http_message *hm)
 {
 
     char strSource[80]="";
+    char nonce[64]="";
     char strSourceTopic[128]="";
     mg_get_http_var(&hm->query_string, "topic", strSource, 80);
+    mg_get_http_var(&hm->query_string, "nonce", nonce, 64);
+
     sprintf(strSourceTopic,"SHARE_SRC/%s",strSource);
 
     unsigned char PK[VKEY_KEY_SIZE];
@@ -251,7 +254,7 @@ static int get_share(struct mg_connection *nc, struct http_message *hm)
     time_t nTime = time(NULL);
     //3 subscribe topic
     mqtt_subscribe("SHARE_DES",PK,SK,nTime,0,"");
-    mqtt_send(strSourceTopic,"SHARE_DES",PK,SK,"");
+    mqtt_send(strSourceTopic,"SHARE_DES",PK,SK,nonce);
 
 
     http_response_text(nc,200,"ok");
@@ -293,10 +296,10 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
     //todo: parse multi claims
 
     cJSON* jSend = cJSON_CreateObject();
-    cJSON_AddStringToObject(jSend,"pid","1234");
+    cJSON_AddStringToObject(jSend,"nonce",s_data);
     cJSON* jClaims = cJSON_CreateArray();
 
-    claim_get_with_proofs( jClaimIds,s_peerTopic, jClaims);
+    claim_get_by_ids( jClaimIds,s_data, jClaims);
 
     cJSON_AddItemToObject(jSend,"claims",jClaims);
 

@@ -9,6 +9,8 @@
 #include "db.h"
 #include "util.h"
 #include "attest.h"
+#include "vkey.h"
+#include "encrypt.h"
 
 static int get_claim(struct mg_connection *nc, struct http_message *hm);
 static int post_claim(struct mg_connection *nc, struct http_message *hm);
@@ -26,20 +28,30 @@ static http_router routers[4]={
 };
 
 
-/// /api/v1/claim?templateid=CLMT_NAME
+/// /api/v1/claim?templateid=CLMT_NAME&nonce=123
 static int get_claim(struct mg_connection *nc, struct http_message *hm) {
 
     char templateId[32]="";
+    char nonce[64]="";
     mg_get_http_var(&hm->query_string, "templateId", templateId, 32);
+    mg_get_http_var(&hm->query_string, "nonce", nonce, 64);
+
+    unsigned char HashMsg[VKEY_KEY_SIZE];
+    encrypt_hash(HashMsg,nonce,strlen(nonce));
 
 
-    cJSON* res = cJSON_CreateArray();
+    cJSON* jSend = cJSON_CreateObject();
+    cJSON_AddStringToObject(jSend,"nonce",nonce);
+    cJSON* jClaims = cJSON_CreateArray();
 
-    claim_read(templateId,res);
+    claim_get_by_tid(templateId,HashMsg,jClaims);
 
-    http_response_json(nc,200,res);
+    cJSON_AddItemToObject(jSend,"claims",jClaims);
 
-    cJSON_Delete(res);
+
+    http_response_json(nc,200,jSend);
+
+    cJSON_Delete(jSend);
 
 }
 
@@ -316,7 +328,7 @@ cJSON* claim_read_by_claimid(const char* s_id)
  * return value
  * ["data1","data2"]
  * */
-int claim_read(const char* s_templateId,cJSON* result)
+int claim_get_by_tid(const char* s_templateId,unsigned const char* u_msg,cJSON* jClaims)
 {
     //todo: descrypt s_json
 
@@ -354,14 +366,25 @@ int claim_read(const char* s_templateId,cJSON* result)
     while( sqlite3_step(pStmt) == SQLITE_ROW )
     {
         char *strID = (char *) sqlite3_column_text(pStmt, 0);
-        char *strData = (char *) sqlite3_column_text(pStmt, 1);
-        //todo: descrypt data
-        cJSON* jData = cJSON_Parse(strData);
-        if(jData&&strID)
-        {
-            cJSON_AddStringToObject(jData,"id",strID);
-        }
-        cJSON_AddItemToArray(result,jData);
+
+
+        cJSON* jClaim = claim_read_by_claimid(strID);
+        cJSON* jAttests = attest_read_by_claimid(strID,u_msg);
+
+        cJSON* jClaimWithAttest=cJSON_CreateObject();
+        cJSON_AddItemToObject(jClaimWithAttest,"claim",jClaim);
+        cJSON_AddItemToObject(jClaimWithAttest,"proofs",jAttests);
+        cJSON_AddItemToArray( jClaims,jClaimWithAttest);
+
+//
+//        char *strData = (char *) sqlite3_column_text(pStmt, 1);
+//        //todo: descrypt data
+//        cJSON* jData = cJSON_Parse(strData);
+//        if(jData&&strID)
+//        {
+//            cJSON_AddStringToObject(jData,"id",strID);
+//        }
+//        cJSON_AddItemToArray(result,jData);
         //cJSON_Delete(jData);
     }
     sqlite3_finalize(pStmt);
@@ -369,7 +392,7 @@ int claim_read(const char* s_templateId,cJSON* result)
 }
 
 
-int claim_get_with_proofs(cJSON* jClaimIds,const char* sTopic,cJSON* jClaims)
+int claim_get_by_ids(cJSON* jClaimIds,unsigned const char* u_msg,cJSON* jClaims)
 {
     int nClaimCount=cJSON_GetArraySize(jClaimIds);
 
@@ -378,20 +401,11 @@ int claim_get_with_proofs(cJSON* jClaimIds,const char* sTopic,cJSON* jClaims)
         cJSON* jItem=cJSON_GetArrayItem(jClaimIds,i);
 
         cJSON* jClaim = claim_read_by_claimid(jItem->valuestring);
-        cJSON* jAttests = attest_read_by_claimid(jItem->valuestring);
-        int nProofCount = cJSON_GetArraySize(jAttests);
-        for(int j=0;j<nProofCount;j++)
-        {
-            cJSON* jProof = cJSON_GetArrayItem(jAttests,j);
-            attest_replace_rask_with_verify(jProof,sTopic);
+        cJSON* jAttests = attest_read_by_claimid(jItem->valuestring,u_msg);
 
-        }
         cJSON* jClaimWithAttest=cJSON_CreateObject();
         cJSON_AddItemToObject(jClaimWithAttest,"claim",jClaim);
         cJSON_AddItemToObject(jClaimWithAttest,"proofs",jAttests);
-
-
-
         cJSON_AddItemToArray( jClaims,jClaimWithAttest);
     }
     return 0;

@@ -175,7 +175,8 @@ POST
   "reg":"www.xxxx.com",
   "rpk":"12334",
   "claims":["123","456"],
-  "extra":"aa"
+  "nonce":"12345",
+  "extra":{}
 }
  * */
 /// reg and rpk are optional attributes,if they exist, client execute register process
@@ -189,30 +190,41 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     cJSON *jReg = cJSON_GetObjectItem(json, "reg");
     cJSON *jRPK = cJSON_GetObjectItem(json, "rpk");
     cJSON *jClaimIds = cJSON_GetObjectItem(json, "claims");
+    cJSON *jNonce = cJSON_GetObjectItem(json, "nonce");
     cJSON *jExtra = cJSON_GetObjectItem(json, "extra");
+
     if(!jTopic)
     {
         http_response_error(nc,400,"Vkey Service : peer error");
         return 0;
     }
 
+    if(!jNonce)
+    {
+        http_response_error(nc,400,"Vkey Service : nonce error");
+        return 0;
+    }
+
+    unsigned char NonceHash[VKEY_KEY_SIZE];
+    encrypt_hash(NonceHash, jNonce->valuestring, strlen(jNonce->valuestring));
+
+
     cJSON* jSend = cJSON_CreateObject();
-    char strExtraSig[129];
+    char strNonceSig[129];
 
     if( jReg )
     {
         char strIPK[65];
-        unsigned  char ISK[VKEY_KEY_SIZE];
+        unsigned  char ISK[VKEY_SIG_SK_SIZE];
         register_create(jReg->valuestring, jRPK->valuestring, strIPK,ISK);
 
         cJSON_AddStringToObject(jSend,"ipk",strIPK);
         cJSON_AddStringToObject(jSend,"reg",jReg->valuestring);
-        if( jExtra )
-        {
-            unsigned char SIG[VKEY_SIG_SIZE];
-            encrypt_sign(jExtra->valuestring,strlen(jExtra->valuestring),ISK,SIG);
-            sodium_bin2hex(strExtraSig,129,SIG,VKEY_SIG_SIZE);
-        }
+
+        unsigned char SIG[VKEY_SIG_SIZE];
+        encrypt_sign(NonceHash,VKEY_KEY_SIZE,ISK,SIG);
+        sodium_bin2hex(strNonceSig,129,SIG,VKEY_SIG_SIZE);
+
     }
 
     unsigned char PK[VKEY_KEY_SIZE];
@@ -225,18 +237,22 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     {
         cJSON *jClaims = cJSON_CreateArray();
 
-        claim_get_with_proofs(jClaimIds, jTopic->valuestring, jClaims);
+        claim_get_by_ids(jClaimIds, NonceHash, jClaims);
 
         cJSON_AddItemToObject(jSend, "claims", jClaims);
     }
 
+    cJSON_AddStringToObject(jSend, "nonce", jNonce->valuestring);
+    if(jReg)
+    {
+        cJSON_AddStringToObject(jSend, "nonceSig", strNonceSig);
+    }
+
+
     if( jExtra )
     {
-        cJSON_AddStringToObject(jSend, "extra", jExtra->valuestring);
-        if(jReg)
-        {
-            cJSON_AddStringToObject(jSend, "extraSig", strExtraSig);
-        }
+        cJSON* jExtraSend = cJSON_Duplicate(jExtra,1);
+        cJSON_AddItemToObject(jSend,"extra",jExtraSend);
     }
 
     //send data to des
@@ -307,41 +323,27 @@ int auth_got( const char* s_peerTopic, const char* s_data )
     unsigned char RSK[VKEY_SIG_SK_SIZE];
     if(jReg && 0==register_getKeys(jReg->valuestring,RPK,RSK))
     {
-        //todo: verify signature by isk
-
-        unsigned char RID[VKEY_KEY_SIZE];
-        encrypt_hash(RID,jIPK->valuestring,strlen(jIPK->valuestring));
-        char strRID[65];
-        sodium_bin2hex(strRID,65,RID,VKEY_KEY_SIZE);
+        unsigned char PID[VKEY_KEY_SIZE];
+        encrypt_hash(PID,jIPK->valuestring,strlen(jIPK->valuestring));
+        char strPID[65];
+        sodium_bin2hex(strPID,65,PID,VKEY_KEY_SIZE);
 
 
         //todo: compute RID and sig
         unsigned char SIG[VKEY_SIG_SIZE];
-        encrypt_sign(RID,VKEY_KEY_SIZE,RSK,SIG);
+        encrypt_sign(PID,VKEY_KEY_SIZE,RSK,SIG);
 
         char strSigRID[129];
         sodium_bin2hex(strSigRID,129,SIG,VKEY_SIG_SIZE);
 
         ///test
-//
-//        unsigned char RPXK[32];
-//        encrypt_makeSignPublic(RSK,RPXK);
-        int x=encrypt_recover(RID,VKEY_KEY_SIZE,RPK,SIG);
-//
-//
-//        unsigned char RSKK[32];
-//        unsigned char RPKK[32];
-//        encrypt_random(RSKK);
-//        encrypt_makeSignPublic(RSKK,RPKK);
-//        encrypt_sign(RID,VKEY_KEY_SIZE,RSKK,SIG);
-//        x=encrypt_recover(RID,VKEY_KEY_SIZE,RPKK,SIG);
+        //int x=encrypt_recover(PID,VKEY_KEY_SIZE,RPK,SIG);
         ///test
 
         char strRPK[65];
         sodium_bin2hex(strRPK,65,RPK,VKEY_KEY_SIZE);
-        printf("PID:%s\n",strRID);
-        eth_register_site(strRID,strSigRID,strRPK);
-        cJSON_AddStringToObject(jData,"rid",strRID);
+        eth_register_site(strPID,strSigRID,strRPK);
+        cJSON_AddStringToObject(jData,"pid",strPID);
     }
 
     char *pData = cJSON_PrintUnformatted(jData);

@@ -34,8 +34,13 @@ int g_notify(const char *s_topic, const char *s_msg)
     {
         cJSON* jPayload=cJSON_CreateObject();
         cJSON_AddStringToObject(jPayload,"topic",s_topic);
-        cJSON_AddStringToObject(jPayload,"msg",s_msg);
+        cJSON* jMsg = cJSON_Parse(s_msg);
+
+        cJSON_AddItemToObject(jPayload,"msg",jMsg);
+
         char* pPayload = cJSON_PrintUnformatted(jPayload);
+        //char* pPayload = cJSON_Print(jPayload);
+        printf("URL POST:%s\n",pPayload);
         http_post(g_callback_url,pPayload);
         free(pPayload);
         cJSON_Delete(jPayload);

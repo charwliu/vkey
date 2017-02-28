@@ -262,6 +262,8 @@ static int get_key(struct mg_connection *nc, struct http_message *hm )
 {
     char ILK[32];
     char APK[65];
+    memset(APK,0,65);
+
     if(0==key_get(NULL,ILK,APK,NULL,NULL))
     {
         char strILK[65];
@@ -391,7 +393,7 @@ static int key_remove()
 
 }
 
-int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, char* s_ask, char* s_tag)
+int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, unsigned char* u_ask, char* s_tag)
 {
     sqlite3* db = db_get();
     if(!db)
@@ -431,13 +433,13 @@ int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, char* s_ask
         if(s_apk)
         {
             char* apk = sqlite3_column_text(pStmt,2);
-            strncpy(s_apk,apk,VKEY_KEY_SIZE*2);
+            strncpy(s_apk,apk,strlen(apk ));
         }
 
-        if(s_ask)
+        if(u_ask)
         {
-            char* ask = sqlite3_column_text(pStmt,3);
-            memcpy(s_ask,ask,VKEY_KEY_SIZE);
+            unsigned char* ask = sqlite3_column_blob(pStmt,3);
+            memcpy(u_ask,ask,VKEY_SIG_SK_SIZE);
         }
         if(s_tag)
         {

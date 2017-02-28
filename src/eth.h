@@ -9,6 +9,7 @@ int eth_register(char* global_name, char* vid, char* pid, char* suk, char* vuk);
 
 int eth_attest(char* from, char* to, char* pid, char* claimId, char* signature);
 
+int eth_attest_read(const char* s_psig, const char* s_apk, const char* s_msg, const char* s_msig );
 int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,const char* s_tid);
 
 

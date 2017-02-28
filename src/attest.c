@@ -18,40 +18,34 @@ static int get_attest(struct mg_connection *nc, struct http_message *hm);
 static int post_attest_self(struct mg_connection *nc, struct http_message *hm);
 static int attest_create(const char* s_cid,const char* s_tid, cJSON* j_proof,cJSON* j_signature);
 
-static http_router routers[2]={
+static http_router routers[3]={
         {get_attest,"GET","/api/v1/attestation"},
         {post_attest,"POST","/api/v1/attestation"},
         {post_attest_self,"POST","/api/v1/attestation/self"},
 };
 
 
+/// GET /api/v1/attestation?psig=xxxxx&apk=yyyy&nonce=11111&nsig=2222
 static int get_attest(struct mg_connection *nc, struct http_message *hm)
 {
-    cJSON *json = util_parseBody(&hm->body);
 
-    cJSON *claim = cJSON_GetObjectItem(json, "claim");
-    if(!claim)
-    {
-        http_response_error(nc,400,"Vkey Service : claim error");
-        return 0;
-    }
-    cJSON *proof = cJSON_GetObjectItem(json, "proof");
-    if(!proof)
-    {
-        http_response_error(nc,400,"Vkey Service : proof error");
-        return 0;
-    }
 
-    cJSON *signature = cJSON_GetObjectItem(json, "signature");
-    if(!signature)
-    {
-        http_response_error(nc,400,"Vkey Service : signature error");
-        return 0;
-    }
+    char strProofSig[180]="";
+    char strAPK[80]="";
+    char strMessage[80]="";
+    char strMessageSig[180]="";
+    mg_get_http_var(&hm->query_string, "psig", strProofSig, 180);
+    mg_get_http_var(&hm->query_string, "apk", strAPK, 80);
+    mg_get_http_var(&hm->query_string, "nonce", strMessage, 80);
+    mg_get_http_var(&hm->query_string, "nsig", strMessageSig, 180);
 
-    //todo: check it
+    unsigned char HashMsg[VKEY_KEY_SIZE];
+    encrypt_hash(HashMsg,strMessage,strlen(strMessage));
+    char strHashMsg[65];
+    sodium_bin2hex(strHashMsg,65,HashMsg,32);
+    eth_attest_read(strProofSig,strAPK,strHashMsg,strMessageSig);
 
-    cJSON_Delete(json);
+
 
     cJSON* res = cJSON_CreateObject();
 
@@ -60,45 +54,6 @@ static int get_attest(struct mg_connection *nc, struct http_message *hm)
     http_response_json(nc,200,res);
 
     cJSON_Delete(res);
-}
-
-static int attest_getKeys(char* s_apk,char* s_ask)
-{
-
-    sqlite3* db = db_get();
-
-    char strSql[256];
-
-    sprintf(strSql,"SELECT APK,ASK FROM TB_KEY LIMIT 1;");
-
-
-    sqlite3_stmt* pStmt;
-    const char* strTail=NULL;
-    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
-    if( ret != SQLITE_OK )
-    {
-        printf("No key!");
-        sqlite3_finalize(pStmt);
-        return 0;
-    }
-
-
-    ret = sqlite3_step(pStmt);
-    if( ret != SQLITE_ROW )
-    {
-        sqlite3_finalize(pStmt);
-        return 0;
-    }
-
-    char *strAPK = (char *) sqlite3_column_text(pStmt, 0);
-    char *strASK = (char *) sqlite3_column_text(pStmt, 1);
-    strcpy(s_apk,strAPK);
-    strcpy(s_ask,strASK);
-
-
-    sqlite3_finalize(pStmt);
-
-    return 1;
 }
 
 
@@ -166,9 +121,6 @@ int post_attest(struct mg_connection *nc, struct http_message *hm)
     }
 
 
-    //1: add claim id to proof
-    //cJSON_AddStringToObject(proof,"claimId",id->valuestring);
-
     //2: add claim hash to proof
     char* strClaim=cJSON_PrintUnformatted(claim);
     char claimHash[32];
@@ -181,20 +133,22 @@ int post_attest(struct mg_connection *nc, struct http_message *hm)
 
     //3: add attest public key to proof
     char hexAttestPK[65];
-    char hexAttestSK[65];
-    attest_getKeys(hexAttestPK,hexAttestSK);
+    memset(hexAttestPK,0,65);
+    unsigned char AttestSK[VKEY_SIG_SK_SIZE];
+    key_get(NULL,NULL,hexAttestPK,AttestSK,NULL);
+
+    //attest_getKeys(hexAttestPK,hexAttestSK);
 
     cJSON_AddStringToObject(proof,"apk",hexAttestPK);
 
     //4: compute proof signature
-    char ask[32];
-    size_t len;
-    sodium_hex2bin(ask,32,hexAttestSK,65,NULL,&len,NULL);
+//    char ask[32];
+//    size_t len;
+//    sodium_hex2bin(ask,32,hexAttestSK,65,NULL,&len,NULL);
     char* strProof=cJSON_PrintUnformatted(proof);
     char sigProof[64];
-    encrypt_sign(strProof,strlen(strProof),ask,sigProof);
-    memset(ask,0,32);
-    memset(hexAttestSK,0,65);
+    encrypt_sign(strProof,strlen(strProof),AttestSK,sigProof);
+    memset(AttestSK,0,VKEY_SIG_SK_SIZE);
 
     char hexSigProof[129];
     sodium_bin2hex(hexSigProof,129,sigProof,64);
@@ -311,12 +265,12 @@ static int post_attest_self(struct mg_connection *nc, struct http_message *hm)
     return 0;
 }
 
-cJSON* attest_read_by_claimid(const char* s_claimId)
+cJSON* attest_read_by_claimid(const char* s_claimId,unsigned char* u_verifyMsg)
 {
     sqlite3* db = db_get();
 
     char strSql[256];
-    sprintf(strSql,"SELECT PROOF,RASK,TIME FROM TB_ATTEST WHERE CID=?;");
+    sprintf(strSql,"SELECT PROOF,SIGNATURE,RASK,TIME FROM TB_ATTEST WHERE CID=?;");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -333,15 +287,29 @@ cJSON* attest_read_by_claimid(const char* s_claimId)
     while( sqlite3_step(pStmt) == SQLITE_ROW )
     {
         char *strProof = (char *) sqlite3_column_text(pStmt, 0);
-        char *strRASK = (char *) sqlite3_column_text(pStmt, 1);
+        char *strSignature = ( char *) sqlite3_column_text(pStmt, 1);
+        unsigned char *RASK = (unsigned char *) sqlite3_column_blob(pStmt, 2);
+
+        char strRASK[65];
+        sodium_bin2hex(strRASK,65,RASK,VKEY_KEY_SIZE);
+
+        cJSON* jItem = cJSON_CreateObject();
         //todo: descrypt data
-        cJSON* jData = cJSON_Parse(strProof);
-        if(jData&&strRASK)
+        cJSON* jProof = cJSON_Parse(strProof);
+        cJSON_AddItemToObject(jItem,"proof",jProof);
+        cJSON_AddStringToObject(jItem,"signature",strSignature);
+
+        if(u_verifyMsg)
         {
-            cJSON_AddStringToObject(jData,"rask",strRASK);
+            unsigned char VERIFYSIG[VKEY_SIG_SIZE];
+            encrypt_sign(u_verifyMsg, VKEY_KEY_SIZE, RASK, VERIFYSIG);
+
+            char strVerifySig[129];
+            sodium_bin2hex(strVerifySig, 129, VERIFYSIG, VKEY_SIG_SIZE);
+
+            cJSON_AddStringToObject(jItem, "verify", strVerifySig);
         }
-        cJSON_AddItemToArray(jResult,jData);
-       // cJSON_Delete(jData);
+        cJSON_AddItemToArray(jResult,jItem);
     }
     sqlite3_finalize(pStmt);
     return jResult;
@@ -364,7 +332,7 @@ cJSON* attest_read_by_claimid(const char* s_claimId)
  *
  *
  */
-int attest_replace_rask_with_verify(cJSON* jAttest,const char* s_msg)
+int attest_replace_rask_with_verify(cJSON* jAttest,unsigned const char* u_msg)
 {
     cJSON* jRASK = cJSON_GetObjectItem(jAttest,"rask");
     if(!jRASK)
@@ -379,7 +347,7 @@ int attest_replace_rask_with_verify(cJSON* jAttest,const char* s_msg)
         return -1;
     }
     char sig[VKEY_SIG_SIZE];
-    if(0!=encrypt_sign(s_msg,strlen(s_msg),sk,sig))
+    if(0!=encrypt_sign(u_msg,VKEY_KEY_SIZE,sk,sig))
     {
         return -1;
     }
@@ -528,5 +496,5 @@ int attest_got( const char* s_peerTopic, const char* s_data )
 
 int attest_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,2,nc,hm);
+    return http_routers_handle(routers,3,nc,hm);
 }

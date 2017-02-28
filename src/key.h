@@ -13,6 +13,6 @@ int key_update(const char* s_ciperOldIUK,const char* s_oldRescure, const char* s
 int key_chechPassword(const char* s_password);
 int key_checkIUK(const char* s_ciperIUK,const char* s_rescure);
 int key_descryptIUK(const char* s_ciperIUK,const char* s_rescure,unsigned char* u_iuk);
-int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, char* s_ask, char* s_tag);
+int key_get(unsigned char* u_imk, unsigned char* u_ilk, char* s_apk, unsigned char* u_ask, char* s_tag);
 
 #endif

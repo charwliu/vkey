@@ -47,6 +47,11 @@ POST HOST/share
 
 int share_start(cJSON* j_share,cJSON* j_result)
 {
+    if(!j_share)
+    {
+        return -1;
+    }
+
     //1 parse j_share body
     cJSON *claimIds = cJSON_GetObjectItem(j_share, "claimIds");
     cJSON *duration =  cJSON_GetObjectItem(j_share, "duration");
@@ -264,8 +269,8 @@ static int get_share(struct mg_connection *nc, struct http_message *hm)
 
 static int del_share(struct mg_connection *nc, struct http_message *hm)
 {
-    char strPK[64]="";
-    mg_get_http_var(&hm->query_string, "topic", strPK, 64);
+    char strPK[65]="";
+    mg_get_http_var(&hm->query_string, "topic", strPK, 65);
     if( strlen(strPK)==0)
     {
         http_response_error(nc,400,"Vkey Service : no valid topic");

@@ -49,7 +49,7 @@ static int get_attest(struct mg_connection *nc, struct http_message *hm)
 
     cJSON* res = cJSON_CreateObject();
 
-    cJSON_AddStringToObject(res,"attestation","yes");
+    cJSON_AddStringToObject(res,"attestation","not ready now");
 
     http_response_json(nc,200,res);
 
@@ -315,6 +315,14 @@ cJSON* attest_read_by_claimid(const char* s_claimId,unsigned char* u_verifyMsg)
     return jResult;
 }
 
+int attest_remove(const char* s_cid)
+{
+    sqlite3* db = db_get();
+    char strSql[1024];
+    sprintf(strSql,"DELETE FROM TB_ATTEST WHERE CID='%s'",s_cid);
+    return sqlite3_exec(db,strSql,NULL,NULL,NULL);
+}
+
 /* translate
  * {
  *  proof:{},
@@ -332,33 +340,33 @@ cJSON* attest_read_by_claimid(const char* s_claimId,unsigned char* u_verifyMsg)
  *
  *
  */
-int attest_replace_rask_with_verify(cJSON* jAttest,unsigned const char* u_msg)
-{
-    cJSON* jRASK = cJSON_GetObjectItem(jAttest,"rask");
-    if(!jRASK)
-    {
-        return -1;
-    }
-    char sk[VKEY_KEY_SIZE];
-    size_t len;
-    sodium_hex2bin(sk,VKEY_KEY_SIZE,jRASK->valuestring,64,NULL,&len,NULL);
-    if(len!=VKEY_KEY_SIZE)
-    {
-        return -1;
-    }
-    char sig[VKEY_SIG_SIZE];
-    if(0!=encrypt_sign(u_msg,VKEY_KEY_SIZE,sk,sig))
-    {
-        return -1;
-    }
-    char sigHex[VKEY_SIG_SIZE*2+1];
-    sodium_bin2hex(sigHex,VKEY_SIG_SIZE*2+1,sig,VKEY_SIG_SIZE);
-
-    cJSON_AddStringToObject(jAttest,"verify",sigHex);
-    cJSON_DeleteItemFromObject(jAttest,"rask");
-
-    return 0;
-}
+//int attest_replace_rask_with_verify(cJSON* jAttest,unsigned const char* u_msg)
+//{
+//    cJSON* jRASK = cJSON_GetObjectItem(jAttest,"rask");
+//    if(!jRASK)
+//    {
+//        return -1;
+//    }
+//    char sk[VKEY_KEY_SIZE];
+//    size_t len;
+//    sodium_hex2bin(sk,VKEY_KEY_SIZE,jRASK->valuestring,64,NULL,&len,NULL);
+//    if(len!=VKEY_KEY_SIZE)
+//    {
+//        return -1;
+//    }
+//    char sig[VKEY_SIG_SIZE];
+//    if(0!=encrypt_sign(u_msg,VKEY_KEY_SIZE,sk,sig))
+//    {
+//        return -1;
+//    }
+//    char sigHex[VKEY_SIG_SIZE*2+1];
+//    sodium_bin2hex(sigHex,VKEY_SIG_SIZE*2+1,sig,VKEY_SIG_SIZE);
+//
+//    cJSON_AddStringToObject(jAttest,"verify",sigHex);
+//    cJSON_DeleteItemFromObject(jAttest,"rask");
+//
+//    return 0;
+//}
 
 ///write proof to db
 static int attest_write(const char* s_cid,const char* s_proof,const char* s_sig,const unsigned char* u_rask)

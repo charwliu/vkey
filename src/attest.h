@@ -9,6 +9,8 @@ int attest_got( const char* s_peerTopic, const char* s_data );
 
 cJSON* attest_read_by_claimid(const char* s_claimId,unsigned char* u_verifyMsg);
 
-int attest_replace_rask_with_verify(cJSON* jAttest,unsigned const char* u_msg);
+int attest_remove(const char* s_cid);
+
+//int attest_replace_rask_with_verify(cJSON* jAttest,unsigned const char* u_msg);
 
 #endif

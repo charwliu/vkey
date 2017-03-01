@@ -126,6 +126,8 @@ static int req_auth(struct mg_connection *nc, struct http_message *hm)
     {
         //todo: false handle.
         //http_response_json(nc,400,jShareRes);
+        cJSON_Delete(jShareRes);
+        jShareRes=NULL;
     }
 
     cJSON *jReqRes = cJSON_CreateObject();
@@ -137,7 +139,10 @@ static int req_auth(struct mg_connection *nc, struct http_message *hm)
     }
 
     cJSON* jRes=cJSON_CreateObject();
-    cJSON_AddItemToObject(jRes,"share",jShareRes);
+    if(jShareRes)
+    {
+        cJSON_AddItemToObject(jRes, "share", jShareRes);
+    }
     cJSON_AddItemToObject(jRes,"req",jReqRes);
 
     http_response_json(nc,200,jRes);

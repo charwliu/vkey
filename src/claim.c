@@ -78,7 +78,6 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
     if( jId )
     {//has id
         strcpy(strId,jId->valuestring);
-        cJSON_DeleteItemFromObject(json,"id");
     }
     else
     {
@@ -87,6 +86,7 @@ static int post_claim(struct mg_connection *nc, struct http_message *hm) {
             http_response_error(nc, 400, "Vkey Service : Could not generate uuid");
             return 0;
         }
+        cJSON_AddStringToObject(json,"id",strId);
     }
     const char* strTemplateId=templateId->valuestring;
 
@@ -135,6 +135,15 @@ static int put_claim(struct mg_connection *nc, struct http_message *hm) {
 
     const char* strClaimId=claimId->valuestring;
 
+
+    cJSON* jClaim = claim_read_by_claimid(strClaimId);
+    if(!jClaim)
+    {
+        http_response_error(nc,400,"Vkey Service : claim not exist");
+        return 0;
+    }
+    cJSON_Delete(jClaim);
+
     time_t nTimeU = time(NULL);
     const char* strJson=cJSON_PrintUnformatted(json);
 
@@ -157,25 +166,47 @@ static int put_claim(struct mg_connection *nc, struct http_message *hm) {
     cJSON_Delete(json);
 }
 
+/// DELETE HOST/claim?id=1233
+/// \param nc
+/// \param hm
+/// \return
 static int del_claim(struct mg_connection *nc, struct http_message *hm)
 {
-    cJSON *json = util_parseBody(&hm->body);
-    if(!json)
+
+    char strID[64]="";
+
+    if(0>=mg_get_http_var(&hm->query_string, "id", strID, 64))
     {
-        http_response_error(nc,400,"Vkey Service : invalid json data");
+        http_response_error(nc,400,"Vkey Service : invalid id");
         return 0;
     }
-    //todo: varify json schema
-    cJSON *claimId = cJSON_GetObjectItem(json, "claimId");
-    if(!claimId)
+    cJSON* jClaim = claim_read_by_claimid(strID);
+    if(!jClaim)
     {
-        http_response_error(nc,400,"Vkey Service : claimId error");
+        http_response_error(nc,400,"Vkey Service : claim not exist");
         return 0;
     }
-    char* strID=claimId->valuestring;
+    cJSON_Delete(jClaim);
+
+//
+//    cJSON *json = util_parseBody(&hm->body);
+//    if(!json)
+//    {
+//        http_response_error(nc,400,"Vkey Service : invalid json data");
+//        return 0;
+//    }
+//    //todo: varify json schema
+//    cJSON *claimId = cJSON_GetObjectItem(json, "claimId");
+//    if(!claimId)
+//    {
+//        http_response_error(nc,400,"Vkey Service : claimId error");
+//        return 0;
+//    }
+//    char* strID=claimId->valuestring;
     //todo: 1 check exist
 
     //todo: 2 delete auth and attestation records
+    attest_remove(strID);
 
     //todo: 3 delete claim record
     sqlite3* db = db_get();
@@ -183,7 +214,6 @@ static int del_claim(struct mg_connection *nc, struct http_message *hm)
     sprintf(strSql,"DELETE FROM TB_CLAIM WHERE ID='%s'",strID);
     sqlite3_exec(db,strSql,NULL,NULL,NULL);
 
-    cJSON_Delete(json);
 
 //    sqlite3_stmt* pStmt;
 //    const char* strTail=NULL;
@@ -312,10 +342,10 @@ cJSON* claim_read_by_claimid(const char* s_id)
         char *strData = (char *) sqlite3_column_text(pStmt, 1);
         //todo: descrypt data
         cJSON* jData = cJSON_Parse(strData);
-        if(jData&&strID)
-        {
-            cJSON_AddStringToObject(jData,"id",strID);
-        }
+//        if(jData&&strID)
+//        {
+//            cJSON_AddStringToObject(jData,"id",strID);
+//        }
         sqlite3_finalize(pStmt);
         return jData;
 

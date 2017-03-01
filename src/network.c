@@ -26,7 +26,8 @@ int network_start()
     {
         mg_mgr_poll(&mgr, 1000);
         time_t now=time(NULL);
-        //if(now%5==0)
+        if(now%5==0)
+        mqtt_timer(now);
         //printf("time:%d\n",now);
     }
 

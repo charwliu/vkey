@@ -96,7 +96,7 @@ static int db_checkAttestTable()
 
 static int db_checkMqttTable()
 {
-    const char* sql = "CREATE TABLE TB_MQTT( TOPIC TEXT NOT NULL, PK TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, DATA TEXT NOT NULL );";
+    const char* sql = "CREATE TABLE TB_MQTT( TOPIC TEXT NOT NULL, PK TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, PEER TEXT,DATA TEXT );";
     return db_checkTable("TB_MQTT",sql);
 }
 

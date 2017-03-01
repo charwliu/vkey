@@ -134,7 +134,7 @@ int share_start(cJSON* j_share,cJSON* j_result)
     char* pData = cJSON_PrintUnformatted(j_share);
 
 
-    mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,pData);
+    mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,NULL,pData);
     free(pData);
 
     //4 build vlink
@@ -258,7 +258,7 @@ static int get_share(struct mg_connection *nc, struct http_message *hm)
 
     time_t nTime = time(NULL);
     //3 subscribe topic
-    mqtt_subscribe("SHARE_DES",PK,SK,nTime,0,"");
+    mqtt_subscribe("SHARE_DES",PK,SK,nTime,600,NULL,"");
     mqtt_send(strSourceTopic,"SHARE_DES",PK,SK,nonce);
 
 

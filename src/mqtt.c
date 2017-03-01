@@ -38,8 +38,10 @@ static struct mg_mgr *mqtt_mgr;
 static struct mg_connection *mqtt_conn=NULL;
 static int mqtt_ready=0;
 
+static int mqtt_got(struct mg_mqtt_message *msg);
 static int mqtt_doForAllTopics(int n_action);
-static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data);
+static int mqtt_log(const char* s_topic,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_peerTopic,const char* s_data);
+static int mqtt_getTopicData(const char* s_pk,cJSON* j_result);
 
 /// event handler of mqtt
 /// \param nc
@@ -226,7 +228,7 @@ static int mqtt_got(struct mg_mqtt_message *msg)
 
     cJSON* jSubscribe=cJSON_CreateObject();
 
-    if( 0!=mqtt_readTopic(strPK,jSubscribe))
+    if( 0!=mqtt_getTopicData(strPK,jSubscribe))
     {
         return -1;
     }
@@ -293,6 +295,43 @@ static int mqtt_got(struct mg_mqtt_message *msg)
 
 }
 
+
+int mqtt_getTopicKeysByPeer( const char* s_peerTopic, char* s_pk, char* s_sk )
+{
+    sqlite3* db = db_get();
+
+    char strSql[256];
+
+
+    sprintf(strSql,"SELECT SK,PK FROM TB_MQTT WHERE PEER=?;");
+
+
+    sqlite3_stmt* pStmt;
+    const char* strTail=NULL;
+    int ret = sqlite3_prepare_v2(db,strSql,-1,&pStmt,&strTail);
+    if( ret != SQLITE_OK )
+    {
+        sqlite3_finalize(pStmt);
+        return -1;
+    }
+
+    sqlite3_bind_text(pStmt, 1, s_peerTopic, strlen(s_peerTopic), SQLITE_TRANSIENT);
+
+    ret=sqlite3_step(pStmt);
+    if( ret == SQLITE_ROW )
+    {
+        char *strSK = (char *) sqlite3_column_text(pStmt, 0);
+        char *strPK = (char *) sqlite3_column_text(pStmt, 1);
+
+        strncpy(s_pk,strPK,strlen(strPK));
+        strncpy(s_sk,strSK,strlen(strSK));
+
+        sqlite3_finalize(pStmt);
+        return 0;
+    }
+    return -1;
+}
+
 /// subscribe and save the data
 /// \param s_event   SHARE/AUTH/ATTEST etc.
 /// \param s_pk
@@ -301,7 +340,7 @@ static int mqtt_got(struct mg_mqtt_message *msg)
 /// \param n_duration
 /// \param s_data
 /// \return
-int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
+int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_peerTopic, const char* s_data)
 {
     if(!mqtt_ready) return -1;
 
@@ -316,7 +355,18 @@ int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t 
     struct mg_mqtt_topic_expression topic_expr={strTopic,0};
 
     printf("Subscribing to '%s'\n", strTopic);
-    mqtt_log(s_event,strPK,strSK,t_time,n_duration,s_data);
+
+    char *strPeer="";
+    char *strData="";
+    if(s_peerTopic)
+    {
+        strPeer=s_peerTopic;
+    }
+    if(s_data)
+    {
+        strData=s_data;
+    }
+    mqtt_log(s_event,strPK,strSK,t_time,n_duration,strPeer,strData);
 
 
     mg_mqtt_subscribe(mqtt_conn, &topic_expr, 1, 42);
@@ -441,7 +491,15 @@ int mqtt_timer(time_t t_now)
         {
             char strTopic[256];
             sprintf(strTopic,"%s/%s",strEvent,strPK);
-            mg_mqtt_unsubscribe(mqtt_conn, strTopic, 1, 42);
+            mqtt_unsubscribe(strTopic);
+//            char *strTopics[1];
+//            strTopics[0]=malloc(256);
+//            sprintf(strTopics[0],"%s/%s",strEvent,strPK);
+//
+//
+//            mqtt_unsubscribe(strTopic);
+//            mg_mqtt_unsubscribe(mqtt_conn, strTopics, 1, 42);
+//            free(strTopics[0]);
         }
     }
     sqlite3_finalize(pStmt);
@@ -489,11 +547,11 @@ int mqtt_unsubscribe(const char* s_topic)
 /// \param n_duration , duration of the subscribe
 /// \param s_data , additional data with the subscribe
 /// \return
-static int mqtt_log(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data)
+static int mqtt_log(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_peerTopic,const char* s_data)
 {
     sqlite3* db = db_get();
     char strSql[1024];
-    sprintf(strSql,"INSERT INTO TB_MQTT (TOPIC,PK,SK,TIME,DURATION,DATA) VALUES(?,?,?,?,?,?)");
+    sprintf(strSql,"INSERT INTO TB_MQTT (TOPIC,PK,SK,TIME,DURATION,PEER,DATA) VALUES(?,?,?,?,?,?,?)");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -510,7 +568,8 @@ static int mqtt_log(const char* s_event,const char* s_pk,const char* s_sk,time_t
 
     sqlite3_bind_int(pStmt,4,t_time );
     sqlite3_bind_int(pStmt,5,n_duration);
-    sqlite3_bind_text(pStmt,6,s_data,strlen(s_data),SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,6,s_peerTopic,strlen(s_peerTopic),SQLITE_TRANSIENT);
+    sqlite3_bind_text(pStmt,7,s_data,strlen(s_data),SQLITE_TRANSIENT);
 
     ret = sqlite3_step(pStmt);
     if( ret != SQLITE_DONE )
@@ -523,7 +582,7 @@ static int mqtt_log(const char* s_event,const char* s_pk,const char* s_sk,time_t
     return 0;
 }
 
-int mqtt_readTopic(const char* s_pk,cJSON* j_result)
+static int mqtt_getTopicData(const char* s_pk,cJSON* j_result)
 {
     sqlite3* db = db_get();
 

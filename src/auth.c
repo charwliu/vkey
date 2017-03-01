@@ -58,7 +58,7 @@ int auth_start(cJSON* jReq,cJSON* jResult)
     char* pData = cJSON_PrintUnformatted(jReq);
 
 
-    mqtt_subscribe("AUTH_DES",PK,SK,nTime,duration->valueint,pData);
+    mqtt_subscribe("AUTH_DES",PK,SK,nTime,duration->valueint,NULL,pData);
     free(pData);
 
     //build topic
@@ -232,11 +232,6 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
 
     }
 
-    unsigned char PK[VKEY_KEY_SIZE];
-    unsigned char SK[VKEY_KEY_SIZE];
-
-    encrypt_random(SK);
-    encrypt_makeDHPublic(SK,PK);
 
     if(jClaimIds)
     {
@@ -266,7 +261,25 @@ static int post_auth(struct mg_connection *nc, struct http_message *hm) {
     sprintf(strTopic,"AUTH_DES/%s",jTopic->valuestring);
 
     time_t nTime = time(NULL);
-    mqtt_subscribe("AUTH_SRC",PK,SK,nTime,0,"");
+
+    unsigned char PK[VKEY_KEY_SIZE];
+    unsigned char SK[VKEY_KEY_SIZE];
+    char strPK[65];
+    char strSK[65];
+
+    if(-1==mqtt_getTopicKeysByPeer(strTopic,strPK,strSK))
+    {
+        encrypt_random(SK);
+        encrypt_makeDHPublic(SK,PK);
+        mqtt_subscribe("AUTH_SRC",PK,SK,nTime,6000,strTopic,"");
+    }
+    else
+    {
+        size_t len;
+        sodium_hex2bin(PK,32,strPK,64,NULL,&len,NULL);
+        sodium_hex2bin(SK,32,strSK,64,NULL,&len,NULL);
+    }
+
     mqtt_send(strTopic,"AUTH_SRC",PK,SK,pData);
 
     //release resource

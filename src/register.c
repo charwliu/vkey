@@ -569,7 +569,7 @@ int register_start(const char* s_url, char* s_rpk)
 
         sodium_bin2hex(s_rpk,65,RPK,VKEY_KEY_SIZE);
 
-        mqtt_subscribe("RESTORE_DES",RPK,RSK,nTime,0,"");
+        mqtt_subscribe("RESTORE_DES",RPK,RSK,nTime,0,NULL,"");
     }
     //
     return 0;

@@ -93,8 +93,14 @@ POST HOST/attestation?topic=123455
 int post_attest(struct mg_connection *nc, struct http_message *hm)
 {
 
+    char strSource[80]="";
     char strSourceTopic[128]="";
-    mg_get_http_var(&hm->query_string, "topic", strSourceTopic, 80);
+    mg_get_http_var(&hm->query_string, "topic", strSource, 80);
+
+
+
+    sprintf(strSourceTopic,"AUTH_SRC/%s",strSource);
+
 
 
 

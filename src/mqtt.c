@@ -31,6 +31,7 @@
 #include "encrypt.h"
 #include "vkey.h"
 #include "network.h"
+#include "register.h"
 
 
 static struct mg_mgr *mqtt_mgr;
@@ -283,6 +284,10 @@ static int mqtt_got(struct mg_mqtt_message *msg)
     if(strstr(jFrom->valuestring,"ATTEST_SRC")>0)
     {
         attest_got(jFrom->valuestring,jData->valuestring);
+    }
+    if(strstr(jFrom->valuestring,"RESTORE_SRC")>0)
+    {
+        register_recover_got(jFrom->valuestring,jData->valuestring);
     }
 
     free(strTopic);

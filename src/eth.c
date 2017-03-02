@@ -222,7 +222,7 @@ int eth_attest_read(const char* s_psig, const char* s_apk, const char* s_msg, co
     char* trEthFunctionCodeRegister="0xa75caa05";
 
     char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
-    char* strEthContractAddress="0xca3a9cf4c10eb74589ffe420c49b7bdd28848a7f";
+    char* strEthContractAddress="0xf3757d870986de2b7bba622b6edda91f2a7d6f60";
     char* strEthPassword="mm1234";
 
 
@@ -265,7 +265,7 @@ int eth_attest_write(const char* s_sig,const char* s_apk,const char* s_rapk,cons
     char* trEthFunctionCodeRegister="0x08dfbf77";
 
     char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
-    char* strEthContractAddress="0xca3a9cf4c10eb74589ffe420c49b7bdd28848a7f";
+    char* strEthContractAddress="0xf3757d870986de2b7bba622b6edda91f2a7d6f60";
     char* strEthPassword="mm1234";
 
     //build params data
@@ -305,7 +305,7 @@ int eth_register_client(const char* s_pid, const char* s_rpk, const char* s_vuk,
 {
     char* strEthFunctionCodeRegister="0x231e0750";
     char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
-    char* strEthContractAddress="0x0c386ce9eb6316a60be7d002ca8913a5e5b5e4f9";
+    char* strEthContractAddress="0x866219a29c5b2f600ad8365175bcda8321c73bc0";
     char* strEthPassword="mm1234";
 
     char data[1024];
@@ -335,10 +335,6 @@ int eth_register_client(const char* s_pid, const char* s_rpk, const char* s_vuk,
     return 0;
 }
 
-int eth_recover_client(const char* s_oldPid,const char* s_sigByURSK,const char* s_pid, const char* s_rpk, const char* s_vuk, const char* s_suk)
-{
-    return 0;
-}
 
 /// site submit register
 /// \param RID
@@ -348,7 +344,7 @@ int eth_register_site(char* s_pid,char* s_sigPid,char* s_rpk)
 {
     char* strEthFunctionCodeRegister="0x6937e722";
     char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
-    char* strEthContractAddress="0x0c386ce9eb6316a60be7d002ca8913a5e5b5e4f9";
+    char* strEthContractAddress="0x866219a29c5b2f600ad8365175bcda8321c73bc0";
     char* strEthPassword="mm1234";
 
     char data[2024];
@@ -378,3 +374,78 @@ int eth_register_site(char* s_pid,char* s_sigPid,char* s_rpk)
     printf("Send Smart Contract message to %s\n", eth_getUrl());
     return 0;
 }
+
+
+int eth_recover_client(const char* s_oldPid,const char* s_sigByURSK,const char* s_pid, const char* s_rpk, const char* s_vuk, const char* s_suk)
+{
+    char* strEthFunctionCodeRegister="0x566ad2e6";
+    char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
+    char* strEthContractAddress="0x866219a29c5b2f600ad8365175bcda8321c73bc0";
+    char* strEthPassword="mm1234";
+
+    char data[2024];
+    memset(data,0,2024);
+    strncpy(data,strEthFunctionCodeRegister,strlen(strEthFunctionCodeRegister));
+    char* values[8];
+    values[0]=s_oldPid;
+    values[1]=s_pid;
+    values[2]=s_suk;
+    values[3]=s_vuk;
+    values[4]=s_rpk;
+    values[5]="00000000000000000000000000000000000000000000000000000000000000c0";
+    values[6]="0000000000000000000000000000000000000000000000000000000000000040";
+    values[7]=s_sigByURSK;
+
+    eth_buildBytesPayload(data,values,8);
+
+    //construct json data to post to block chain
+    char payload[2048];
+    memset(payload,0,2048);
+    int ret=sprintf(payload,ETH_TEMPLATE_TRANS_PAYLOAD, strEthPubAddress,strEthContractAddress,data,strEthPassword);
+
+    struct mg_connection *nc;
+
+    printf(payload);
+
+    nc = mg_connect_http(eth_mgr, ev_handler, eth_getUrl(), eth_header, payload);
+    mg_set_protocol_http_websocket(nc);
+
+    printf("Send Smart Contract message to %s\n", eth_getUrl());
+    return 0;
+}
+
+int eth_recover_site(char* s_pidOld,char* s_pidNew,char* s_sigPidNew)
+{
+    char* strEthFunctionCodeRegister="0x73a408f1";
+    char *strEthPubAddress="0x88df0d4a83b54ff939565551784bc8c486f55642";
+    char* strEthContractAddress="0x866219a29c5b2f600ad8365175bcda8321c73bc0";
+    char* strEthPassword="mm1234";
+
+    char data[2024];
+    memset(data,0,2024);
+    strncpy(data,strEthFunctionCodeRegister,strlen(strEthFunctionCodeRegister));
+    char* values[5];
+    values[0]=s_pidOld;
+    values[1]=s_pidNew;
+    values[2]="0000000000000000000000000000000000000000000000000000000000000060";
+    values[3]="0000000000000000000000000000000000000000000000000000000000000040";
+    values[4]=s_sigPidNew;
+
+    eth_buildBytesPayload(data,values,5);
+
+    //construct json data to post to block chain
+    char payload[2048];
+    memset(payload,0,2048);
+    int ret=sprintf(payload,ETH_TEMPLATE_TRANS_PAYLOAD, strEthPubAddress,strEthContractAddress,data,strEthPassword);
+
+    struct mg_connection *nc;
+
+    printf(payload);
+
+    nc = mg_connect_http(eth_mgr, ev_handler, eth_getUrl(), eth_header, payload);
+    mg_set_protocol_http_websocket(nc);
+
+    printf("Send Smart Contract message to %s\n", eth_getUrl());
+    return 0;
+}
+

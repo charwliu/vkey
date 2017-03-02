@@ -148,10 +148,10 @@ int db_exist(const char* s_path)
 
 int db_init(const char *s_path)
 {
-    if( db_exist(s_path) )
-    {
-        return -1;
-    }
+//    if( db_exist(s_path) )
+//    {
+//        return -1;
+//    }
     sqlite3_open_v2(s_path,&g_db,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,NULL);
 
     if(0!=db_checkKeyTable())

@@ -179,7 +179,8 @@ static int post_recover(struct mg_connection *nc, struct http_message *hm)
         return -1;
     }
     char strSql[256];
-    sprintf(strSql,"SELECT RID,URL,RPK FROM TB_REG_CLIENT WHERE STATE=1;");
+    sprintf(strSql,"SELECT RID,URL,RPK FROM TB_REG_CLIENT WHERE STATE=0;");
+    //sprintf(strSql,"SELECT RID,URL,RPK FROM TB_REG_CLIENT;");
 
     sqlite3_stmt* pStmt;
     const char* strTail=NULL;
@@ -294,7 +295,7 @@ static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u
 
     //3 save reg info to db with sent state, when confirm info from site arrived, the reg info set to be confirmed
     register_disable(s_PID,1);
-    register_write(strPID,s_URL,s_RPK,0);
+    register_write(strPID,s_URL,s_RPK,2);
     //todo 4.6: send old ipk,new ipk, signature of ipk by new isk to site
 
 
@@ -305,13 +306,16 @@ static int register_recover(const unsigned char* u_IUKOLD,const unsigned char* u
     encrypt_makeDHPublic(SK,PK);
 
     cJSON* jToSite = cJSON_CreateObject();
+    cJSON_AddStringToObject(jToSite,"reg",s_URL);
     cJSON_AddStringToObject(jToSite,"ipkNew",strIPK);
     cJSON_AddStringToObject(jToSite,"sigNew",hexSig);
     cJSON_AddStringToObject(jToSite,"ipkOld",strIPKOld);
     cJSON_AddStringToObject(jToSite,"sigOld",hexOldSig);
     char* pData = cJSON_PrintUnformatted(jToSite);
 
-    mqtt_send(s_RPK,"RESTORE_DES",PK,SK,pData);
+    char strTopic[128];
+    sprintf(strTopic,"RESTORE_DES/%s",s_RPK);
+    mqtt_send(strTopic,"RESTORE_SRC",PK,SK,pData);
 
     free(pData);
     cJSON_Delete(jToSite);
@@ -329,25 +333,44 @@ int register_recover_got( const char* s_peerTopic, const char* s_data )
 
     //handle register message
     cJSON* jData = cJSON_Parse(s_data);
-    cJSON* jURL = cJSON_GetObjectItem(jData,"url");
+    cJSON* jURL = cJSON_GetObjectItem(jData,"reg");
     cJSON* jIpkNew = cJSON_GetObjectItem(jData,"ipkNew");
     cJSON* jSigNew = cJSON_GetObjectItem(jData,"sigNew");
     cJSON* jIpkOld = cJSON_GetObjectItem(jData,"ipkOld");
     cJSON* jSigOld = cJSON_GetObjectItem(jData,"sigOld");
 
-    char strRPK[65];
-    char strRSK[65];
-    if(jURL && 0==register_getKeys(jURL->valuestring,strRPK,strRSK))
+
+    unsigned char RPK[VKEY_KEY_SIZE];
+    unsigned char RSK[VKEY_SIG_SK_SIZE];
+    if(jURL && 0==register_getKeys(jURL->valuestring,RPK,RSK))
     {
         //todo: verify signature by isk
 
         char PIDOLD[VKEY_KEY_SIZE];
-        char strSigRID[VKEY_SIG_SIZE];
         encrypt_hash(PIDOLD,jIpkOld->valuestring,strlen(jIpkOld->valuestring));
         char strPIDOLD[65];
         sodium_bin2hex(strPIDOLD,65,PIDOLD,VKEY_KEY_SIZE);
 
+
+        char PIDNEW[VKEY_KEY_SIZE];
+        encrypt_hash(PIDNEW,jIpkNew->valuestring,strlen(jIpkNew->valuestring));
+        char strPIDNEW[65];
+        sodium_bin2hex(strPIDNEW,65,PIDNEW,VKEY_KEY_SIZE);
+
+
         //todo: compute RID and sig
+
+        unsigned char SIG[VKEY_SIG_SIZE];
+        encrypt_sign(PIDNEW,VKEY_KEY_SIZE,RSK,SIG);
+
+        char strSigPID[129];
+        sodium_bin2hex(strSigPID,129,SIG,VKEY_SIG_SIZE);
+        eth_recover_site(strPIDOLD,strPIDNEW,strSigPID);
+
+
+
+
+
     }
 
     char *pData = cJSON_PrintUnformatted(jData);
@@ -390,9 +413,9 @@ static int register_buildKeys(const unsigned char* u_ILK,const unsigned char* u_
     char DHKEY[VKEY_KEY_SIZE];
     char VSK[VKEY_SIG_SK_SIZE];
     char VUK[VKEY_KEY_SIZE];
-    encrypt_makeDHShareKey(RLK,u_ILK,s_suk,DHKEY);
-    encrypt_makeSignPublic(DHKEY,VSK,s_vuk);
-    memset(VSK,0,VKEY_SIG_SK_SIZE);
+    encrypt_makeDHShareKey(RLK,u_ILK,SUK,DHKEY);
+    encrypt_makeSignPublic(DHKEY,VSK,VUK);
+    //memset(VSK,0,VKEY_SIG_SK_SIZE);
 
     sodium_bin2hex(s_vuk,65,VUK,VKEY_KEY_SIZE);
 

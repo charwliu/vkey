@@ -23,4 +23,6 @@ int eth_recover_client(const char* s_oldPid,const char* s_sigByURSK,const char* 
 /// \return
 int eth_register_site(char* s_pid,char* s_sigPid,char* s_rpk);
 
+int eth_recover_site(char* s_pidOld,char* s_pidNew,char* s_sigPidNew);
+
 #endif

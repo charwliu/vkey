@@ -3,6 +3,7 @@
 #include <string.h>
 #include <sodium.h>
 #include "mongoose/mongoose.h"
+#include "attest.h"
 
 #define ETH_TEMPLATE_CALL_PAYLOAD "{\"jsonrpc\":\"2.0\",\"method\":\"eth_call\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\"},\"latest\"],\"id\":1}"
 #define ETH_TEMPLATE_TRANS_PAYLOAD "{\"jsonrpc\":\"2.0\",\"method\":\"personal_sendTransaction\",\"params\":[{\"from\": \"%s\", \"to\": \"%s\", \"data\": \"%s\", \"gas\": \"0x47E7C4\"},\"%s\"],\"id\":1}"
@@ -15,6 +16,7 @@
 
 static struct mg_mgr *eth_mgr;
 static char* eth_header="Content-Type: application/json\r\n";
+static int eth_get_attest=0;
 
 
 //
@@ -197,8 +199,14 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
             }
             break;
         case MG_EV_HTTP_REPLY:
-            printf("Got reply:\n%.*s\n", (int) hm->body.len, hm->body.p);
+            printf("Got reply from smart contract:\n%.*s\n", (int) hm->body.len, hm->body.p);
             nc->flags |= MG_F_SEND_AND_CLOSE;
+            if(eth_get_attest)
+            {
+                int ret = (hm->body.p[hm->body.len-1]=='1')?1:0;
+                got_attest_fromBC(ret);
+                eth_get_attest=0;
+            }
             break;
         case MG_EV_CLOSE:
                 printf("Server closed connection\n");
@@ -252,6 +260,7 @@ int eth_attest_read(const char* s_psig, const char* s_apk, const char* s_msg, co
 
     struct mg_connection *nc;
 
+    eth_get_attest=1;
     nc = mg_connect_http(eth_mgr, ev_handler, eth_getUrl(), eth_header, payload);
     mg_set_protocol_http_websocket(nc);
 

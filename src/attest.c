@@ -24,12 +24,18 @@ static http_router routers[3]={
         {post_attest_self,"POST","/api/v1/attestation/self"},
 };
 
+static struct mg_connection *attest_req_connection;
+static char  attest_proof_sig[129];
 
 /// GET /api/v1/attestation?psig=xxxxx&apk=yyyy&nonce=11111&nsig=2222
 static int get_attest(struct mg_connection *nc, struct http_message *hm)
 {
 
-
+    if(attest_req_connection)
+    {
+        http_response_error(nc,400,"busy");
+        return 0;
+    }
     char strProofSig[180]="";
     char strAPK[80]="";
     char strMessage[80]="";
@@ -43,19 +49,32 @@ static int get_attest(struct mg_connection *nc, struct http_message *hm)
     encrypt_hash(HashMsg,strMessage,strlen(strMessage));
     char strHashMsg[65];
     sodium_bin2hex(strHashMsg,65,HashMsg,32);
+
+    strncpy(attest_proof_sig,strProofSig,strlen(strProofSig));
+    attest_req_connection=nc;
+
     eth_attest_read(strProofSig,strAPK,strHashMsg,strMessageSig);
 
 
-
-    cJSON* res = cJSON_CreateObject();
-
-    cJSON_AddStringToObject(res,"attestation","not ready now");
-
-    http_response_json(nc,200,res);
-
-    cJSON_Delete(res);
+    return 0;
 }
 
+int got_attest_fromBC(int n_result)
+{
+    if(!attest_req_connection)
+        return -1;
+    char strResult[2];
+    sprintf(strResult,"%d",n_result);
+
+    cJSON* res = cJSON_CreateObject();
+    cJSON_AddStringToObject(res,"psig",attest_proof_sig);
+    cJSON_AddStringToObject(res,"result",strResult);
+
+    http_response_json(attest_req_connection,200,res);
+
+    cJSON_Delete(res);
+    attest_req_connection=NULL;
+}
 
 /*
  *

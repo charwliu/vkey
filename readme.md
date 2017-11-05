@@ -1,4 +1,4 @@
-vkey 2.0
+vkey 0.2.0
 
 [toc]
 # Interface
@@ -233,7 +233,7 @@ Request
         
         "result":1,
     
-        "name":"佛山自然人一门式",
+        "name":"xxx",
         
         "time":"125545611",
         "expiration":"13545544",

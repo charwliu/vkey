@@ -9,17 +9,22 @@
 #include "collect.h"
 #include "vlink.h"
 #include "util.h"
+#include "register.h"
+#include "start.h"
 
 static int test(struct mg_connection *nc, struct http_message *hm);
 
+static struct mg_mgr *http_mgr;
 /// router gateway
-static http_router routers[8]={
+static http_router routers[9]={
+        {start_route,"*","/api/v1/stop"},
         {key_route,"*","/api/v1/key"},
         {claim_route,"*","/api/v1/claim"},
         {auth_route,"*","/api/v1/auth"},
         {attest_route,"*","/api/v1/attestation"},
         {share_route,"*","/api/v1/share"},
         {collect_route,"*","/api/v1/collection"},
+        {register_route,"*","/api/v1/register"},
         {vlink_route,"*","/api/v1/vlink"},
         {test,"GET","/test"}
 };
@@ -70,6 +75,7 @@ int http_start(struct mg_mgr *mgr)
     {
         return -1;
     }
+    http_mgr = mgr;
     struct mg_bind_opts bind_opts;
 
     const char *err_str = "vkey service error";
@@ -157,5 +163,14 @@ int http_response_json(struct mg_connection *nc,int n_status,cJSON* json)
     mg_send_http_chunk(nc, "", 0);
     free(strJson);
     return 0;
+
+}
+
+int http_post(const char* s_url,const char* s_payload)
+{
+    struct mg_connection *nc;
+
+    nc = mg_connect_http(http_mgr, ev_handler, s_url, "Content-Type: application/json\r\n", s_payload);
+    mg_set_protocol_http_websocket(nc);
 
 }

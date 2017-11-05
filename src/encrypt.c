@@ -63,7 +63,7 @@ int encrypt_makeDHShareKey(const uint8_t *secret,const uint8_t *public,const uin
     return 0;
 }
 
-int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public)
+int encrypt_makeSignPublic2(const uint8_t *secret, uint8_t *public)
 {
     uint8_t sk[crypto_sign_SECRETKEYBYTES];
     sodium_mlock( sk, crypto_sign_SECRETKEYBYTES );
@@ -74,10 +74,22 @@ int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public)
 }
 
 
+int encrypt_makeSignPublic(const uint8_t *seed, uint8_t *secret, uint8_t *public)
+{
+    //uint8_t sk[crypto_sign_SECRETKEYBYTES];
+    //sodium_mlock( sk, crypto_sign_SECRETKEYBYTES );
+    return crypto_sign_seed_keypair( public, secret, seed );
+    //sodium_munlock( sk, crypto_sign_SECRETKEYBYTES );
+
+    //return 0;
+}
+
+
 int encrypt_hash(uint8_t *out, const uint8_t *in, int len)
 {
     return crypto_generichash(out, 32, in, len, NULL, 0);
 }
+
 
 int encrypt_enHash(const uint64_t *in,uint64_t *out) {
     uint64_t trans[4];
@@ -99,6 +111,13 @@ int encrypt_enHash(const uint64_t *in,uint64_t *out) {
     sodium_munlock( tmp, 32 );
     return 0;
 }
+
+int encrypt_enScrypt(uint8_t *out, const uint8_t *in, int len,const char* s_salt)
+{
+    //todo:enscypt
+    return encrypt_hash(out,in,len);
+}
+
 /*
 int encrypt_enHash(const uint8_t *in, uint8_t *out)
 {
@@ -126,11 +145,12 @@ int encrypt_encrypt(uint8_t *cipherText, const uint8_t *plainText, int textLengt
                  const uint8_t *key, const uint8_t *iv, const uint8_t *add, int add_len, uint8_t *tag) {
     gcm_context ctx;
     uint8_t miv[12] = {0};
-    size_t iv_len = 12;
+    size_t iv_len = 0;
     size_t tag_len = 0;
     int retVal;
 
     if( iv ) memcpy( miv, iv, iv_len );
+    if( iv ) iv_len = 12;
     if( tag ) tag_len = 16;
     if( !add ) add_len = 0;
 
@@ -148,17 +168,19 @@ int encrypt_encrypt(uint8_t *cipherText, const uint8_t *plainText, int textLengt
 int encrypt_decrypt(uint8_t *plainText, const uint8_t *cipherText, int textLength,
                  const uint8_t *key, const uint8_t *iv, const uint8_t *add, int add_len, const uint8_t *tag) {
     gcm_context ctx;
+    uint8_t miv[12] = {0};
     size_t iv_len = 0;
     size_t tag_len = 0;
     int retVal;
 
+    if( iv ) memcpy( miv, iv, iv_len );
     if( iv ) iv_len = 12;
     if( tag ) tag_len = 16;
     if( !add ) add_len = 0;
 
     gcm_setkey( &ctx, (uint8_t*)key, 32 );
     retVal = gcm_auth_decrypt(
-            &ctx, iv, iv_len,
+            &ctx, miv, iv_len,
             add, add_len,
             cipherText, plainText, textLength,
             tag, tag_len );

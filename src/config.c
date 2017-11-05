@@ -4,6 +4,16 @@
 
 void config_load()
 {
-    g_config.sde_url="192.168.107.131:1883";
+    g_config.mqtt_url="124.251.62.214:1886";
+    g_config.mqtt_user = "vnetsdk";
+    g_config.mqtt_password = "vnetsdk123456";
+
+//    g_config.mqtt_url="192.168.107.132:1883";
+//    g_config.mqtt_user = "guoqc";
+//    g_config.mqtt_password = "123";
+
     g_config.http_port="10001";
+
+    g_config.template_server="http://124.251.62.218:1027/v1/claimTemplates";
+
 }

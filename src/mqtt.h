@@ -5,20 +5,22 @@
 #include "cjson/cJSON.h"
 
 int mqtt_connect(struct mg_mgr *mgr);
+int mqtt_close();
 
 //int mqtt_send(const char* s_address,const char* s_data, int n_size);
 //int mqtt_send(const char* s_to,const char* s_from,const char* s_sk,const char* s_data );
 int mqtt_send(const char* s_to,const char* s_event,const char* s_pk,const char* s_sk,const char* s_data );
 
 //int mqtt_subscribe(const char* s_topic);
-int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data);
+//int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_data);
 
+int mqtt_subscribe(const char* s_event,const char* s_pk,const char* s_sk,time_t t_time,int n_duration,const char* s_peerTopic, const char* s_data);
 
 int mqtt_unsubscribe(const char* s_topic);
 
-int mqtt_readTopic(const char* s_topic,cJSON* j_result);
 
+int mqtt_getTopicKeysByPeer( const char* s_peerTopic, char* s_pk, char* s_sk );
 
-static int mqtt_got(struct mg_mqtt_message *msg);
+int mqtt_timer(time_t t_now);
 
 #endif

@@ -22,4 +22,7 @@ int http_response_json(struct mg_connection *nc, int n_status, cJSON *json);
 
 int http_routers_handle(const http_router *routers, int n_size, struct mg_connection *nc, struct http_message *hm);
 
+
+int http_post(const char* s_url,const char* s_payload);
+
 #endif

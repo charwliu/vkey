@@ -12,10 +12,14 @@ int encrypt_makeDHPublic(const uint8_t *secret, uint8_t *public);
 
 int encrypt_makeDHShareKey(const uint8_t *secret,const uint8_t *public,const uint8_t *to_public,uint8_t* share);
 
-int encrypt_makeSignPublic(const uint8_t *secret, uint8_t *public);
+int encrypt_makeSignPublic(const uint8_t *seed, uint8_t *secret, uint8_t *public);
+
+int encrypt_makeSignPublic2(const uint8_t *secret, uint8_t *public);
 
 int encrypt_enHash(const uint64_t *in,uint64_t *out);
 int encrypt_hash( uint8_t *out,  const uint8_t *in, int len);
+
+int encrypt_enScrypt(uint8_t *out, const uint8_t *in, int len,const char* s_salt);
 
 int encrypt_hmac(const uint8_t *secrect, const uint8_t *msg, int len, uint8_t *out);
 

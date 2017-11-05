@@ -15,11 +15,15 @@
 
 static int post_share(struct mg_connection *nc, struct http_message *hm);
 static int get_share(struct mg_connection *nc, struct http_message *hm);
+static int del_share(struct mg_connection *nc, struct http_message *hm);
 
-static http_router routers[2]={
+static http_router routers[3]={
         {post_share,"POST","/api/v1/share"},
-        {get_share,"GET","/api/v1/share"}
+        {get_share,"GET","/api/v1/share"},
+        {del_share,"DELETE","/api/v1/share"}
 };
+
+
 
 
 /*
@@ -43,11 +47,17 @@ POST HOST/share
 
 int share_start(cJSON* j_share,cJSON* j_result)
 {
+    if(!j_share)
+    {
+        return -1;
+    }
+
     //1 parse j_share body
     cJSON *claimIds = cJSON_GetObjectItem(j_share, "claimIds");
     cJSON *duration =  cJSON_GetObjectItem(j_share, "duration");
     cJSON *confirm =  cJSON_GetObjectItem(j_share, "confirm");
-    cJSON *desc =  cJSON_GetObjectItem(j_share, "desc");
+//    cJSON *desc =  cJSON_GetObjectItem(j_share, "desc");
+
 
     if(!claimIds )
     {
@@ -69,6 +79,42 @@ int share_start(cJSON* j_share,cJSON* j_result)
 
 
     //todo 1: check if claims exist all
+    int nClaimCount =cJSON_GetArraySize(claimIds);
+    if(nClaimCount==0)
+    {
+        cJSON_AddStringToObject(j_result,"error","Vkey Service : claims is empty!");
+        return -1;
+    }
+
+    char names[1024];
+//    char* templateIds[nClaimCount];
+//    memset(templateIds,NULL,nClaimCount);
+//    int nTemplateCount=0;
+
+    for(int i=0;i<nClaimCount;i++)
+    {
+        cJSON* jItem = cJSON_GetArrayItem(claimIds,i);
+        cJSON* jClaim = claim_read_by_claimid(jItem->valuestring);
+        if(!jClaim)
+        {
+            cJSON_AddStringToObject(j_result,"error","Vkey Service : claims not exist!");
+            return -1;
+
+        }
+//        cJSON* jTemplateId=cJSON_GetObjectItem(jClaim,"templateId");
+//        char* strTemplateId=malloc(strlen(jTemplateId->valuestring)+1);
+//        strncpy(strTemplateId,jTemplateId->valuestring,strlen(jTemplateId->valuestring));
+//
+//        if(jTemplateId)
+//        {
+//            if(0== util_addStringToSet(templateIds,nClaimCount,strTemplateId))
+//            {
+//                nTemplateCount++;
+//            }
+//        }
+        cJSON_Delete(jClaim);
+    }
+
 
 
     //2 subscribe topic
@@ -88,19 +134,19 @@ int share_start(cJSON* j_share,cJSON* j_result)
     char* pData = cJSON_PrintUnformatted(j_share);
 
 
-    mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,pData);
+    mqtt_subscribe("SHARE_SRC",PK,SK,nTime,duration->valueint,NULL,pData);
     free(pData);
 
     //4 build vlink
 
     char strTopic[128];
     sprintf(strTopic,"SHARE:%s",strPK);
-    char names[128];
     //todo 2: get claim template names by claim ids
 
     cJSON_AddStringToObject(j_result,"topic",strTopic);
-    cJSON_AddStringToObject(j_result,"names",names);
-    cJSON_AddStringToObject(j_result,"desc",desc->valuestring);
+//    cJSON_AddStringToObject(j_result,"names",names);
+//    cJSON_AddStringToObject(j_result,"desc",desc->valuestring);
+
 
     return 0;
 }
@@ -191,14 +237,17 @@ static int post_share(struct mg_connection *nc, struct http_message *hm)
 }
 
 /*
- * GET /api/v1/share?topic=123456787
+ * GET /api/v1/share?topic=123456787&nonce=123
  */
 static int get_share(struct mg_connection *nc, struct http_message *hm)
 {
 
     char strSource[80]="";
+    char nonce[64]="";
     char strSourceTopic[128]="";
     mg_get_http_var(&hm->query_string, "topic", strSource, 80);
+    mg_get_http_var(&hm->query_string, "nonce", nonce, 64);
+
     sprintf(strSourceTopic,"SHARE_SRC/%s",strSource);
 
     unsigned char PK[VKEY_KEY_SIZE];
@@ -209,11 +258,31 @@ static int get_share(struct mg_connection *nc, struct http_message *hm)
 
     time_t nTime = time(NULL);
     //3 subscribe topic
-    mqtt_subscribe("SHARE_DES",PK,SK,nTime,0,"");
-    mqtt_send(strSourceTopic,"SHARE_DES",PK,SK,"");
+    mqtt_subscribe("SHARE_DES",PK,SK,nTime,600,NULL,"");
+    mqtt_send(strSourceTopic,"SHARE_DES",PK,SK,nonce);
 
 
     http_response_text(nc,200,"ok");
+    return 0;
+}
+
+
+static int del_share(struct mg_connection *nc, struct http_message *hm)
+{
+    char strPK[65]="";
+    mg_get_http_var(&hm->query_string, "topic", strPK, 65);
+    if( strlen(strPK)==0)
+    {
+        http_response_error(nc,400,"Vkey Service : no valid topic");
+        return 0;
+    }
+    char strTopic[100];
+    sprintf(strTopic,"%s/%s","SHARE_SRC",strPK);
+
+    mqtt_unsubscribe(strTopic);
+
+    http_response_text(nc,200,"share has been removed");
+
     return 0;
 }
 
@@ -232,17 +301,21 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
     //todo: parse multi claims
 
     cJSON* jSend = cJSON_CreateObject();
-    cJSON_AddStringToObject(jSend,"pid","1234");
+    cJSON_AddStringToObject(jSend,"nonce",s_data);
     cJSON* jClaims = cJSON_CreateArray();
 
-    claim_get_with_proofs( jClaimIds,s_peerTopic, jClaims);
+    claim_get_by_ids( jClaimIds,s_data, jClaims);
 
     cJSON_AddItemToObject(jSend,"claims",jClaims);
 
     //send data to des
     char* pData=cJSON_PrintUnformatted(jSend);
 
+    time_t nTime = time(NULL);
+    //mqtt_subscribe("SHARE_SRC",s_pk,s_sk,nTime,0,"");
     mqtt_send(s_peerTopic,"SHARE_SRC",s_pk,s_sk,pData);
+
+
 
     //release resource
     free(pData);
@@ -251,15 +324,15 @@ int share_confirm(const char* s_peerTopic,const char* s_pk,const char* s_sk,cJSO
     return 0;
 }
 
-int share_got( const char* s_myTopic, const char* s_data )
+int share_got( const char* s_peerTopic, const char* s_data )
 {
-    g_notify(s_data);
-    mqtt_unsubscribe(s_myTopic);
+    printf("Share Message:%s\n",s_data);
+    g_notify(s_peerTopic,s_data);
     return 0;
 }
 
 
 int share_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,2,nc,hm);
+    return http_routers_handle(routers,3,nc,hm);
 }

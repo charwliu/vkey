@@ -13,6 +13,10 @@ char* util_getStr(struct mg_str* msg);
 char* util_getPk(const char* s_topic);
 char** util_split(char* a_str, const char a_delim);
 
+int util_compareKey(const unsigned char* u_a,const unsigned char* u_b,int n_size);
+
+int util_addStringToSet(char** set,int n_size,char* item);
+
 
 
 #endif

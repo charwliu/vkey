@@ -6,10 +6,10 @@
 
 int claim_route(struct mg_connection *nc, struct http_message *hm );
 
-int claim_read(const char* s_templateId,cJSON* result);
+int claim_get_by_tid(const char* s_templateId,unsigned const char* u_msg,cJSON* jClaims);
 
 
 cJSON* claim_read_by_claimid(const char* s_id);
-int claim_get_with_proofs(cJSON* jClaimIds,const char* sTopic,cJSON* jClaims);
+int claim_get_by_ids(cJSON* jClaimIds,unsigned const char* u_msg,cJSON* jClaims);
 
 #endif

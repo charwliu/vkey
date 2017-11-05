@@ -39,6 +39,26 @@ Return
 ```
 - iuk   encrypted iuk, vwallet should show qrcode with iuk to user and user must backup the qrcode for recovering the identity
  
+### recover key
+```
+POST HOST/key/recover
+{
+    "iuk":"111222233",
+    "resure":"rescure code"
+}
+
+```
+- iuk: Identity unlock key encryped by resure code and stored offline by user
+- resure: Rescure code stored offline by user
+
+Recover action need the db file recovered from cloud first.
+
+Return
+```
+{
+    
+}
+```
 
 ## 
 
@@ -308,6 +328,9 @@ string g_name
 
 - Local name
 string strName
+
+- DB
+all key saved as hex string.
 
 # Building
 

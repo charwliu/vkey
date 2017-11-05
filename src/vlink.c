@@ -7,7 +7,7 @@
 static int get_vlink(struct mg_connection *nc, struct http_message *hm);
 static int del_vlink(struct mg_connection *nc, struct http_message *hm);
 
-static http_router routers[1]={
+static http_router routers[2]={
         {get_vlink,"GET","/api/v1/vlink"},
         {del_vlink,"DEL","/api/v1/vlink"}
 };
@@ -16,7 +16,7 @@ static http_router routers[1]={
 
 int vlink_route(struct mg_connection *nc, struct http_message *hm )
 {
-    return http_routers_handle(routers,1,nc,hm);
+    return http_routers_handle(routers,2,nc,hm);
 }
 
 static int get_vlink_auth(struct mg_connection *nc, struct http_message *hm)
@@ -76,5 +76,4 @@ static int del_vlink(struct mg_connection *nc, struct http_message *hm)
     http_response_text(nc,200,"vlink has been removed");
 
     return 0;
-
 }

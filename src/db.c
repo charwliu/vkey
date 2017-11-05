@@ -4,6 +4,7 @@
 #include "db.h"
 #include "sqlite/sqlite3.h"
 #include "cjson/cJSON.h"
+#include "key.h"
 
 sqlite3* g_db;
 
@@ -24,7 +25,7 @@ sqlite3* db_get()
     return g_db;
 }
 
-static int db_exist(const char* s_table)
+static int db_tableExist(const char* s_table)
 {
     sqlite3* db = db_get();
     char strSql[256];
@@ -74,7 +75,7 @@ static int db_checkKeyTable()
 //        fprintf(stdout, "Table created successfully\n");
 //    }
 //    return 0;
-    const char* sql = "CREATE TABLE TB_KEY( ADDRESS TEXT PRIMARY KEY NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
+    const char* sql = "CREATE TABLE TB_KEY( APK TEXT PRIMARY KEY NOT NULL, ASK BLOB NOT NULL, IMK BLOB NOT NULL, ILK BLOB NOT NULL, TAG TEXT NOT NULL,TIME INT );";
     return db_checkTable("TB_KEY",sql);
 }
 
@@ -88,20 +89,33 @@ static int db_checkClaimTable()
 
 static int db_checkAttestTable()
 {
-    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, ATTEST TEXT NOT NULL, RASK TEXT NOT NULL, TIME INT );";
+    const char* sql = "CREATE TABLE TB_ATTEST( CID TEXT NOT NULL, PROOF TEXT NOT NULL, SIGNATURE TEXT NOT NULL, RASK BLOB NOT NULL, TIME INT );";
     return db_checkTable("TB_ATTEST",sql);
 }
 
 
 static int db_checkMqttTable()
 {
-    const char* sql = "CREATE TABLE TB_MQTT( TOPIC TEXT NOT NULL, PK TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, DATA TEXT NOT NULL );";
+    const char* sql = "CREATE TABLE TB_MQTT( TOPIC TEXT NOT NULL, PK TEXT PRIMARY KEY NOT NULL, SK TEXT NOT NULL, TIME INT NOT NULL, DURATION INT, PEER TEXT,DATA TEXT );";
     return db_checkTable("TB_MQTT",sql);
+}
+
+
+static int db_checkRegSiteTable()
+{
+    const char* sql = "CREATE TABLE TB_REG_SITE( URL TEXT PRIMARY KEY NOT NULL, SK BLOB NOT NULL, PK BLOB NOT NULL, TIME INT NOT NULL );";
+    return db_checkTable("TB_REG_SITE",sql);
+}
+
+static int db_checkRegClientTable()
+{
+    const char* sql = "CREATE TABLE TB_REG_CLIENT( RID TEXT PRIMARY KEY NOT NULL, URL TEXT NOT NULL, RPK TEXT NOT NULL, TIME INT NOT NULL, STATE INT NOT NULL );";
+    return db_checkTable("TB_REG_CLIENT",sql);
 }
 
 static int db_checkTable(const char* s_table,const char* s_createSQL)
 {
-    if(1==db_exist(s_table))
+    if(1==db_tableExist(s_table))
     {
         fprintf(stdout, "Table %s is ready\n",s_table);
         return 0;
@@ -115,7 +129,18 @@ static int db_checkTable(const char* s_table,const char* s_createSQL)
         sqlite3_free(sErrMsg);
         return -1;
     }else{
-        fprintf(stdout, "Table created successfully\n");
+        fprintf(stdout, "Table %s created successfully\n",s_table);
+    }
+    return 0;
+}
+
+int db_exist(const char* s_path)
+{
+    FILE* file = fopen(s_path,"r");
+    if(file)
+    {
+        fclose(file);
+        return 1;
     }
     return 0;
 }
@@ -123,25 +148,71 @@ static int db_checkTable(const char* s_table,const char* s_createSQL)
 
 int db_init(const char *s_path)
 {
+//    if( db_exist(s_path) )
+//    {
+//        return -1;
+//    }
     sqlite3_open_v2(s_path,&g_db,SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,NULL);
 
     if(0!=db_checkKeyTable())
     {
+        db_close();
         return -1;
     }
     if(0!=db_checkClaimTable())
     {
+        db_close();
         return -1;
     }
 
     if(0!=db_checkAttestTable())
     {
+        db_close();
         return -1;
     }
 
     if(0!=db_checkMqttTable())
     {
+        db_close();
         return -1;
     }
+
+    if(0!=db_checkRegSiteTable())
+    {
+        db_close();
+        return -1;
+    }
+
+    if(0!=db_checkRegClientTable())
+    {
+        db_close();
+        return -1;
+    }
+
+    return 0;
+}
+
+int db_open(const char *s_path,const char* s_password)
+{
+    sqlite3_open_v2(s_path,&g_db,SQLITE_OPEN_READWRITE ,NULL);
+
+    return 0;
+}
+
+
+int db_close()
+{
+    sqlite3* db = db_get();
+    if(db)
+    {
+        sqlite3_close_v2(db);
+    }
+    return 0;
+
+}
+
+
+int db_reEncrypt(const unsigned char* u_oldKey,const unsigned char* u_newKey)
+{
     return 0;
 }

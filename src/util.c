@@ -73,7 +73,7 @@ char* util_getStr(struct mg_str* msg)
 {
     char *topic=malloc(msg->len + 1);
     memcpy(topic, msg->p, msg->len);
-    topic[msg->len + 1] = 0;
+    topic[msg->len] = 0;
     return topic;
 }
 
@@ -137,3 +137,36 @@ char** util_split(char* a_str, const char a_delim)
     return result;
 }
 
+
+int util_compareKey(const unsigned char* u_a,const unsigned char* u_b,int n_size)
+{
+    for(int i=0;i<n_size;i++)
+    {
+        if(u_a[i]!=u_b[i])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
+int util_addStringToSet(char** set,int n_size,char* item)
+{
+    for(int i=0;i<n_size;i++)
+    {
+        if(set[i]==NULL)
+        {
+            set[i]=item;
+            return 0;
+        }
+        else
+        {
+            if(strcmp(set[i],item)==0)
+            {
+                return -1;
+            }
+        }
+    }
+    return -1;
+}
